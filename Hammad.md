@@ -1,4 +1,4 @@
-# Hamad
+# Hammad
 
 ## About Me
 I am a BCA student passionate about programming and web development.
