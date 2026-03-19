@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Dosis:wght@200..800&family=Orbitron:wght@400..900&family=Quicksand:wght@300..700&family=Space+Grotesk:wght@300..700&family=Syne:wght@400..800&&family=Zen+Dots&display=swap');
+
 .PageLayout {
     background-color: var(--bg);
     position: relative;
@@ -7,15 +9,16 @@
 }
 
 header {
-    background-color: var(--bg1);
+    background-color: var(--header-bg);
     margin: auto;
     transition: background var(--transition);
     padding: 0 28px;
     height: 70px;
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid var(--violet);
 }
 
 header .logoContainer {
@@ -27,6 +30,7 @@ header .logoContainer {
 
 header .logoContainer img {
     height: 80%;
+    filter: drop-shadow(0 0 5px var(--violet));
 }
 
 header .logoName {
@@ -46,137 +50,595 @@ header .logoName em {
 header .Buttons {
     display: flex; 
     align-items: flex-end; 
+    align-items: center;
     gap: 10px;
-}
-
-header .Buttons button:nth-child(1) {
-    padding: 9px 18px; 
-    border-radius: 10px;
-    background: transparent; 
-    border: 1px solid var(--border2);
-    color: var(--text-2); 
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; 
-    font-weight: 600; 
-    cursor: pointer;
-    transition: all .2s; 
-    white-space: nowrap;
-}
-
-header .Buttons button:nth-child(1):hover {
-    border-color: var(--violet); 
-    color: var(--violet-light);
-}
-
-header .Buttons button:nth-child(2) {
-    padding: 9px 18px; 
-    border-radius: 10px;
-    background: var(--violet); 
-    border: 1px solid transparent;
-    color: #fff; 
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; 
-    font-weight: 700; cursor: pointer;
-    transition: all .2s; 
-    display: flex; 
-    align-items: center; 
-    gap: 7px; 
-    white-space: nowrap;
-    box-shadow: 0 4px 18px rgba(123,94,248,.3);
-}
-
-header .Buttons button:nth-child(2):hover {
-    background: var(--violet-light); 
-    transform: translateY(-1px); 
-    box-shadow: 0 8px 28px rgba(123,94,248,.45);
-}
-
-header .Buttons button:nth-child(3) {
-    padding: 9px 18px; 
-    border-radius: 10px;
-    background: var(--amber-dim); 
-    border: 1px solid var(--coral);
-    color: var(--text); 
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; 
-    font-weight: 700; cursor: pointer;
-    transition: all .2s; 
-    display: flex; 
-    align-items: center; 
-    gap: 7px; 
-    white-space: nowrap;
-    box-shadow: 0 4px 18px rgba(123,94,248,.3);
-}
-
-header .Buttons button:nth-child(3):hover {
-    opacity: 0.8; 
-    transform: translateY(-1px); 
-    box-shadow: 0 8px 28px rgba(123,94,248,.45);
-}
-
-header .Buttons button:nth-child(4) {
-    width: 38px; 
-    height: 38px; 
-    border-radius: 10px;
-    background: var(--surface2); 
-    border: 1px solid var(--border2);
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    transition: all .2s; 
-    font-size: 16px; 
-    flex-shrink: 0;
-}
-
-header .Buttons button:nth-child(4):hover {
-    background: var(--surface3); 
-    transform: scale(1.08);
-}
-
-/* Tablet */
-@media (max-width: 900px) {
-
-header {
-    width: 95%;
-    padding: 0 16px;
-}
-
-header .logoName {
-    font-size: 1.6em;
+    height: 50%;
 }
 
 header .Buttons button {
-    padding: 8px 14px;
-    font-size: 12px;
+    background-color: var(--bg1);
+    border-radius: 5px;
+    gap: 5px;
+    color: white;
+    height: 100%;
+    font-size: 1rem;
+    padding: 2px 10px;
+    cursor: pointer;
+    font-family: 'syne','Courier New', Courier, monospace;
 }
 
+header .Buttons button img {
+    height: 100%;
+}
+
+header .Buttons #LoginBtn {
+    background-color: var(--amber-dim); 
+    border: 1px solid var(--violet);
+    color: var(--violet);
+}
+
+header .Buttons #SubscripBtn {
+    border: 1px solid var(--mint);
+    color: var(--mint);
+    
+}
+
+header .Buttons #toggle {
+    border: 1px solid var(--violet);
 }
 
 
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
 /* Mobile */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
 
-header {
-    flex-direction: column;
-    height: auto;
-    gap: 10px;
-    padding: 12px;
+    header {
+        flex-direction: column;
+        height: auto;
+        gap: 10px;
+        padding: 12px;
+    }
+
+    header .logoContainer {
+        justify-content: center;
+        height: 50px;
+    }
 }
 
-header .logoContainer {
-    justify-content: center;
-}
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
 
-header .Buttons {
+nav {
+    background: var(--header-bg);
     width: 100%;
-    justify-content: center;
+    display: flex;
     flex-wrap: wrap;
 }
 
-header .Buttons button {
-    padding: 8px 12px;
-    font-size: 12px;
+nav button {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: bold;
+    letter-spacing: 1px;
+    height: 30px;
+    margin: 5px 10px;
+    flex-grow: 1;
+    flex-basis: 200;
+    border-radius: 5px;
+    cursor: pointer;
+    background: var(--head-Btn);
+    border: none;
+    border-bottom: 3px solid var(--violet);
+    border-left: 3px solid var(--violet);
+    color: var(--text);
+    padding: 0px 15px;
 }
 
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+
+#Home {
+    background-color: var(--bg);
+    display: flex;
+    height: 600px;
+    position: relative;
+    padding-top: 30px;
+}
+
+.IntroSec {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.IntroSec .versionInfo {
+    flex: 1;
+    position: inherit;
+    align-content: center;
+    animation: moveVersionInfo 2s linear infinite;
+}   
+
+@keyframes moveVersionInfo {
+    0% {
+        transform: translateY(0%);
+    }
+    25% {
+        transform: translateY(10%);
+    }
+    50% {
+        transform: translateY(0%);
+    }
+    75% {
+        transform: translateY(-10%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.versionInfo div {
+    background: #7a5ef82f;
+    color: #7B5EF8;
+    border: 1px solid #7B5EF8;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 10%;
+    border-radius: 5px;
+    font-family: "Zen Dots", sans-serif;
+    box-shadow: var(--logo-glow);
+    align-content: center;
+    justify-content: space-between;
+}
+
+.IntroSec .TagLine {
+    flex: 3;
+    align-content: center;
+}
+
+.TagLine div {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    font-size: 4rem;
+}
+
+.TagLine div em {
+    font-family: "Syne", sans-serif;
+    font-weight: bold;
+    color: #7B5EF8;
+}
+
+.TagLine div span {
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+    padding-left: 10%;
+}
+
+.IntroSec .IntroPara {
+    flex: 2;
+    align-content: center;
+}
+
+.IntroPara p {
+    color: var(--text-2);
+    font-family: "Dosis", sans-serif;
+    margin-left: 10%;
+    font-size: 1.5rem;
+}
+
+.IntroSec .RedirectBtns {
+    /* background-color: red; */
+    flex: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.RedirectBtns button {
+    font-family: "Syne", sans-serif;
+    font-size: 1.5rem;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: none;
+    color: var(--text);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.RedirectBtns button:nth-child(1) {
+    background: var(--violet);
+    box-shadow: var(--logo-glow);
+}
+
+.RedirectBtns button:nth-child(2) {
+    background: linear-gradient(to bottom right, var(--surface3), var(--surface2));
+    border: 2px solid var(--violet);
+}
+
+.RedirectBtns button:nth-child(1):hover,
+.RedirectBtns button:nth-child(2):hover {
+    transform: scale(1.1);
+    transition: var(--transition);
+}
+
+.IntroSec .feedCard {
+    flex: 2;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.feedCard div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Zen Dots", sans-serif;
+    color: var(--text);
+}
+
+.feedCard div span {
+    font-size: 1.8rem;
+}
+
+.feedCard div span strong {
+    font-size: 1.5rem;
+    color: var(--violet);
+}
+
+.feedCard div p {
+    font-size: 1rem;
+    color: var(--text-2);
+}
+
+.AttractSec {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.AttractSec .AttractBlock {
+    height: 50%;
+    width: 70%;
+    border-radius: 10px;
+    position: relative;
+    border-radius: 10px;
+    border: 1px solid var(--border2);
+}
+
+.AttractBlock .float {
+    position: absolute;
+    right: 5%;
+    top: -5%;
+    color: black;
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    background-color: var(--mint);
+    box-shadow: 0 0 15px var(--mint);
+    animation: moveVersionInfo 2s linear infinite;
+}
+
+.AttractBlock .URLHead {
+    background: var(--surface3);
+    color: white;
+    height: 10%;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.AttractBlock .URLHead .dots {
+    height: 100%;
+    width: 8%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.AttractBlock .URLHead .dots span {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+}
+
+.AttractBlock .URLHead .dots span:nth-child(1){
+    background: var(--coral);
+}
+.AttractBlock .URLHead .dots span:nth-child(2){
+    background: var(--amber);
+}
+.AttractBlock .URLHead .dots span:nth-child(3){
+    background: var(--mint);
+}
+
+.AttractBlock .URLHead .Dem-URL {
+    background: var(--bg);
+    width: 90%;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    padding: 2px 5px;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text-2);
+}
+
+.AttractBlock .Container {
+    background: var(--surface2);
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 0 0 8px 8px;
+    padding: 2% 3%;
+}
+
+.AttractBlock .Container .AttractProfile {
+    background: linear-gradient(to right, var(--violet), var(--coral));
+    flex: 3;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 5%;
+}
+
+.AttractBlock .Container .AttractProfile img {
+    background-color: red;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.AttractBlock .Container .AttractProfile div {
+    font-family: "Syne", sans-serif;
+    font-size: 1.5rem;
+}
+
+.AttractBlock .Container .AttractProfile div p:nth-child(1) {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.AttractBlock .Container .AttractProfile div p:nth-child(2) {
+    font-size: 1.2rem;
+}
+
+.AttractBlock .Container .AttractSkill {
+    flex: 1;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-family: "Orbitron", sans-serif;
+}
+
+.AttractBlock .Container .AttractSkill span {
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.AttractBlock .Container .AttractSkill span:nth-child(1){
+    border: 1px solid var(--violet);
+    color: var(--violet);
+    background-color: #7a5ef844;
+}
+.AttractBlock .Container .AttractSkill span:nth-child(2){
+    border: 1px solid var(--sky);
+    color: var(--sky);
+    background-color: #38c7ff3c;
+}
+.AttractBlock .Container .AttractSkill span:nth-child(3){
+    border: 1px solid var(--mint);
+    color: var(--mint);
+    background-color: #2edfa445;
+}
+
+.AttractBlock .Container .AttractProject {
+    flex: 2;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 15px;
+}
+
+.AttractBlock .Container .AttractProject div {
+    background-color: red;
+    width: calc(100%/3);
+    align-content: flex-end;
+    padding: 5px;
+    font-family: "Atkinson Hyperlegible Mono", sans-serif;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 10px;
+    color: var(--text);
+}
+
+.AttractBlock .Container .AttractProject div:nth-child(1){
+    background: linear-gradient(to bottom right, var(--violet), var(--orchid));
+}
+.AttractBlock .Container .AttractProject div:nth-child(2){
+    background: linear-gradient(to bottom right, var(--sky), var(--orchid));
+}
+.AttractBlock .Container .AttractProject div:nth-child(3){
+    background: linear-gradient(to bottom right, var(--mint), var(--sky));
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/* Mobile */
+@media (max-width: 768px) {
+    #Home {
+        flex-direction: column;
+        height: auto;
+        padding-top: 20px;
+        padding-bottom: 30px;
+    }
+
+    .IntroSec {
+        width: 100%;
+    }
+
+    .IntroSec .versionInfo {
+        flex: none;
+        padding: 10px 0;
+        text-align: left;
+    }
+
+    .versionInfo div {
+        margin-left: 5%;
+        font-size: 0.75rem;
+    }
+
+    .IntroSec .TagLine {
+        flex: none;
+        padding: 10px 0;
+    }
+
+    .TagLine div {
+        margin-left: 5%;
+        font-size: 2.2rem;
+    }
+
+    .TagLine div span {
+        font-size: 2rem;
+        padding-left: 5%;
+    }
+
+    .IntroSec .IntroPara {
+        flex: none;
+        padding: 10px 0;
+    }
+
+    .IntroPara p {
+        margin-left: 5%;
+        margin-right: 5%;
+        font-size: 1.1rem;
+    }
+
+    .IntroSec .RedirectBtns {
+        flex: none;
+        padding: 15px 0;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .RedirectBtns button {
+        font-size: 1.1rem;
+        padding: 10px 20px;
+    }
+
+    .IntroSec .feedCard {
+        flex: none;
+        padding: 15px 5%;
+        justify-content: space-around;
+    }
+
+    .feedCard div span {
+        font-size: 1.4rem;
+    }
+
+    .feedCard div span strong {
+        font-size: 1.2rem;
+    }
+
+    .feedCard div p {
+        font-size: 0.85rem;
+    }
+
+    .AttractSec {
+        width: 100%;
+        min-height: 280px;
+        padding: 20px 0 10px;
+    }
+
+    .AttractSec .AttractBlock {
+        width: 88%;
+        height: auto;
+    }
+
+    .AttractBlock .float {
+        font-size: 0.85rem;
+        top: -6%;
+    }
+
+    .AttractBlock .URLHead {
+        height: auto;
+        padding: 6px 0;
+    }
+
+    .AttractBlock .URLHead .dots span {
+        height: 8px;
+        width: 8px;
+    }
+
+    .AttractBlock .URLHead .Dem-URL {
+        font-size: 0.65rem;
+        padding: 3px 6px;
+    }
+
+    .AttractBlock .Container {
+        padding: 4% 4%;
+        gap: 8px;
+    }
+
+    .AttractBlock .Container .AttractProfile {
+        padding: 8px 5%;
+        gap: 12px;
+    }
+
+    .AttractBlock .Container .AttractProfile img {
+        height: 38px;
+        width: 38px;
+    }
+
+    .AttractBlock .Container .AttractProfile div {
+        font-size: 1rem;
+    }
+
+    .AttractBlock .Container .AttractProfile div p:nth-child(1) {
+        font-size: 1rem;
+    }
+
+    .AttractBlock .Container .AttractProfile div p:nth-child(2) {
+        font-size: 0.85rem;
+    }
+
+    .AttractBlock .Container .AttractSkill span {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+
+    .AttractBlock .Container .AttractProject div {
+        font-size: 0.65rem;
+        padding: 4px;
+    }
 }
