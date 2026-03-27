@@ -1,5 +1,6 @@
 import '../pagesStyles/landingPage.css'
 import logo from '../assets/Logo.png'
+import ProfileImg from '../assets/profileImg.png'
 
 function LandingPage() {
   return (
@@ -71,38 +72,140 @@ function LandingPage() {
               <div className='AttractSec'>
                 <div className='AttractBlock'>
                   <div className="float">
-                    <p>✔ Published</p>
+                  <p>✔ Published</p>
+                </div>
+                <div className='URLHead'>
+                  <div className='dots'>
+                    <span></span><span></span><span></span>
                   </div>
-                  <div className='URLHead'>
-                    <div className='dots'>
-                      <span></span><span></span><span></span>
-                    </div>
-                    <div className='Dem-URL'>
-                      <p>https://portfoliobuilder.app/MubashirAhmad</p>
+                  <div className='Dem-URL'>
+                    <p>https://portfoliobuilder.app/MubashirAhmad</p>
+                  </div>
+                </div>
+                <div className='Container'>
+                  <div className="AttractProfile">
+                    <img src={ProfileImg} alt="" />
+                    <div>
+                      <p>Mubashir Ahmad</p>
+                      <p>MERN-Stack Developer</p>
                     </div>
                   </div>
-                  <div className='Container'>
-                    <div className="AttractProfile">
-                      <img src="" alt="img" />
+                  <div className="AttractSkill">
+                    <span>React.js</span>
+                    <span>Node.js</span>
+                    <span>JavaScript</span>
+                  </div>
+                  <div className="AttractProject">
+                    <div>Wheather Web-App</div>
+                    <div>E-Com Web-App</div>
+                    <div>DashBoard</div>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </section>
+
+
+            <section id="About">
+              <div className="heading">
+                <h2>✦ About the Platform</h2>
+              </div>
+
+              <div className="container">
+                <div className='Left'>
+                  <div className="HeadTag">
+                    <h3>What is <br/><em>Portfolio Builder?</em></h3>
+                  </div>
+                  <div className="Para">
+                    <p>Portfolio Builder is a web platform that empowers students, developers, and professionals to create polished, shareable portfolio websites — without writing a single line of code.</p>
+                  </div>
+                  <div className="cards">
+                    <div className='card card1'>
+                      <span>🎨</span>
                       <div>
-                        <p>Mubashir Ahmad</p>
-                        <p>MERN-Stack Developer</p>
+                        <h5>Pick a Template</h5>
+                        <p>Choose from 12+ professionally designed templates suited to every style.</p>
                       </div>
                     </div>
-                    <div className="AttractSkill">
-                      <span>React.js</span>
-                      <span>Node.js</span>
-                      <span>JavaScript</span>
+                    <div className='card card2'>
+                      <span>✍️</span>
+                      <div>
+                        <h5>Fill Your Details</h5>
+                        <p>Add projects, skills, experience, and links through a guided form flow.</p>
+                      </div>
                     </div>
-                    <div className="AttractProject">
-                      <div>Wheather Web-App</div>
-                      <div>E-Com Web-App</div>
-                      <div>DashBoard</div>
+                    <div className='card card3'>
+                      <span>🚀</span>
+                      <div>
+                        <h5>Build & Share</h5>
+                        <p>Get a live portfolio link instantly. Share it in applications, LinkedIn, or anywhere.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className='Right'>
+                  <div className="parentCard">
+                    <div className='cont-1'> 
+                      <span>12+</span>
+                      <p>Beautiful templates for every role and industry</p>
+                    </div>
+                    <div  className='cont-2'>
+                      <div>
+                        <span>80%</span>
+                        <p>No coding needed</p>
+                      </div>
+                      <div>
+                        <span>Free</span>
+                        <p>Free trail limited features</p>
+                      </div>
+                    </div>
+                    <div  className='cont-3'>
+                      <span>4 min</span>
+                      <p>Average time to Build</p>
                     </div>
                   </div>
                 </div>
               </div>
             </section>
+
+            <section id="WAW">
+              <div className="heading">
+                <h2>✦ Who & Why</h2>
+              </div>
+
+              <div className="title">
+                <p>Built <em>for you,</em><br/>If you're one of these.</p>
+              </div>
+
+              <div className="container">
+                <div className="card card_1">
+                  <span>🎓</span>
+                  <h6>Students</h6>
+                  <p>Just graduated or still studying? Stand out from the crowd with a portfolio that shows your projects and potential before you even have work experience.</p>
+                </div>
+                <div className="card card_2">
+                  <span>💼</span>
+                  <h6>Freshers & Job Seekers</h6>
+                  <p>Recruiters Google you. Make what they find count. A polished portfolio link on your resume or LinkedIn drastically improves callback rates.</p>
+                </div>
+                <div className="card card_3">
+                  <span>🎨</span>
+                  <h6>Creators & Freelancers</h6>
+                  <p>Designers, writers, photographers, developers — if your work deserves to be seen, you need a place to put it. Portfolio Builder makes it instant.</p>
+                </div>
+              </div>
+            </section>
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
 

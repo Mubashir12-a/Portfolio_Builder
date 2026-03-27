@@ -10,6 +10,7 @@
 
 header {
     background-color: var(--header-bg);
+    backdrop-filter: blur(5px);
     margin: auto;
     transition: background var(--transition);
     padding: 0 28px;
@@ -19,6 +20,9 @@ header {
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid var(--violet);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 header .logoContainer {
@@ -123,16 +127,21 @@ header .Buttons #toggle {
 
 nav {
     background: var(--header-bg);
+    backdrop-filter: blur(5px);
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    position: sticky;
+    top: 70px;
+    z-index: 100;
+    padding: 10px 0;
 }
 
 nav button {
     font-family: 'Orbitron', sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
-    height: 30px;
+    height: 50px;
     margin: 5px 10px;
     flex-grow: 1;
     flex-basis: 200;
@@ -140,10 +149,16 @@ nav button {
     cursor: pointer;
     background: var(--head-Btn);
     border: none;
-    border-bottom: 3px solid var(--violet);
-    border-left: 3px solid var(--violet);
+    border: 1px solid var(--violet-dim);
     color: var(--text);
     padding: 0px 15px;
+    transition: var(--transition);
+}
+
+nav button:hover {
+    border: 1px solid var(--violet);
+    transition: var(--transition);
+
 }
 
 /*////////////////////////////////////////////////////*/
@@ -407,7 +422,7 @@ nav button {
 }
 
 .AttractBlock .Container .AttractProfile img {
-    background-color: red;
+    background-color: white;
     height: 50px;
     width: 50px;
     border-radius: 50%;
@@ -641,4 +656,477 @@ nav button {
         font-size: 0.65rem;
         padding: 4px;
     }
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+
+#About {
+    background-color: var(--bg);
+    height: 650px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#About .heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+#About .heading h2 {
+    background: #7a5ef843;
+    border: 1px solid #7B5EF8;
+    color: #7B5EF8;
+    padding: 3px 5px;
+    margin-left: 5%;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+}
+
+#About .container {
+    display: flex;
+    width: 100%;
+    height: 85%;
+    padding-left: 5%;
+    padding-right: 5%;
+    gap: 30px;
+}
+
+#About .container .Left {
+    /* background-color: green; */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-right: 1%;
+}
+
+#About .container .Left .HeadTag {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 3rem;
+    color: var(--text);
+}
+
+#About .container .Left .HeadTag em {
+    color: #7B5EF8;
+}
+
+#About .container .Left .Para {
+    color: var(--text-2);
+    font-size: 1.3rem;
+    font-family: "Syne", sans-serif;
+}
+
+#About .container .Left .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+#About .container .Left .cards div {
+    background-color: var(--surface2);
+    box-shadow: 2px 2px 3px var(--surface3);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+#About .container .Left .cards .card1:hover {
+    border: 1px solid var(--violet);
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+#About .container .Left .cards .card2:hover {
+    border: 1px solid var(--coral);
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+#About .container .Left .cards .card3:hover {
+    border: 1px solid var(--mint);
+    transform: translateY(-10px);
+    transition: var(--transition);
+}
+
+#About .container .Left .cards div span {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 1%;
+}
+
+#About .container .Left .cards div:nth-child(1) span {
+    background: var(--violet-dim);
+    border: 1px solid var(--violet);
+}
+#About .container .Left .cards div:nth-child(2) span {
+    background: var(--coral-dim);
+    border: 1px solid var(--coral);
+}
+#About .container .Left .cards div:nth-child(3) span {
+    background: var(--mint-dim);
+    border: 1px solid var(--mint);
+}
+
+#About .container .Left .cards div div {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: none;
+}
+
+#About .container .Left .cards div div h5 {
+    font-size: 1.5rem;
+    font-family: "Zen Dots", sans-serif;
+    font-weight: 500;
+    color: var(--text);
+}
+
+#About .container .Left .cards div div p {
+    font-size: 1rem;
+    font-family: "Dosis", sans-serif;
+    color: var(--text-2);
+}
+
+#About .container .Right {
+    flex: 1;
+}
+
+#About .container .Right .parentCard {
+    height: 80%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+#About .container .Right .parentCard .cont-1 {
+    background-color: var(--surface2);
+    flex: 1;
+    border-radius: 10px;
+    padding-left: 2%;
+    align-content: center;
+    box-shadow: 0px 0px 5px var(--violet);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-1:hover {
+    transform: translate(5px, -5px);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-1 span {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 2.5rem;
+    color: var(--violet);
+}
+
+#About .container .Right .parentCard .cont-1 p {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-2);
+}
+
+#About .container .Right .parentCard .cont-2 {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+}
+
+#About .container .Right .parentCard .cont-2 div:nth-child(1),
+#About .container .Right .parentCard .cont-2 div:nth-child(2) {
+    background-color: var(--surface2);
+    flex: 1;
+    border-radius: 10px;
+    padding-left: 2%;
+    align-content: center;
+    box-shadow: 0px 0px 5px var(--coral);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-2 div:nth-child(1):hover,
+#About .container .Right .parentCard .cont-2 div:nth-child(2):hover {
+    transform: translate(5px, -5px);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-2 div:nth-child(1) span,
+#About .container .Right .parentCard .cont-2 div:nth-child(2) span {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 2.5rem;
+    color: var(--coral);
+}
+
+#About .container .Right .parentCard .cont-2 div:nth-child(1) p,
+#About .container .Right .parentCard .cont-2 div:nth-child(2) p {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-2);
+}
+
+#About .container .Right .parentCard .cont-3 {
+    background-color: var(--surface2);
+    flex: 1;
+    width: calc(50% - 10px);
+    border-radius: 10px;
+    padding-left: 5%;
+    align-content: center;
+    box-shadow: 0px 0px 5px var(--mint);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-3:hover {
+    transform: translate(5px, -5px);
+    transition: var(--transition);
+}
+
+#About .container .Right .parentCard .cont-3 span {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 2.5rem;
+    color: var(--mint);
+}
+
+#About .container .Right .parentCard .cont-3 p {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-2);
+}
+
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/* MOBILE */
+
+@media (max-width: 768px) {
+    #About {
+        height: auto;
+        padding-bottom: 40px;
+    }
+
+    #About .heading {
+        height: auto;
+        padding: 15px 0;
+    }
+
+    #About .container {
+        flex-direction: column;
+        height: auto;
+        padding-left: 5%;
+        padding-right: 5%;
+        gap: 30px;
+    }
+
+    #About .container .Left {
+        padding-right: 0;
+    }
+
+    #About .container .Left .HeadTag {
+        font-size: 2rem;
+    }
+
+    #About .container .Left .Para {
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+
+    #About .container .Left .cards {
+        gap: 14px;
+        margin-top: 20px;
+    }
+
+    #About .container .Left .cards div div h5 {
+        font-size: 1.1rem;
+    }
+
+    #About .container .Left .cards div div p {
+        font-size: 0.9rem;
+    }
+
+    #About .container .Left .cards div div {
+        padding: 12px;
+    }
+
+    #About .container .Left .cards div span {
+        font-size: 1.2rem;
+    }
+
+    #About .container .Right {
+        width: 100%;
+    }
+
+    #About .container .Right .parentCard {
+        height: auto;
+        gap: 14px;
+    }
+
+    #About .container .Right .parentCard .cont-1 {
+        padding: 16px 5%;
+        min-height: 90px;
+    }
+
+    #About .container .Right .parentCard .cont-1 span,
+    #About .container .Right .parentCard .cont-2 div:nth-child(1) span,
+    #About .container .Right .parentCard .cont-2 div:nth-child(2) span,
+    #About .container .Right .parentCard .cont-3 span {
+        font-size: 1.8rem;
+    }
+
+    #About .container .Right .parentCard .cont-1 p,
+    #About .container .Right .parentCard .cont-2 div:nth-child(1) p,
+    #About .container .Right .parentCard .cont-2 div:nth-child(2) p,
+    #About .container .Right .parentCard .cont-3 p {
+        font-size: 0.9rem;
+    }
+
+    #About .container .Right .parentCard .cont-2 {
+        gap: 14px;
+    }
+
+    #About .container .Right .parentCard .cont-2 div:nth-child(1),
+    #About .container .Right .parentCard .cont-2 div:nth-child(2) {
+        padding: 16px 5%;
+        min-height: 90px;
+    }
+
+    #About .container .Right .parentCard .cont-3 {
+        width: 100%;
+        padding: 16px 5%;
+        min-height: 90px;
+    }
+}
+
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+
+#WAW {
+    background-color: var(--bg);
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 5% 2% 5%;
+}
+
+#WAW .heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+    flex: 1;
+}
+
+#WAW .heading h2 {
+    background: #7a5ef843;
+    border: 1px solid #7B5EF8;
+    color: #7B5EF8;
+    padding: 3px 5px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+}
+
+#WAW .title {
+    flex: 2;
+}
+
+#WAW .title p {
+    font-size: 3rem;
+    font-family: "Zen Dots", sans-serif;
+    color: var(--text);
+}
+
+#WAW .title p em {
+    font-family: "Dosis", sans-serif;
+    color: var(--violet);
+}
+
+#WAW .container {
+    width: 100%;    
+    flex: 3;
+    display: flex;
+    gap: 20px;
+}
+
+#WAW .container .card {
+    background-color: var(--surface2);
+    border-radius: 10px;
+    padding: 0 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    transition: var(--transition);
+}
+
+#WAW .container .card span {
+    font-size: 3rem;
+}
+
+#WAW .container .card h6 {
+    font-size: 1.5rem;
+    font-family: "Zen Dots", sans-serif;
+    color: var(--text);
+}
+
+#WAW .container .card p {
+    font-family: "Dosis", sans-serif;
+    color: var(--text-2);
+}
+
+#WAW .container .card_1 {
+    border-top: 3px solid var(--violet);
+}
+#WAW .container .card_2 {
+    border-top: 3px solid var(--mint);
+}
+#WAW .container .card_3 {
+    border-top: 3px solid var(--coral);
+}
+
+#WAW .container .card:hover {
+    transform: translateY(-5px);
+    transition: var(--transition);
+}
+
+#WAW .container .card_1:hover {
+    box-shadow: 0 0 5px var(--violet);
+}
+#WAW .container .card_2:hover {
+    box-shadow: 0 0 5px var(--mint);
+}
+#WAW .container .card_3:hover {
+    box-shadow: 0 0 5px var(--coral);
 }
