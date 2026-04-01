@@ -1314,7 +1314,7 @@ nav button:hover {
 
 #credits {
     background-color: var(--bg);
-    height: 750px;
+    height: 900px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -1349,6 +1349,7 @@ nav button:hover {
 }
 
 #credits .title p em {
+    font-size: 4rem;
     font-family: "Dosis", sans-serif;
     color: var(--violet);
     font-weight: bold;
@@ -1362,6 +1363,7 @@ nav button:hover {
 #credits .DevCards {
     display: flex;
     gap: 50px;
+    margin-top: 50px;
 }
 
 #credits .DevCards .card {
@@ -1371,12 +1373,13 @@ nav button:hover {
     border: 1px solid var(--surface3);
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     gap: 20px;
     padding: 50px 0;
     cursor: default;
     transition: var(--transition);
+    height: 550px;
     overflow: hidden;
 }
 
@@ -1390,11 +1393,6 @@ nav button:hover {
     background: radial-gradient(circle,var(--mint-dim) 50%, transparent 70%);
     opacity: 0.8;
     z-index: 1;
-    transition: var(--transition);
-}
-
-#credits .DevCards .card:hover {
-    transform: translateY(-15px);
     transition: var(--transition);
 }
 
@@ -1412,6 +1410,7 @@ nav button:hover {
     justify-content: center;
     align-items: center;
     z-index: 2;
+    transition: var(--transition);
 }
 
 #credits .DevCards .card .profilePic::after {
@@ -1462,6 +1461,27 @@ nav button:hover {
     z-index: 1;
 }
 
+#credits .DevCards .card .profilePic span {
+    position: absolute;
+    background: linear-gradient(to bottom, transparent, black);
+    /* backdrop-filter: blur(2px); */
+    height: 200%;
+    width: 200%;
+    left: -50%;
+    top: -50%;
+    z-index: 2;
+    opacity: 0;
+}
+
+#credits .DevCards .card:hover .profilePic span {
+    opacity: 1;
+}
+
+#credits .DevCards .card:hover .profilePic {
+    transform: scale(4) translateY(50%);
+    transition: var(--transition);
+}
+
 #credits .DevCards .card .name {
     font-family: "Zen Dots", sans-serif;
     letter-spacing: 2px;
@@ -1469,6 +1489,16 @@ nav button:hover {
     font-size: 1.8rem;
     text-transform: uppercase;
     z-index: 2;
+    transition: var(--transition);
+}
+
+#credits .DevCards .card:hover .name {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 5px 10px;
+    border: 1px solid var(--border2);
+    transform: translateY(-150px);
+    transition: var(--transition);
 }
 
 #credits .DevCards .card .role {
@@ -1480,6 +1510,16 @@ nav button:hover {
     align-items: center;
     font-family: "Syne", sans-serif;
     color: var(--mint);
+    z-index: 2;
+    transition: var(--transition);
+}
+
+#credits .DevCards .card:hover .role {
+    transform: translateY(-170px);
+    background-color: var(--violet);
+    border-color: var(--surface3);
+    color: var(--surface3);
+    transition: var(--transition);
 }
 
 #credits .DevCards .card .discrip {
@@ -1487,6 +1527,11 @@ nav button:hover {
     font-size: 1.2rem;
     text-align: center;
     font-family: "Dosis", sans-serif;
+    z-index: 2;
+}
+
+#credits .DevCards .card:hover .discrip {
+    opacity: 0;
 }
 
 #credits .DevCards .card .skills {
@@ -1494,6 +1539,11 @@ nav button:hover {
     justify-content: space-evenly;
     align-items: center;
     width: 100%;
+    z-index: 2;
+}
+
+#credits .DevCards .card:hover .skills {
+    opacity: 0;
 }
 
 #credits .DevCards .card .skills span {
@@ -1504,6 +1554,66 @@ nav button:hover {
     color: var(--violet);
     border: 1px solid var(--violet);
     border-radius: 10px;
+}
+
+#credits .DevCards .card button {
+    position: relative;
+    background: var(--violet-dim);
+    width: 90%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    font-family: "Zen Dots", sans-serif;
+    font-size: 1.5rem;
+    color: var(--text);
+    border: 1px solid var(--violet);
+    cursor: pointer;
+    transition: var(--transition);
+    letter-spacing: 2px;
+    z-index: 2;
+    overflow: hidden;
+}
+
+#credits .DevCards .card:hover button {
+    color: white;
+}
+
+#credits .DevCards .card button::after {
+    content: "";
+    position: absolute;
+    left: -150%;
+    top: -100%;
+    height: 200%;
+    width: 150%;
+    background-color: var(--violet-dim);
+    transform: rotate(-10deg);
+    border: 3px solid var(--coral);
+    transition: var(--transition);
+    opacity: 0;
+}
+#credits .DevCards .card button::before {
+    content: "";
+    position: absolute;
+    right: -150%;
+    bottom: -100%;
+    height: 200%;
+    width: 150%;
+    background-color: var(--violet-dim);
+    transform: rotate(-10deg);
+    border: 3px solid var(--coral);
+    transition: var(--transition);
+    opacity: 0;
+}
+
+#credits .DevCards .card button:hover::before{
+    right: -10%;
+    opacity: 1;
+    transition: var(--transition);
+}
+#credits .DevCards .card button:hover::after {
+    left: -10%;
+    opacity: 1;
+    transition: var(--transition);
 }
 
 /*////////////////////////////////////////////////////*/
@@ -1583,3 +1693,52 @@ nav button:hover {
 /*////////////////////////////////////////////////////*/
 /*////////////////////////////////////////////////////*/
 /*////////////////////////////////////////////////////*/
+
+
+#GetInTouch {
+    background-color: var(--bg);
+    height: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0 5% 2% 5%;
+}
+
+#GetInTouch .heading {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 10%;
+}
+
+#GetInTouch .heading h2 {
+    background: #7a5ef843;
+    border: 1px solid #7B5EF8;
+    color: #7B5EF8;
+    padding: 3px 5px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-family: "Orbitron", sans-serif;
+    letter-spacing: 2px;
+    word-spacing: 5px;
+}
+
+#GetInTouch .title p {
+    font-size: 3rem;
+    font-family: "Zen Dots", sans-serif;
+    color: var(--text);
+}
+
+#GetInTouch .title p em {
+    font-size: 4rem;
+    font-family: "Dosis", sans-serif;
+    color: var(--violet);
+    font-weight: bold;
+}
+
+#GetInTouch .title p:nth-child(2) {
+    font-size: 1.5rem;
+    font-family: "Dosis", sans-serif;
+}

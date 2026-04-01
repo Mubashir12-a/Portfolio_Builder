@@ -2,6 +2,9 @@ import '../pagesStyles/landingPage.css'
 import logo from '../assets/Logo.png'
 import ProfileImg from '../assets/profileImg.png'
 import MubashirImg from '../assets/MubashirProPic.jpeg'
+import HammadImg from '../assets/HammadProPic.jpeg'
+import AbrarImg from '../assets/AbrarProPic.jpeg'
+
 
 function LandingPage() {
   return (
@@ -249,6 +252,7 @@ function LandingPage() {
                 <div className="card">
                     <div className="profilePic">
                       <img src={MubashirImg} alt="" />
+                      <span></span>
                     </div>
                     <h2 className='name'>Mubashir</h2>
                     <div className="role">Lead Developer</div>
@@ -258,10 +262,14 @@ function LandingPage() {
                       <span>TypeScript</span>
                       <span>SQL</span>
                     </div>
+                    <button>
+                      <span>View</span>
+                    </button>
                 </div>
                 <div className="card">
                     <div className="profilePic">
-                      <img src={ProfileImg} alt="" />
+                      <img src={AbrarImg} alt="" />
+                      <span></span>
                     </div>
                     <h2 className='name'>Abrar</h2>
                     <div className="role">DataBase</div>
@@ -271,10 +279,14 @@ function LandingPage() {
                       <span>TypeScript</span>
                       <span>SQL</span>
                     </div>
+                    <button>
+                      <span>View</span>
+                    </button>
                 </div>
                 <div className="card">
                     <div className="profilePic">
-                      <img src={ProfileImg} alt="" />
+                      <img src={HammadImg} alt="" />
+                      <span></span>
                     </div>
                     <h2 className='name'>Hammad</h2>
                     <div className="role">DataBase</div>
@@ -284,11 +296,31 @@ function LandingPage() {
                       <span>TypeScript</span>
                       <span>SQL</span>
                     </div>
+                    <button>
+                      <span>View</span>
+                    </button>
                 </div>
               </div>
             </section>
 
 
+
+            <section id="GetInTouch">
+              <div className="heading">
+                <h2>✦ Get In Touch</h2>
+              </div>
+
+              <div className="title">
+                <p>Contact &<em> Feedback.</em></p>
+                <p>Have a question, bug report, or just want to say hello? Switch between contact and feedback below.</p>
+              </div>
+
+              <div className="ToggleContainer">
+                <button>📬 Contact Us</button>
+                <button>💭 Feedback</button>
+              </div>
+
+            </section>
 
 
 
