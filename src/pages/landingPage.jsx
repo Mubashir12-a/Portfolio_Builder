@@ -1,6 +1,7 @@
 import '../pagesStyles/landingPage.css'
 import logo from '../assets/Logo.png'
 import ProfileImg from '../assets/profileImg.png'
+import MubashirImg from '../assets/MubashirProPic.jpeg'
 
 function LandingPage() {
   return (
@@ -168,6 +169,7 @@ function LandingPage() {
               </div>
             </section>
 
+
             <section id="WAW">
               <div className="heading">
                 <h2>✦ Who & Why</h2>
@@ -194,10 +196,97 @@ function LandingPage() {
                   <p>Designers, writers, photographers, developers — if your work deserves to be seen, you need a place to put it. Portfolio Builder makes it instant.</p>
                 </div>
               </div>
+
+              <div className="title title_2">
+                <p>Why <em>Portfolio Builder?</em></p>
+                <p>Because you should spend your time doing great work, not fighting with HTML.</p>
+              </div>
+
+              <div className="tags">
+                <div className="tagcard">
+                  <div>⚡</div>
+                  <div>
+                    <h4>Lightning Fast Setup</h4>
+                    <p>Go from zero to published portfolio in under 5 minutes.</p>
+                  </div>
+                </div>
+                <div className="tagcard">
+                  <div>🎨</div>
+                  <div>
+                    <h4>Style Customization</h4>
+                    <p>Adjust colors, fonts, and layouts through a visual editor — no CSS needed.</p>
+                  </div>
+                </div>
+                <div className="tagcard">
+                  <div>📱</div>
+                  <div>
+                    <h4>Fully Responsive</h4>
+                    <p>Every template looks perfect on mobile, tablet, and desktop.</p>
+                  </div>
+                </div>
+                <div className="tagcard">
+                  <div>📦</div>
+                  <div>
+                    <h4>Export Your Code</h4>
+                    <p>Download clean HTML + CSS to host anywhere.</p>
+                  </div>
+                </div>
+              </div>
             </section>
 
 
+            <section id="credits">
+              <div className="heading">
+                <h2>✦ CREDITS</h2>
+              </div>
 
+              <div className="title">
+                <p>The team behind<br/><em>the builder.</em></p>
+                <p>Three developers, one shared mission — make online portfolios accessible to everyone.</p>
+              </div>
+
+              <div className="DevCards">
+                <div className="card">
+                    <div className="profilePic">
+                      <img src={MubashirImg} alt="" />
+                    </div>
+                    <h2 className='name'>Mubashir</h2>
+                    <div className="role">Lead Developer</div>
+                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="skills">
+                      <span>React.js</span>
+                      <span>TypeScript</span>
+                      <span>SQL</span>
+                    </div>
+                </div>
+                <div className="card">
+                    <div className="profilePic">
+                      <img src={ProfileImg} alt="" />
+                    </div>
+                    <h2 className='name'>Abrar</h2>
+                    <div className="role">DataBase</div>
+                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="skills">
+                      <span>React.js</span>
+                      <span>TypeScript</span>
+                      <span>SQL</span>
+                    </div>
+                </div>
+                <div className="card">
+                    <div className="profilePic">
+                      <img src={ProfileImg} alt="" />
+                    </div>
+                    <h2 className='name'>Hammad</h2>
+                    <div className="role">DataBase</div>
+                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="skills">
+                      <span>React.js</span>
+                      <span>TypeScript</span>
+                      <span>SQL</span>
+                    </div>
+                </div>
+              </div>
+            </section>
 
 
 
