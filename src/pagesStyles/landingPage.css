@@ -108,6 +108,7 @@ header .Buttons #toggle {
         height: auto;
         gap: 10px;
         padding: 12px;
+        position: static;
     }
 
     header .logoContainer {
@@ -159,6 +160,25 @@ nav button:hover {
     border: 1px solid var(--violet);
     transition: var(--transition);
 
+}
+
+
+
+@media (max-width: 768px) {
+    nav {
+        top: 0px;
+        padding: 8px 0;
+        gap: 6px;
+    }
+
+    nav button {
+        height: 20px;
+        font-size: 0.5rem;
+        letter-spacing: 0.5px;
+        margin: 3px 6px;
+        flex-basis: 80px;
+        padding: 0 10px;
+    }
 }
 
 /*////////////////////////////////////////////////////*/
@@ -1405,7 +1425,7 @@ nav button:hover {
     width: 100%;
     transform: rotate(-45deg);
     border-radius: 10px;
-    animation: rotateFrameImg 20s linear infinite;
+    animation: rotateFrameImg 10s linear infinite;
 }
 
 #credits .DevCards .card .profilePic::before {
