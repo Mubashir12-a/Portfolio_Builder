@@ -316,8 +316,74 @@ function LandingPage() {
               </div>
 
               <div className="ToggleContainer">
-                <button>📬 Contact Us</button>
-                <button>💭 Feedback</button>
+                <button className='contact' autoFocus><span>📧</span> <span>Contact Us</span></button>
+                <button className='feedback'><span>💭</span> <span>Feedback</span></button>
+              </div>
+
+              <div className="container">
+                <form action="/">
+                  <div className="name">
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" name="name" id="" />
+                  </div>
+                  <div className="mail">
+                    <label htmlFor="mail">Email:</label>
+                    <input type="email" name="mail" id="" />
+                  </div>
+                  <textarea name="" id=""></textarea>
+                  <div className="buttons">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                  </div>
+                </form>
+                <div className="refLinks">
+                  <a href="">
+                    <div></div>
+                    <div>
+                      <h6></h6>
+                      <p></p>
+                    </div>
+                  </a>
+                  <a href="">
+                    <div></div>
+                    <div>
+                      <h6></h6>
+                      <p></p>
+                    </div>
+                  </a>
+                  <a href="">
+                    <div></div>
+                    <div>
+                      <h6></h6>
+                      <p></p>
+                    </div>
+                  </a>
+                  <a href="">
+                    <div></div>
+                    <div>
+                      <h6></h6>
+                      <p></p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+
+            </section>
+
+
+
+            <section id="GetInTouch">
+              <div className="heading">
+                <h2>✦ Resources</h2>
+              </div>
+
+              <div className="title">
+                <p>Everything you need to<br/><em>get started.</em></p>
+                <p>Guides, templates, and tools to help you build the best portfolio possible.</p>
+              </div>
+
+              <div className="container">
+
               </div>
 
             </section>
@@ -328,14 +394,14 @@ function LandingPage() {
 
 
 
-        </div>
 
+        </div>
+        
     </>
   )
 }
 
 export default LandingPage;
-
 
 function toggleTheme() {
   const current = document.documentElement.getAttribute("data-theme");
