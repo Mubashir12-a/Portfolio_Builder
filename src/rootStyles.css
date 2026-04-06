@@ -27,8 +27,10 @@
     --text:          #F0EEF8;
     --text-2:        #9490B5;
     --text-3:        #4E4A70;
-    --header-bg:     rgba(10,10,18,.8);
-    --logo-glow:     0 0 32px rgba(123,94,248,.35);
+    --header-bg:     rgba(10,10,18,.9);
+    --logo-glow:     0 0 32px rgba(122, 94, 248, 0.434);
+
+    --head-Btn:        var(--violet-dim);
   }
 
 /* LIGHT MODE */
@@ -43,8 +45,10 @@
     --text:          #1A1728;
     --text-2:        #5A5680;
     --text-3:        #9490B5;
-    --header-bg:     rgba(245,243,255,.85);
+    --header-bg:     rgba(245,243,255,.95);
     --logo-glow:     0 0 28px rgba(123,94,248,.2);
+
+    --head-Btn:      var(--mint-dim);
   }
 
 *, *::before, *::after { 
@@ -55,4 +59,7 @@
 
 html { 
     scroll-behavior: smooth; 
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg);
 }
