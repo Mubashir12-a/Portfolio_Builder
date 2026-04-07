@@ -18,6 +18,7 @@
 /* DARK MODE */
 [data-theme="dark"] {
     --bg:            #0A0A12;
+    --bg-Dim:        #ffffff18;
     --bg2:           #0E0E1A;
     --surface:       #12121F;
     --surface2:      #1A1A2E;
@@ -36,6 +37,7 @@
 /* LIGHT MODE */
 [data-theme="light"] {
     --bg:            #F5F3FF;
+    --bg-Dim:        #00000018;
     --bg2:           #EEEbFF;
     --surface:       #FFFFFF;
     --surface2:      #F0EDFF;

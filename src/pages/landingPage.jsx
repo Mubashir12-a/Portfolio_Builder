@@ -4,7 +4,12 @@ import ProfileImg from '../assets/profileImg.png'
 import MubashirImg from '../assets/MubashirProPic.jpeg'
 import HammadImg from '../assets/HammadProPic.jpeg'
 import AbrarImg from '../assets/AbrarProPic.jpeg'
+import Bento from '../assets/Bento.png'
+import Github from '../assets/Github.png'
+import Insta from '../assets/Instagram.png'
+import LinkedIn from '../assets/LinkedIn.png'
 
+import {useState} from 'react';
 
 function LandingPage() {
   return (
@@ -24,13 +29,13 @@ function LandingPage() {
             </header>
 
             <nav>
-              <button>Home</button>
-              <button>About</button>
-              <button>Who & Why</button>
-              <button>Credits</button>
-              <button>Feedback</button>
-              <button>Contact</button>
-              <button>Resources</button>
+              <a href="#Home">Home</a>
+              <a href="#About">About</a>
+              <a href="#WAW">Who & Why</a>
+              <a href="#credits">Credits</a>
+              <a href="#GetInTouch">Feedback</a>
+              <a href="#GetInTouch">Contact</a>
+              <a href="#Resources">Resources</a>
             </nav>
 
             <section id='Home'>
@@ -321,58 +326,17 @@ function LandingPage() {
               </div>
 
               <div className="container">
-                <form action="/">
-                  <div className="name">
-                    <label htmlFor="name">Name:</label>
-                    <input type="text" name="name" id="" />
-                  </div>
-                  <div className="mail">
-                    <label htmlFor="mail">Email:</label>
-                    <input type="email" name="mail" id="" />
-                  </div>
-                  <textarea name="" id=""></textarea>
-                  <div className="buttons">
-                    <button type="submit">Submit</button>
-                    <button type="reset">Reset</button>
-                  </div>
-                </form>
-                <div className="refLinks">
-                  <a href="">
-                    <div></div>
-                    <div>
-                      <h6></h6>
-                      <p></p>
-                    </div>
-                  </a>
-                  <a href="">
-                    <div></div>
-                    <div>
-                      <h6></h6>
-                      <p></p>
-                    </div>
-                  </a>
-                  <a href="">
-                    <div></div>
-                    <div>
-                      <h6></h6>
-                      <p></p>
-                    </div>
-                  </a>
-                  <a href="">
-                    <div></div>
-                    <div>
-                      <h6></h6>
-                      <p></p>
-                    </div>
-                  </a>
-                </div>
+                <div className="effect"></div>
+
+                {/* <Contact/> */}
+                <Feedback/>
               </div>
 
             </section>
 
 
 
-            <section id="GetInTouch">
+            <section id="Resources">
               <div className="heading">
                 <h2>✦ Resources</h2>
               </div>
@@ -384,19 +348,133 @@ function LandingPage() {
 
               <div className="container">
 
-              </div>
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">📚</div>
+                    <h4>Getting Started Guide</h4>
+                    <p>Step-by-step walkthrough of creating your first portfolio from scratch.</p>
+                    <span>→</span>
+                  </div>
+                </div>
 
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">🎨</div>
+                    <h4>Template Gallery</h4>
+                    <p>Browse all 12+ templates, filter by role, and preview before picking.</p>
+                    <span>→</span>
+                  </div>
+                </div>
+
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">🎓</div>
+                    <h4>Portfolio Tips for Students</h4>
+                    <p>What to put in a student portfolio — even with zero work experience.</p>
+                    <span>→</span>
+                  </div>
+                </div>
+
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">💼</div>
+                    <h4>Recruiter Insights</h4>
+                    <p>What recruiters actually look for in a portfolio. Real advice, not fluff.</p>
+                    <span>→</span>
+                  </div>
+                </div>
+
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">🔧</div>
+                    <h4>Export & Hosting Guide</h4>
+                    <p>How to download your portfolio code and host it on GitHub Pages, Vercel, or Netlify.</p>
+                    <span>→</span>
+                  </div>
+                </div>
+
+                <div className='cardCont'>
+                  <div className="shade"></div>
+                  <div className='card'>
+                    <div className="icon">❓</div>
+                    <h4>FAQ</h4>
+                    <p>Answers to the most common questions about Portfolio Builder and how it works.</p>
+                    <span>→</span>
+                  </div>
+                </div>
+                
+                
+              </div>
             </section>
 
+            <footer>
+              <section className='footerTop'>
+                <div className="quickAbout">
+                  <div className="iconName">
+                    <img src={logo} alt="" />
+                    <h3>Portfolio<em>Builder</em></h3>
+                  </div>
+                  <p>Build your online presence in minutes. No code, no fuss — just a beautiful portfolio that opens doors.</p>
+                </div>
 
+                <div className="Products footercard">
+                  <h2>Product</h2>
 
+                  <ul>
+                    <li>Templates</li>
+                    <li>Style Editor</li>
+                    <li>Export Code</li>
+                    <li>Pricing</li>
+                  </ul>
+                </div>
 
+                <div className="Company footercard">
+                  <h2>Company</h2>
 
+                  <ul>
+                    <li>About</li>
+                    <li>Team</li>
+                    <li>Contact</li>
+                    <li>Blog</li>
+                  </ul>
+                </div>
 
+                <div className="Legal footercard">
+                  <h2>Legal</h2>
 
+                  <ul>
+                    <li>Privacy Policy</li>
+                    <li>Terms Of Use</li>
+                    <li>Cookie Policy</li>
+                  </ul>
+                </div>
+              </section>
 
-        </div>
-        
+              <section className='footerBottom'>
+                <p>© 2026 PortfolioBuilder. Developer Mubashir Ahmad.</p>
+                <div>
+                  <a href="http://">
+                    <img src={Bento} alt="" />
+                  </a>
+                  <a href="http://">
+                    <img src={Github} alt="" />
+                  </a>
+                  <a href="http://">
+                    <img src={Insta} alt="" />
+                  </a>
+                  <a href="http://">
+                    <img src={LinkedIn} alt="" />
+                  </a>
+                </div>
+              </section>
+            </footer>
+
+        </div>        
     </>
   )
 }
@@ -414,3 +492,130 @@ function toggleTheme() {
     document.getElementById('toggle').innerHTML = '🌙';
   }
 }
+
+
+
+function Contact(){
+  return (
+    <>
+      <form action="" id='Contact'>
+        <div className="name">
+          <label htmlFor="name" id='nameLabel'>Name:</label>
+          <input type="text" name="name" id="nameInput" />
+        </div>
+        <div className="mail">
+          <label htmlFor="mail" id='emailLabel'>Email:</label>
+          <input type="email" name="mail" id="emailInput" />
+        </div>
+        <textarea name="" id="textarea" placeholder='Message'></textarea>
+        <div className="buttons">
+          <button type="submit">Submit</button>
+          <button type="reset">Reset</button>
+        </div>
+      </form>
+
+      <div className="refLinks">
+        <a href="">
+          <div>📧</div>
+          <div>
+            <h6>Email</h6>
+            <p>ma2625645@gmail.com</p>
+          </div>
+        </a>
+        <a href="">
+          <div>📞</div>
+          <div>
+            <h6>Contact</h6>
+            <p>+91-7889825292 - +91-0000000000 - +91-0000000000</p>
+          </div>
+        </a>
+        <a href="">
+          <div>💬</div>
+          <div>
+            <h6>Twitter</h6>
+            <p>@portfoliobuilderHQ</p>
+          </div>
+        </a>
+        <a href="">
+          <div>🔗</div>
+          <div>
+            <h6>LinkedIn</h6>
+            <p>https://linked.in/PortfolioBuilderHQ</p>
+          </div>
+        </a>
+        <a href="">
+          <div>📍</div>
+          <div>
+            <h6>Based In</h6>
+            <p>Kashmir</p>
+          </div>
+        </a>
+      </div>
+    </>
+  )
+}
+
+
+
+function Feedback() {
+  const [cardActive, setCardActive] = useState(null);
+
+  return (
+    <>
+    
+      <section id='Feedback'>
+        <p>Your feedback shapes Portfolio Builder. Tell us what you think — we read every submission.</p>
+        
+        <div className="FeedbackType">
+          <div className={`FeedCard ${cardActive === 0 ? "active" : ""}`}
+            onClick={
+              () => {
+                setCardActive(0);
+              }
+            }>
+            <span>🚀</span>
+            <h3>Feature Request</h3>
+          </div>
+          <div className={`FeedCard ${cardActive === 1 ? "active" : ""}`}
+            onClick={
+              () => {
+                setCardActive(1);
+              }
+            }>
+            <span>🪲</span>
+            <h3>Bug Report</h3>
+          </div>
+          <div className={`FeedCard ${cardActive === 2 ? "active" : ""}`}
+            onClick={
+              () => {
+                setCardActive(2);
+              }
+            }>
+            <span>💡</span>
+            <h3>Suggestion</h3>
+          </div>
+          <div className={`FeedCard ${cardActive === 3 ? "active" : ""}`}
+            onClick={
+              () => {
+                setCardActive(3);
+              }
+            }>
+            <span>💖</span>
+            <h3>General Love</h3>
+          </div>
+        </div>
+
+        <p>Your Feedback</p>
+
+        <textarea name="feedback" id="feedbackBox" placeholder='Share your thoughts - Every word matters...'></textarea>
+
+        <div className="submitFeed">
+          <button>Submit Feedback →</button>
+          <p>Anonymous submissions welcome</p>
+        </div>
+      </section>
+    
+    </>
+  )
+}
+
