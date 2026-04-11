@@ -1,21 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&family=Dosis:wght@200..800&family=Orbitron:wght@400..900&family=Quicksand:wght@300..700&family=Space+Grotesk:wght@300..700&family=Syne:wght@400..800&&family=Zen+Dots&display=swap');
-
 .PageLayout {
     background-color: var(--bg);
     position: relative;
     z-index: 1;
     width: 100%;
     max-width: 1700px;
-    overflow-x: hidden;
+    margin: 0 auto;
 }
 
 header {
     background-color: var(--header-bg);
     backdrop-filter: blur(5px);
-    margin: auto;
+    margin: 0;
     transition: background var(--transition);
     padding: 0 28px;
-    height: 70px;
+    height: 50px;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -34,8 +32,7 @@ header .logoContainer {
 }
 
 header .logoContainer img {
-    height: 80%;
-    filter: drop-shadow(0 0 5px var(--violet));
+    height: 100%;
 }
 
 header .logoName {
@@ -57,39 +54,7 @@ header .Buttons {
     align-items: flex-end; 
     align-items: center;
     gap: 10px;
-    height: 50%;
-}
-
-header .Buttons button {
-    background-color: var(--bg1);
-    border-radius: 5px;
-    gap: 5px;
-    color: white;
-    height: 100%;
-    font-size: 1rem;
-    padding: 2px 10px;
-    cursor: pointer;
-    font-family: 'syne','Courier New', Courier, monospace;
-}
-
-header .Buttons button img {
-    height: 100%;
-}
-
-header .Buttons #LoginBtn {
-    background-color: var(--amber-dim); 
-    border: 1px solid var(--violet);
-    color: var(--violet);
-}
-
-header .Buttons #SubscripBtn {
-    border: 1px solid var(--mint);
-    color: var(--mint);
-    
-}
-
-header .Buttons #toggle {
-    border: 1px solid var(--violet);
+    height: 80%;
 }
 
 
@@ -134,19 +99,18 @@ nav {
     display: flex;
     flex-wrap: wrap;
     position: sticky;
-    top: 70px;
+    top: 50px;
     z-index: 100;
-    padding: 10px 0;
 }
 
 nav a {
     font-family: 'Orbitron', sans-serif;
     font-weight: bold;
     letter-spacing: 1px;
-    height: 50px;
+    height: 30px;
     margin: 5px 10px;
     flex-grow: 1;
-    flex-basis: 200;
+    flex-basis: 200px;
     border-radius: 5px;
     cursor: pointer;
     text-align: center;
@@ -163,10 +127,17 @@ nav a {
 nav a:hover {
     border: 1px solid var(--violet);
     transition: var(--transition);
-
 }
 
-
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*////////////////////////////////////////////////////*/
+/*MOBILE*/
 
 @media (max-width: 768px) {
     nav {
@@ -1781,6 +1752,8 @@ nav a:hover {
 
 #GetInTouch .ToggleContainer button:focus {
     transform: scale(0.9);
+    color: var(--violet);
+    border: 1px solid var(--violet);
     transition: var(--transition);
 }
 
@@ -1819,8 +1792,8 @@ nav a:hover {
     width: 300px;
     background: radial-gradient(circle, var(--sky-dim) 40%, transparent 80%);
     border-radius: 50%;
-    top: -5%;
-    right: -10%;
+    top: -10%;
+    right: -2%;
     border: 1px solid var(--sky);
     animation: moveEffect 5s linear infinite;
     z-index: -1;
@@ -2606,7 +2579,8 @@ footer .footerBottom div {
 }
 
 footer .footerBottom div a {
-    background: var(--mint);
+    background: var(--text-2);
+    border: 1px solid black;
     border-radius: 5px;
     display: block;
     height: 100%;
