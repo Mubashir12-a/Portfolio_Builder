@@ -36,7 +36,7 @@ export default function LandingPage() {
 function BtnsSet(){
     return (
         <>
-            <Btn_Primary title={"Login"} to={"/"}/>
+            <Btn_Primary title={"Login"} to={"/auth"}/>
             <Btn_Secondry title={"Subscription"} to={"/subscription"}/>
         </>
     )

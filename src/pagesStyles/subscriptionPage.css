@@ -22,6 +22,7 @@
     bottom: 0;
     right: 0;
     height: 100px;
+    z-index: 100;
 }
 
 #caption img:nth-child(3) {
@@ -29,6 +30,7 @@
     top: 50px;
     left: 0;
     height: 100px;
+    z-index: 100;
 }
 
 #caption .tag {
@@ -234,6 +236,18 @@
     font-size: 1rem;
     font-family: "Syne", sans-serif;
     color: var(--text);
+}
+
+#planCards div .DynaPrice h3 .RupeeIcon{
+    font-size: 3rem;
+}
+
+#planCards div .DynaPrice h3 .original{
+    color: var(--text-3);
+    font-size: 1.5rem;
+    text-decoration: line-through;
+    text-decoration-color: var(--text-2);
+    font-family: "Zen Dots", sans-serif;
 }
 
 #planCards div .DynaPrice h3 em {
@@ -458,10 +472,6 @@
     border: 1px solid var(--border);
 }
 
-#tableCompare table tr:hover {
-    background: var(--surface2);
-}
-
 #tableCompare table tr:nth-child(1):hover {
     background: var(--surface);
 } 
@@ -478,4 +488,158 @@
 
 #tableCompare table tr td:nth-child(4) {
     background: var(--surface2);
+}
+
+
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////*/
+/*MOBILE*/
+
+@media (max-width: 768px) {
+
+    /*Caption / Hero*/
+    #caption .shade {
+        height: 150px;
+        width: 150px;
+        box-shadow: 0px 0px 100px 150px var(--violet-dim);
+    }
+
+    #caption img:nth-child(2),
+    #caption img:nth-child(3) {
+        height: 60px;
+    }
+
+    #caption .tag {
+        width: 90%;
+        padding: 60px 0;
+        gap: 20px;
+    }
+
+    #caption .tag h1 {
+        font-size: 2rem;
+        line-height: 110%;
+    }
+
+    #caption .billingTab {
+        width: 100%;
+        padding: 0 5%;
+    }
+
+    #caption .billingTab .tabs {
+        width: 100%;
+    }
+
+    #caption .billingTab .tabs button {
+        font-size: 0.65rem;
+        height: 36px;
+    }
+
+    #caption .billingTab .tabs button span {
+        display: none;
+    }
+
+    /*Plan Cards*/
+    #cardContainer {
+        flex-direction: column;
+        width: 90%;
+        margin: 40px auto;
+        gap: 16px;
+    }
+
+    #planCards div h2 {
+        font-size: 1.4rem;
+    }
+
+    #planCards div button {
+        font-size: 1.1rem;
+    }
+
+    /*Feature Tabs*/
+    #tabs {
+        width: 95%;
+    }
+
+    #tabs .tab {
+        height: auto;
+        flex-direction: column;
+        padding: 20px;
+        gap: 14px;
+        text-align: center;
+    }
+
+    #tabs .tab:nth-child(odd),
+    #tabs .tab:nth-child(even) {
+        transform: translateX(0);
+    }
+
+    #tabs .tab p {
+        font-size: 1.4rem;
+        padding: 0 10px;
+    }
+
+    #tabs .tab img {
+        height: 100px;
+        width: auto;
+        margin: 0;
+    }
+
+    /* Hide the decorative gradient bar */
+    #tabs .tab div {
+        display: none;
+    }
+
+    /*Guarantee*/
+    #gurantee {
+        padding: 30px 5%;
+    }
+
+    #gurantee div {
+        width: 100%;
+        gap: 14px;
+    }
+
+    #gurantee div span {
+        font-size: 3rem;
+    }
+
+    #gurantee div h3 {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    #gurantee div p {
+        font-size: 0.9rem;
+    }
+
+    /*Comparison Table*/
+    #tableCompare {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding: 0 5%;
+    }
+
+    #tableCompare h1 {
+        font-size: 1.3rem;
+        text-align: center;
+    }
+
+    #tableCompare table {
+        width: 100%;
+        margin-top: 24px;
+    }
+
+    #tableCompare table th {
+        font-size: 0.75rem;
+        padding: 8px 4px;
+    }
+
+    #tableCompare table td {
+        font-size: 0.65rem;
+        padding: 8px 4px;
+    }
 }
