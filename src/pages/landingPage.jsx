@@ -1,44 +1,43 @@
-import '../pagesStyles/landingPage.css'
-import logo from '../assets/Logo.png'
 
-function LandingPage() {
+import '../pagesStyles/landingPage.css'
+
+import Header from '../components/LandingPageComponents/header.jsx';
+import Navbar from '../components/LandingPageComponents/navbar.jsx';
+import Home from '../components/LandingPageComponents/home.jsx';
+import About from '../components/LandingPageComponents/about.jsx';
+import WAW from '../components/LandingPageComponents/whowhy.jsx';
+import Credits from '../components/LandingPageComponents/credits.jsx';
+import GetInTouch from '../components/LandingPageComponents/getInTouch.jsx';
+import Resources from '../components/LandingPageComponents/resources.jsx';
+import Footer from '../components/LandingPageComponents/footer.jsx';
+
+import Btn_Primary from '../components/GeneralComponents/buttonPrimary.jsx';
+import Btn_Secondry from '../components/GeneralComponents/buttonSecondry.jsx';
+
+export default function LandingPage() {
+
   return (
     <>
-      
         <div className="PageLayout">
-            <header>
-                <div className="logoContainer">
-                    <img src={logo} alt="logo" />
-                    <span className="logoName">Portfolio<em>Builder</em></span>
-                </div>
-
-                <div className="Buttons">
-                    <button>Login</button>
-                    <button>Signup</button>
-                    <button>Subscription 👑</button>
-                    <button onClick={toggleTheme} id='toggle'>☀️</button>
-                </div>
-            </header>
-
-
-
-        </div>
-
+            <Header comp={BtnsSet}/>
+            <Navbar/>
+            <Home/>
+            <About/>
+            <WAW/>
+            <Credits/>
+            <GetInTouch/>
+            <Resources/>
+            <Footer/>
+        </div>        
     </>
   )
 }
 
-export default LandingPage;
-
-
-function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme");
-
-  if (current === "light") {
-    document.documentElement.setAttribute("data-theme", "dark");
-    document.getElementById('toggle').innerHTML = '☀️';
-  } else {
-    document.documentElement.setAttribute("data-theme", "light");
-    document.getElementById('toggle').innerHTML = '🌙';
-  }
+function BtnsSet(){
+    return (
+        <>
+            <Btn_Primary title={"Login"} to={"/auth"}/>
+            <Btn_Secondry title={"Subscription"} to={"/subscription"}/>
+        </>
+    )
 }

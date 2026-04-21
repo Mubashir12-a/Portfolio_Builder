@@ -1,0 +1,16 @@
+#auth {
+    background-color: red;
+    display: flex;
+    gap: 10px;
+    height: 750px;
+}
+
+#auth .container_1 {
+    background-color: yellow;
+    flex: 1;
+}
+
+#auth .container_2 {
+    background-color: cyan;
+    flex: 1;
+}

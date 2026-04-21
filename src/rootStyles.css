@@ -18,6 +18,7 @@
 /* DARK MODE */
 [data-theme="dark"] {
     --bg:            #0A0A12;
+    --bg-Dim:        #ffffff18;
     --bg2:           #0E0E1A;
     --surface:       #12121F;
     --surface2:      #1A1A2E;
@@ -27,13 +28,16 @@
     --text:          #F0EEF8;
     --text-2:        #9490B5;
     --text-3:        #4E4A70;
-    --header-bg:     rgba(10,10,18,.8);
-    --logo-glow:     0 0 32px rgba(123,94,248,.35);
+    --header-bg:     rgba(10,10,18,.9);
+    --logo-glow:     0 0 32px rgba(122, 94, 248, 0.434);
+
+    --head-Btn:        var(--violet-dim);
   }
 
 /* LIGHT MODE */
 [data-theme="light"] {
     --bg:            #F5F3FF;
+    --bg-Dim:        #00000018;
     --bg2:           #EEEbFF;
     --surface:       #FFFFFF;
     --surface2:      #F0EDFF;
@@ -43,8 +47,10 @@
     --text:          #1A1728;
     --text-2:        #5A5680;
     --text-3:        #9490B5;
-    --header-bg:     rgba(245,243,255,.85);
+    --header-bg:     rgba(245,243,255,.95);
     --logo-glow:     0 0 28px rgba(123,94,248,.2);
+
+    --head-Btn:      var(--mint-dim);
   }
 
 *, *::before, *::after { 
@@ -55,4 +61,6 @@
 
 html { 
     scroll-behavior: smooth; 
+    background-color: var(--bg);
 }
+
