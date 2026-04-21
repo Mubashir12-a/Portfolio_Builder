@@ -12,8 +12,8 @@ export default function Btn_Primary({title, to}){
                     border-radius: 5px;
                     gap: 5px;
                     height: 80%;
-                    font-size: 1rem;
-                    padding: 2px 10px;
+                    font-size: 1.2rem;
+                    padding: 2px 8px;
                     cursor: pointer;
                     font-family: 'syne','Courier New', Courier, monospace;
                 }

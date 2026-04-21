@@ -1,16 +1,289 @@
+/*  ||||||||  ||||||||  ||||   ||  ||||||||||    ||||      |||||||||||  ||||    ||  |||||||||  ||||||   */
+/*  ||        ||    ||  || ||  ||      ||       ||  ||         ||       || ||   ||  ||         ||   ||  */
+/*  ||        ||    ||  ||  || ||      ||      ||    ||        ||       ||  ||  ||  ||||||     ||||||   */
+/*  ||        ||    ||  ||   ||||      ||     ||||||||||       ||       ||   || ||  ||         ||  ||   */
+/*  ||||||||  ||||||||  ||    |||      ||    ||        ||  |||||||||||  ||    ||||  |||||||||  ||   ||  */
+/*______________________________________________________________________________________________________*/
+
 #auth {
-    background-color: red;
     display: flex;
     gap: 10px;
-    height: 750px;
+    height: 90vh;
 }
 
-#auth .container_1 {
-    background-color: yellow;
+/*  ||||||||      ||||     |||||||   ||||||||||  |||||||||||   ||||||||   ||||    ||  */
+/*  ||           ||  ||    ||    ||      ||          ||       ||      ||  || ||   ||  */
+/*  ||          ||    ||   |||||||       ||          ||       ||      ||  ||  ||  ||  */
+/*  ||         ||||||||||  ||            ||          ||       ||      ||  ||   || ||  */
+/*  ||||||||  ||        || ||            ||      |||||||||||   ||||||||   ||    ||||  */
+/*____________________________________________________________________________________*/
+
+.parent {
     flex: 1;
+    padding: 50px 40px;
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
 }
 
-#auth .container_2 {
+.parent .tag {
+    width: 200px;
+    height: 30px;
+    background: var(--violet-dim);
+    border: 1px solid var(--violet);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.parent .tag span {
+    height: 10px;
+    width: 10px;
+    background: radial-gradient(circle, var(--violet) 50%, var(--violet-dim) 80%);
+    animation: animate 1s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        transform: scale(.8);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(.8);
+    }
+}
+
+.parent .tag p {
+    color: var(--violet);
+    font-family: "Orbitron", sans-serif;
+    font-size: 0.8rem;
+}
+
+.parent h1 {
+    line-height: 1;
+    font-size: 2.5rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+}
+
+.parent h1 em {
+    color: #a78bfa;
+    font-family: "syne", sans-serif;
+}
+
+.parent .para {
+    color: var(--text-2);
+    padding-top: 20px;
+    font-size: 1rem;
+    font-family: "syne", sans-serif;
+}
+
+.parent .tabs {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.parent .tab {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 18px;
+    border-radius: 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.parent .tab:hover {
+    background: rgba(255, 255, 255, 0.06);
+    transition: var(--transition);
+}
+
+.parent .tab span {
+    font-size: 1.5rem;
+    border-radius: 10px;
+    padding: 3px 5px;
+    border: 1px solid;
+}
+
+.parent .tab1 span {
+    background: var(--mint-dim);
+    border-color: var(--mint);
+}
+.parent .tab2 span {
+    background: var(--coral-dim);
+    border-color: var(--coral);
+}
+.parent .tab3 span {
+    background: var(--amber-dim);
+    border-color: var(--amber);
+}
+
+.parent .tab h4 {
+    font-size: 1.2rem;
+    color: var(--text);
+    font-family: "Orbitron", sans-serif;
+}
+
+.parent .tab p {
+    margin: 4px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    font-family: "syne", sans-serif;
+}
+
+.parent .MajorTab {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    border-radius: 20px;  
+    background: var(--bg2);
+    border: 1px solid var(--border);
+}
+
+.parent .MajorTab div:first-child {
+    display: flex;
+}
+
+.parent .MajorTab div:first-child span:nth-child(1) {
+    background: var(--amber-dim);
+    color: var(--amber);
+    border-color: var(--amber);
+    z-index: 0;
+}
+.parent .MajorTab div:first-child span:nth-child(2) {
+    background: var(--mint-dim);
+    color: var(--mint);
+    border-color: var(--mint);
+    z-index: 0;
+}
+.parent .MajorTab div:first-child span:nth-child(3) {
+    background: var(--coral-dim);
+    color: var(--coral);
+    border-color: var(--coral);
+    z-index: 0;
+}
+.parent .MajorTab div:first-child span:nth-child(4) {
+    background: var(--violet-dim);
+    color: var(--violet);
+    border-color: var(--violet);
+    z-index: 0;
+}
+
+.parent .MajorTab span {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -8px;
+    font-size: 1rem;
+    border: 1px solid var(--border2);
+    backdrop-filter: blur(5px);
+}
+
+.parent .MajorTab h3 {
+    font-size: 1.5rem;
+    color: var(--text);
+    font-family: "Orbitron", sans-serif;
+}
+
+.parent .MajorTab p {
+    margin: 2px 0 0;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    font-family: "syne", sans-serif;
+}
+
+/*  ||        /|||||||\  /|||||||   /||||||||\  /|||    ||  */
+/*  ||        ||     ||  ||             ||      || ||   ||  */
+/*  ||        ||     ||  ||   \\\       ||      ||  ||  ||  */
+/*  ||        ||     ||  ||     ||      ||      ||   || ||  */
+/*  ||||||||  \|||||||/  \||||||||  \||||||||/  ||    |||/  */
+/*__________________________________________________________*/
+
+
+#LogSigncontainer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#LogSigncontainer .switchTab {
+    background-color: var(--bg2);
+    border: 2px solid var(--border);
+    height: 50px;
+    width: 500px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 12px;
+    gap: 10px;
+    padding: 0 5px;
+}
+
+#LogSigncontainer .switchTab button {
+    background: var(--bg2);
+    height: 80%;
+    border: 1px solid transparent;
+    flex: 1;
+    border-radius: 10px;
+    color: var(--text);
+    font-family: "Orbitron", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: var(--transition);
+    cursor: pointer;
+}   
+
+#LogSigncontainer .switchTab .activeBtn {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+#LogSigncontainer .show {
     background-color: cyan;
-    flex: 1;
+    height: auto;
+    width: 500px;
+}
+
+#LogSigncontainer #GetLoginInfo {
+    background-color: blue;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
+}
+
+#GetLoginInfo .heading {
+    background-color: red;
 }
