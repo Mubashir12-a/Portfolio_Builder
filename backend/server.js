@@ -20,17 +20,28 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 app.post("/send-otp", async (req, res) => {
   const { email } = req.body;
 
-  const otp = generateOTP();
-  otpStore[email] = otp;
+  const otp = Math.floor(100000 + Math.random() * 900000);
 
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "Your OTP Code",
-    html: `<h1>Your OTP is ${otp}</h1>`,
-  });
+  try {
+    const response = await resend.emails.send({
+      from: "Portfolio Builder <onboarding@resend.dev>",
+      to: email,
+      subject: "Your OTP Code",
+      html: `<h1>Your OTP is ${otp}</h1>`,
+    });
 
-  res.json({ message: "OTP sent" });
+    console.log("EMAIL RESPONSE:", response);
+
+    return res.json({ message: "OTP sent" });
+
+  } catch (error) {
+    console.error("EMAIL ERROR:", error);
+
+    return res.status(500).json({
+      message: "Email failed",
+      error: error.message
+    });
+  }
 });
 
 // verify OTP
