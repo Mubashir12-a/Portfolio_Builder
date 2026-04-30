@@ -110,7 +110,7 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
         setUserEmail(email);
 
         try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -214,7 +214,7 @@ function GetLoginOTP({ holdCont, userEmail }){
         }
       
         try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
