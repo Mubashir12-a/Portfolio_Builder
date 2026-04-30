@@ -13,11 +13,14 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
 
 // mail setup
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  family: 4, 
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
-  }
+  },
 });
 
 // send OTP
