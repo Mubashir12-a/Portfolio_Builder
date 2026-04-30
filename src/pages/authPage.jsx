@@ -5,6 +5,9 @@ import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
 import { useState } from 'react';
 import { useEffect } from "react";
 
+
+console.log("P01");
+
 function AuthPage(){
     return (
         <>
