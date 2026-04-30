@@ -3,7 +3,11 @@ const cors = require("cors");
 const { Resend } = require("resend");
 
 const app = express();
-app.use(cors());
+
+app.use(cors({
+  origin: "https://pb.portfoliobuilder153.workers.dev"
+}));
+
 app.use(express.json());
 
 let otpStore = {};
