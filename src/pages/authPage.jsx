@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 
 console.log("P01");
+console.log("P02");
 
 function AuthPage(){
     return (
@@ -83,6 +84,8 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  
     const handleLogin = async () => {
+        console.log("LOGIN CLICKED");
+
         if (!email) {
             setErrorMsg("Email is required");
             return;
@@ -111,6 +114,8 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
         setErrorMsg("");
 
         setUserEmail(email);
+
+        console.log("Calling API...");
 
         try {
             const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
