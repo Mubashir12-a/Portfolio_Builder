@@ -85,60 +85,43 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  
     const handleLogin = async () => {
-        console.log("LOGIN CLICKED");
+    console.log("LOGIN CLICKED");
 
-        if (!email) {
-            setErrorMsg("Email is required");
-            return;
-        }  
-        
-        if  (!emailRegex.test(email)) {
-            setErrorMsg("Invalid email format");
-            return;
-        }  
-        
-        if  (!password) {
-            setErrorMsg("Password is required");
-            return;
-        }  
-        
-        if  (password.length < 8) {
-            setErrorMsg("Password must be at least 8 characters");
-            return;
-        }  
-        
-        if  (!termsAccepted) {
-            setErrorMsg("Accept Terms & Conditions");
-            return;
-        }  
-        
-        setErrorMsg("");
+    if (!email) return setErrorMsg("Email is required");
+    if (!emailRegex.test(email)) return setErrorMsg("Invalid email format");
+    if (!password) return setErrorMsg("Password is required");
+    if (password.length < 8) return setErrorMsg("Password must be at least 8 characters");
+    if (!termsAccepted) return setErrorMsg("Accept Terms & Conditions");
 
-        setUserEmail(email);
+    setErrorMsg("");
+    setUserEmail(email);
 
-        console.log("Calling API...");
+    console.log("Calling API...");
 
-        try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ email }),
-            });
-      
-            const data = await res.json();
-      
-            if (data.message === "OTP sent") {
-                holdCont("OTPVerify");
-            } else {
-                setErrorMsg("Failed to send OTP");
-            }
-        } catch (err) {
-            setErrorMsg("Server error. Try again.");
+    try {
+        const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email }),
+            cache: "no-store" // 🔥 important
+        });
+
+        const data = await res.json();
+        console.log("SEND OTP RESPONSE:", data);
+
+        if (data.message === "OTP sent") {
+            holdCont("OTPVerify");
+        } else {
+            setErrorMsg("Failed to send OTP");
         }
-    };
 
+    } catch (err) {
+        console.error(err);
+        setErrorMsg("Server error. Try again.");
+    }
+    };
 
 
     return (
@@ -215,37 +198,43 @@ function GetLoginOTP({ holdCont, userEmail }){
     };
 
     const handleVerify = async () => {
-        const finalOTP = otp.join("");
+    const finalOTP = otp.join("");
 
-        if (finalOTP.length < 6) {
-            setError("Enter full OTP");
-            return;
-        }
-      
-        try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
+    if (finalOTP.length < 6) {
+        setError("Enter full OTP");
+        return;
+    }
+
+    console.log("VERIFYING OTP:", finalOTP);
+
+    try {
+        const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
                 email: userEmail,
                 otp: finalOTP,
-                }),
-            });
-        
-            const data = await res.json();
-        
-            if (data.success) {
-                setOtp(["", "", "", "", "", ""]);
-                holdCont("LogInDone");
-            } else {
-                setError("Invalid or expired OTP");
-            }
-        } catch (err) {
-            setError("Server error. Try again.");
+            }),
+            cache: "no-store" // 🔥 important
+        });
+
+        const data = await res.json();
+        console.log("VERIFY RESPONSE:", data);
+
+        if (data.success) {
+            setOtp(["", "", "", "", "", ""]);
+            holdCont("LogInDone");
+        } else {
+            setError("Invalid or expired OTP");
         }
-    };
+
+    } catch (err) {
+        console.error(err);
+        setError("Server error. Try again.");
+    }
+};
 
     return (
         <>
