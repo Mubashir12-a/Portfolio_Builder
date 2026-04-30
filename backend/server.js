@@ -1,27 +1,16 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
 const cors = require("cors");
+const { Resend } = require("resend");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-let otpStore = {}; // temporary storage
+let otpStore = {};
 
-// generate OTP
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
 
-// mail setup
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true, 
-  family: 4,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // send OTP
 app.post("/send-otp", async (req, res) => {
@@ -30,11 +19,11 @@ app.post("/send-otp", async (req, res) => {
   const otp = generateOTP();
   otpStore[email] = otp;
 
-  await transporter.sendMail({
-    from: "portfoliobuilder153@gmail.com",
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
     to: email,
     subject: "Your OTP Code",
-    text: `Your OTP is ${otp}`,
+    html: `<h1>Your OTP is ${otp}</h1>`,
   });
 
   res.json({ message: "OTP sent" });
@@ -52,8 +41,5 @@ app.post("/verify-otp", (req, res) => {
   res.json({ success: false });
 });
 
-// app.listen(5000, () => console.log("Server running on 5000"));
-
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => console.log("Server running on", PORT));
