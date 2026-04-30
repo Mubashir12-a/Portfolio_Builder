@@ -8,6 +8,7 @@ import { useEffect } from "react";
 
 console.log("P01");
 console.log("P02");
+console.log("P03");
 
 function AuthPage(){
     return (
@@ -118,7 +119,7 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
         console.log("Calling API...");
 
         try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
+            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
