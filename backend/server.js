@@ -12,15 +12,22 @@ app.use(express.json());
 
 let otpStore = {};
 
-const generateOTP = () => Math.floor(100000 + Math.random() * 900000);
-
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// send OTP
+// ================= SEND OTP =================
 app.post("/send-otp", async (req, res) => {
   const { email } = req.body;
 
   const otp = Math.floor(100000 + Math.random() * 900000);
+
+  // 🔥 STORE OTP (you forgot this earlier)
+  otpStore[email] = {
+    otp,
+    expires: Date.now() + 5 * 60 * 1000 // 5 minutes
+  };
+
+  console.log("SENT OTP:", otp);
+  console.log("STORE AFTER SAVE:", otpStore);
 
   try {
     const response = await resend.emails.send({
@@ -44,16 +51,32 @@ app.post("/send-otp", async (req, res) => {
   }
 });
 
-// verify OTP
+// ================= VERIFY OTP =================
 app.post("/verify-otp", (req, res) => {
   const { email, otp } = req.body;
 
-  if (otpStore[email] == otp) {
+  const record = otpStore[email];
+
+  console.log("RECEIVED OTP:", otp);
+  console.log("STORED RECORD:", record);
+  console.log("FULL STORE:", otpStore);
+
+  if (!record) {
+    return res.json({ success: false });
+  }
+
+  // expiry check
+  if (Date.now() > record.expires) {
+    delete otpStore[email];
+    return res.json({ success: false });
+  }
+
+  if (record.otp == otp) {
     delete otpStore[email];
     return res.json({ success: true });
   }
 
-  res.json({ success: false });
+  return res.json({ success: false });
 });
 
 const PORT = process.env.PORT || 5000;
