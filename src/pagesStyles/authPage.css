@@ -9,6 +9,7 @@
     display: flex;
     gap: 10px;
     height: 90vh;
+    overflow: hidden;
 }
 
 /*  ||||||||      ||||     |||||||   ||||||||||  |||||||||||   ||||||||   ||||    ||  */
@@ -19,10 +20,23 @@
 /*____________________________________________________________________________________*/
 
 .parent {
-    flex: 1;
+    position: relative;
+    flex: 2;
     padding: 50px 40px;
     background: var(--bg);
     font-family: 'Poppins', sans-serif;
+}
+
+.parent::after {
+    content: "";
+    position: absolute;
+    height: 50%;
+    width: 50%;
+    top: -15%;
+    left: -15%;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--violet-dim) 40%, transparent 80%);
+    z-index: 1;
 }
 
 .parent .tag {
@@ -213,7 +227,7 @@
 
 
 #LogSigncontainer {
-    flex: 1;
+    flex: 3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,39 +265,561 @@
 #LogSigncontainer .switchTab .activeBtn {
     background-color: var(--surface);
     border: 1px solid var(--border);
+    color: var(--violet);
     transition: var(--transition);
 }
 
 #LogSigncontainer .show {
-    background-color: cyan;
+    /* background-color: cyan; */
     height: auto;
     width: 500px;
 }
 
 #LogSigncontainer #GetLoginInfo {
-    background-color: blue;
+    background-color: var(--bg2);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 0 20px;
 }
 
-#GetLoginInfo .heading {
-    background-color: red;
-}
+
+
+
+
+
 
 #GetLoginInfo .heading {
-    background-color: red;
+    padding: 20px 0;
 }
 
-#GetLoginInfo .heading {
-    background-color: red;
+#GetLoginInfo .heading h3 {
+    font-size: 3rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
 }
 
-#GetLoginInfo .heading {
-    background-color: red;
+#GetLoginInfo .heading h3 em {
+    font-family: "syne", sans-serif;
+    color: var(--violet);
 }
 
-#GetLoginInfo .heading {
-    background-color: red;
+#GetLoginInfo .heading p {
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    font-size: 1rem;
 }
 
-#GetLoginInfo .heading {
-    background-color: red;
+#GetLoginInfo .getpass {
+    position: relative;
+}
+
+#GetLoginInfo .getpass .forgotPass {
+    all: initial;
+    position: absolute;
+    font-family: "syne", sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    right: 0;
+    transition: var(--transition);
+    bottom: -10%;
+    cursor: pointer;
+}
+
+#GetLoginInfo .getpass .forgotPass:hover,
+#GetLoginInfo .getpass .forgotPass:active {
+    color: var(--violet);
+    transition: var(--transition);
+}
+
+#GetLoginInfo .getmail,
+#GetLoginInfo .getpass {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 5px;
+}
+
+#GetLoginInfo .getmail label,
+#GetLoginInfo .getpass label {
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    color: var(--text-2);
+    padding-left: 5px;
+}
+
+#GetLoginInfo .getmail input:focus,
+#GetLoginInfo .getpass input:focus {
+    outline: 1px solid var(--violet);
+}
+
+#GetLoginInfo .getmail input,
+#GetLoginInfo .getpass input {
+    font-family: "syne", sans-serif;
+    font-size: 1.3rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--text-2);
+    outline: none;
+}
+
+#GetLoginInfo .terms {
+    font-family: "syne", sans-serif;
+    display: flex;
+    align-content: center;
+    gap: 5px;
+    color: var(--text-2);
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--violet);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--violet);
+  border-color: var(--violet);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+}
+
+#GetLoginInfo .terms a {
+    color: var(--mint);
+}
+
+#GetLoginInfo button {
+    font-family: "Zen Dots", sans-serif;
+    background-color: var(--surface2);
+    color: var(--violet);
+    height: 50px;
+    width: 80%;
+    font-size: 1.5rem;
+    margin: 20px 10%;
+    border-radius: 10px;
+    border: 2px solid var(--violet);
+    box-shadow: var(--logo-glow);
+    transition: var(--transition);
+}
+
+#GetLoginInfo button:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+#GetLoginInfo .signup {
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    color: var(--text-2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+#GetLoginInfo .signup button {
+    all: initial;
+    color: var(--violet);
+    text-decoration: underline;
+    font-family: "Zen Dots", sans-serif;
+    margin-bottom: 10px;
+}
+
+/*Alert box*/
+
+.AlertBox {
+    background-color: var(--coral-dim);
+    border-radius: 10px;
+    border: 1px solid var(--coral);
+    height: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.AlertBox span {
+    font-size: 1.2rem;
+    align-self: center;
+}
+
+.AlertBox p {
+    font-size: 1rem;
+    align-self: center;
+    color: var(--coral);
+}
+
+/*  \\        // ||||||||  |||||||  ||||||||  ||||||||  \\    //              /|||||||\   /||||||||||\  |||||||\     */
+/*   \\      //  ||        ||    ||    ||     ||         \\  //               ||     ||        ||       ||     ||    */
+/*    \\    //   ||||||    |||||||     ||     ||||||      \\//     ||||||||   ||     ||        ||       |||||||/     */
+/*     \\  //    ||        ||  \\      ||     ||           ||                 ||     ||        ||       ||           */
+/*      \\//     ||||||||  ||   \\  ||||||||  ||           ||                 \|||||||/        ||       ||           */
+/*___________________________________________________________________________________________________________________*/    
+
+#getLoginOTP {
+    background-color: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+}
+
+#getLoginOTP .headLines {
+    display: flex;
+    gap: 10px;
+}
+
+#getLoginOTP .line {
+    height: 5px;
+    flex: 1;
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+#getLoginOTP .line:nth-child(1) {
+    background: linear-gradient(to left, var(--violet), violet);
+}
+#getLoginOTP .line:nth-child(2) {
+    background: linear-gradient(to right, var(--violet), violet);
+}
+
+#getLoginOTP .getOTPtext {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 0.6rem;
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+#getLoginOTP .getOTPtext span {
+    background: var(--violet-dim);
+    border: 1px solid var(--violet);
+    border-radius: 50%;
+    font-size: 0.5rem;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#getLoginOTP h3 {
+    font-size: 2rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+}
+
+#getLoginOTP h3 em {
+    font-family: "syne", sans-serif;
+    color: var(--violet);
+}
+
+#getLoginOTP .captn {
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    font-size: 1rem;
+}
+
+#getLoginOTP .refMail {
+    align-self: flex-start;
+    border: 1px solid var(--violet);
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    background: var(--violet-dim);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 8px;
+    margin: 10px 0;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+#getLoginOTP .refMail p {
+    font-size: 0.8rem;
+}
+
+#getLoginOTP .EnterOTP {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+#getLoginOTP .EnterOTP input {
+    width: 50px;
+    height: 60px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    text-align: center;
+    font-size: 2rem;
+    background: var(--surface2);
+    color: var(--violet);
+    outline: none;
+}
+
+#getLoginOTP .EnterOTP input:focus {
+    border-color: var(--violet);
+    box-shadow: var(--logo-glow);
+    transform: scale(1.1);
+    transition: var(--transition);
+}
+
+#getLoginOTP .resendCode {
+    text-align: center;
+    color: var(--text-2);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.8rem;
+    font-family: "syne", sans-serif;
+}
+
+#getLoginOTP .resendCode button {
+    all: initial;
+    color: var(--violet);
+    align-self: center;
+    text-decoration: underline;
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#getLoginOTP .Ver_LogIn {
+    width: 100%;
+    align-self: center;
+    height: 40px;
+    background-color: var(--violet);
+    color: white;
+    font-size: 1.5rem;
+    font-family: "Zen Dots", sans-serif;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#getLoginOTP .Ver_LogIn:hover, 
+#getLoginOTP .Ver_LogIn:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+#getLoginOTP .Ver_LogIn:active {
+    box-shadow: var(--logo-glow);
+}
+
+#getLoginOTP .back {
+    width: 100%;
+    align-self: center;
+    height: 40px;
+    background: transparent;
+    color: var(--text-2);
+    font-size: 1.5rem;
+    font-family: "Zen Dots", sans-serif;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    margin: 0 0 10px 0;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+#getLoginOTP .back:hover {
+    background: var(--coral-dim);
+    border-color: var(--coral);
+    color: var(--coral);
+}
+
+#getLoginOTP .back:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+
+/*LogInDone*/
+
+#LogInDone {
+    background-color: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    align-items: center;
+    gap: 10px;
+}
+
+#LogInDone span {
+    background: var(--mint-dim);
+    border: 1px solid var(--mint);
+    border-radius: 50%;
+    font-size: 3rem;
+    font-weight: bold;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--mint);
+}
+
+#LogInDone h3 {
+    font-size: 1.5rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+}
+
+#LogInDone h3 em {
+    font-family: "syne", sans-serif;
+    color: var(--mint);
+}
+
+#LogInDone p {
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    font-size: 0.8rem;
+}
+
+#LogInDone button {
+    width: 100%;
+    align-self: center;
+    height: 40px;
+    background-color: var(--violet);
+    color: white;
+    font-size: 1.5rem;
+    font-family: "Zen Dots", sans-serif;
+    border-radius: 10px;
+    border: none;
+    margin: 10px 0;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+#LogInDone button:hover, 
+#LogInDone button:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+#LogInDone button:active {
+    box-shadow: var(--logo-glow);
+}
+
+
+
+/*ForgotPass*/
+
+#ForgotPass {
+    background-color: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+    align-items: center;
+    gap: 10px;
+}
+
+#ForgotPass h3 {
+    font-size: 2rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+}
+
+#ForgotPass h3 em {
+    font-family: "syne", sans-serif;
+    color: var(--violet);
+}
+
+#ForgotPass p {
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    font-size: 1rem;
+}
+
+#ForgotPass .getmail {
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 5px;
+}
+
+#ForgotPass .getmail label {
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    color: var(--text-2);
+    padding-left: 5px;
+}
+
+#ForgotPass .getmail input {
+    font-family: "syne", sans-serif;
+    font-size: 1.3rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--text-2);
+    outline: none;
+}
+
+#ForgotPass .sendResetLink {
+    width: 100%;
+    align-self: center;
+    height: 40px;
+    background-color: var(--violet);
+    color: white;
+    font-size: 1.2rem;
+    font-family: "Zen Dots", sans-serif;
+    border-radius: 10px;
+    border: none;
+    margin: 20px 0 0 0;
+    cursor: pointer;
+    transition: var(--transition);
+} 
+
+#ForgotPass .sendResetLink:hover,
+#ForgotPass .sendResetLink:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+#ForgotPass .BackToLog {
+    width: 100%;
+    align-self: center;
+    height: 40px;
+    background: transparent;
+    color: var(--text-2);
+    font-size: 1.2rem;
+    font-family: "Zen Dots", sans-serif;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    margin: 0 0 10px 0;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+#ForgotPass .BackToLog:hover,
+#ForgotPass .BackToLog:active {
+    background: var(--coral-dim);
+    border-color: var(--coral);
+    color: var(--coral);
 }

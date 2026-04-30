@@ -87,6 +87,7 @@ function OriginalPlan(billingType) {
 function BtnsSet(){
     return (
         <>
+            <Btn_Primary title={"Home"} to={"/"}/>
             <Btn_Primary title={"Templates"}/>
             <Btn_Primary title={"Sign-up-free"} to={"/auth"}/>
         </>

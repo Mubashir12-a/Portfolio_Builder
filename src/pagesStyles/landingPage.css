@@ -2579,7 +2579,7 @@ footer .footerBottom div {
 }
 
 footer .footerBottom div a {
-    background: var(--text-2);
+    background: white;
     border: 1px solid black;
     border-radius: 5px;
     display: block;
