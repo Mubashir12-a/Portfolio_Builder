@@ -654,8 +654,10 @@ input[type="checkbox"]:checked::after {
 
 
 /*LogInDone*/
+/*SignUpDone*/
 
-#LogInDone {
+#LogInDone,
+#SignUpDone {
     background-color: var(--bg2);
     display: flex;
     flex-direction: column;
@@ -666,7 +668,8 @@ input[type="checkbox"]:checked::after {
     gap: 10px;
 }
 
-#LogInDone span {
+#LogInDone span,
+#SignUpDone span {
     background: var(--mint-dim);
     border: 1px solid var(--mint);
     border-radius: 50%;
@@ -680,24 +683,28 @@ input[type="checkbox"]:checked::after {
     color: var(--mint);
 }
 
-#LogInDone h3 {
+#LogInDone h3, 
+#SignUpDone h3 {
     font-size: 1.5rem;
     font-family: "Orbitron", sans-serif;
     color: var(--text);
 }
 
-#LogInDone h3 em {
+#LogInDone h3 em,
+#SignUpDone h3 em {
     font-family: "syne", sans-serif;
     color: var(--mint);
 }
 
-#LogInDone p {
+#LogInDone p,
+#SignUpDone p {
     font-family: "syne", sans-serif;
     color: var(--text-2);
     font-size: 0.8rem;
 }
 
-#LogInDone button {
+#LogInDone button,
+#SignUpDone button {
     width: 100%;
     align-self: center;
     height: 40px;
@@ -713,12 +720,15 @@ input[type="checkbox"]:checked::after {
 }
 
 #LogInDone button:hover, 
-#LogInDone button:active {
+#SignUpDone button:hover, 
+#LogInDone button:active,
+#SignUpDone button:active {
     transform: scale(0.95);
     transition: var(--transition);
 }
 
-#LogInDone button:active {
+#LogInDone button:active,
+#SignUpDone button:active {
     box-shadow: var(--logo-glow);
 }
 
@@ -823,3 +833,6 @@ input[type="checkbox"]:checked::after {
     border-color: var(--coral);
     color: var(--coral);
 }
+
+/*SignUp*/
+

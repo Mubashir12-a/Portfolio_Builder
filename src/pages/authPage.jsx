@@ -5,11 +5,6 @@ import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
 import { useState } from 'react';
 import { useEffect } from "react";
 
-
-console.log("P01");
-console.log("P02");
-console.log("P03");
-
 function AuthPage(){
     return (
         <>
@@ -41,7 +36,8 @@ function BtnsSet(){
 function LoginRSignupComp() {
     const [isActive, setIsActive] = useState("LogIn");
     const [HoldLogInCont, setHoldLogInCont] = useState("GetLoginInfo");
-    const [userEmail, setUserEmail] = useState("");
+    const [switchTab, setSwitchTab] = useState("")
+    const [userEmail, setUserEmail] = useState("LogInContainer");
 
 
     return (
@@ -50,20 +46,70 @@ function LoginRSignupComp() {
                 <div className="switchTab">
                     <button onClick={() => {
                         setIsActive("LogIn");
+                        setSwitchTab("LogInContainer");
+                        setHoldLogInCont('GetLoginInfo');
                     }} className={isActive === "LogIn" ? "activeBtn" : ''}>Log In</button>
 
                     <button onClick={() => {
                         setIsActive("SignUp");
+                        setSwitchTab("SignupContainer");
+                        setHoldLogInCont('OTPVerify');
                     }} className={`btn ${isActive === "SignUp" ? "activeBtn" : ''}`}>Sign Up</button>
                 </div>
 
                 <div className="show">
-                    {HoldLogInCont == 'GetLoginInfo' && <GetLoginInfo holdCont={setHoldLogInCont} setUserEmail={setUserEmail}/>}
-                    {HoldLogInCont == 'OTPVerify' && <GetLoginOTP holdCont={setHoldLogInCont} userEmail={userEmail}/>}
-                    {HoldLogInCont == 'LogInDone' && <LogInDone holdCont={setHoldLogInCont}/>}
-                    {HoldLogInCont == 'ForgotPass' && <ForgotPass holdCont={setHoldLogInCont}/>}
+                    {switchTab === 'LogInContainer' && <LogInContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} />}
+                    {switchTab === 'SignupContainer' && <SignupContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} />}
                 </div>
             </div>
+        </>
+    )
+}
+
+
+// LogIn Container:
+
+function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail }) {
+    return (
+        <>
+            {HoldLogInCont === 'GetLoginInfo' && (
+                <GetLoginInfo 
+                    holdCont={setHoldLogInCont} 
+                    setUserEmail={setUserEmail}
+                />
+            )}
+
+            {HoldLogInCont === 'OTPVerify' && (
+                <GetLoginOTP 
+                    holdCont={setHoldLogInCont} 
+                    userEmail={userEmail}
+                />
+            )}
+
+            {HoldLogInCont === 'LogInDone' && (
+                <LogInDone holdCont={setHoldLogInCont}/>
+            )}
+
+            {HoldLogInCont === 'ForgotPass' && (
+                <ForgotPass holdCont={setHoldLogInCont}/>
+            )}
+        </>
+    );
+}
+
+function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail}){
+    return (
+        <>
+            {HoldLogInCont === 'OTPVerify' && (
+                <GetLoginOTP 
+                    holdCont={setHoldLogInCont} 
+                    userEmail={userEmail}
+                />
+            )}
+
+            {HoldLogInCont === 'SignUpDone' && (
+                <LogInDone holdCont={setHoldLogInCont}/>
+            )}
         </>
     )
 }
@@ -352,7 +398,7 @@ function LogInDone({holdCont}){
                 <h3>You're in, <em> welcome back!</em></h3>
                 <p>Identity verified. Redirecting you to your dashboard in a moment...</p>
 
-                <button>Go To Dashboard →</button>
+                <button onClick={holdCont('')}>Go To Dashboard →</button>
             </div>
         </>
     )
@@ -369,6 +415,55 @@ function AlertBox({AlertMsg}){
     )
 }
 
+
+
+// SignUp components:
+
+function CreateAcc(){
+    return (
+        <>
+        
+        </>
+    )
+}
+
+function VerifyEmail(){
+    return (
+        <>
+        
+        </>
+    )
+}
+
+function UserType(){
+    retrun (
+        <>
+        
+        </>
+    )
+}
+
+function SignUpDone({holdCont}){
+    return (
+        <>
+            <div id="SignUpDone">
+                <span>✓</span>
+
+                <h3>Account Created Successfully, <em> welcome!</em></h3>
+                <p>Identity Stored. Redirecting you to your dashboard in a moment...</p>
+
+                <button onClick={holdCont('')}>Go To Dashboard →</button>
+            </div>
+        </>
+    )
+}
+
+
+
+
+
+
+// Caption:
 
 function Caption(){
     return (
