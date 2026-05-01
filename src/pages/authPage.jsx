@@ -5,6 +5,8 @@ import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
 import { useState } from 'react';
 import { useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 function AuthPage(){
     return (
         <>
@@ -36,8 +38,8 @@ function BtnsSet(){
 function LoginRSignupComp() {
     const [isActive, setIsActive] = useState("LogIn");
     const [HoldLogInCont, setHoldLogInCont] = useState("GetLoginInfo");
-    const [switchTab, setSwitchTab] = useState("")
-    const [userEmail, setUserEmail] = useState("LogInContainer");
+    const [switchTab, setSwitchTab] = useState("LogInContainer")
+    const [userEmail, setUserEmail] = useState("");
 
 
     return (
@@ -53,13 +55,13 @@ function LoginRSignupComp() {
                     <button onClick={() => {
                         setIsActive("SignUp");
                         setSwitchTab("SignupContainer");
-                        setHoldLogInCont('OTPVerify');
+                        setHoldLogInCont('Create_Acc');
                     }} className={`btn ${isActive === "SignUp" ? "activeBtn" : ''}`}>Sign Up</button>
                 </div>
 
                 <div className="show">
-                    {switchTab === 'LogInContainer' && <LogInContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} />}
-                    {switchTab === 'SignupContainer' && <SignupContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} />}
+                    {switchTab === 'LogInContainer' && <LogInContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} setSwitchTab={setSwitchTab} />}
+                    {switchTab === 'SignupContainer' && <SignupContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} setSwitchTab={setSwitchTab}  />}
                 </div>
             </div>
         </>
@@ -69,13 +71,14 @@ function LoginRSignupComp() {
 
 // LogIn Container:
 
-function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail }) {
+function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab }) {
     return (
         <>
             {HoldLogInCont === 'GetLoginInfo' && (
                 <GetLoginInfo 
                     holdCont={setHoldLogInCont} 
                     setUserEmail={setUserEmail}
+                    setSwitchTab={setSwitchTab}
                 />
             )}
 
@@ -83,6 +86,7 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
                 <GetLoginOTP 
                     holdCont={setHoldLogInCont} 
                     userEmail={userEmail}
+                    type="login"
                 />
             )}
 
@@ -97,18 +101,27 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
     );
 }
 
-function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail}){
+function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab}){
     return (
         <>
             {HoldLogInCont === 'OTPVerify' && (
                 <GetLoginOTP 
                     holdCont={setHoldLogInCont} 
                     userEmail={userEmail}
+                    type="signup"
                 />
             )}
 
             {HoldLogInCont === 'SignUpDone' && (
                 <LogInDone holdCont={setHoldLogInCont}/>
+            )}
+
+            {HoldLogInCont === 'Create_Acc' && (
+                <CreateAcc 
+                    holdCont={setHoldLogInCont}
+                    setUserEmail={setUserEmail}
+                    setSwitchTab={setSwitchTab}
+                />
             )}
         </>
     )
@@ -120,7 +133,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
 
 // Login Components Parts:
 
-function GetLoginInfo({ holdCont, setUserEmail }) {
+function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showAlert, setShowAlert] = useState(false);
@@ -216,13 +229,16 @@ function GetLoginInfo({ holdCont, setUserEmail }) {
 
             <div className="signup">
                 <p>Don't have an account?</p>
-                <button>Sign up free</button>
+                <button onClick={() => {holdCont('Create_Acc'); setSwitchTab('SignupContainer')}}>Sign up free</button>
             </div>
         </section>
   );
 }
 
-function GetLoginOTP({ holdCont, userEmail }){
+
+
+
+function GetLoginOTP({ holdCont, userEmail, type }){
     const [time, setTime] = useState(30);
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
@@ -271,7 +287,12 @@ function GetLoginOTP({ holdCont, userEmail }){
 
         if (data.success) {
             setOtp(["", "", "", "", "", ""]);
-            holdCont("LogInDone");
+
+            if (type === "signup") {
+                holdCont("SignUpDone");
+            } else {
+                holdCont("LogInDone");
+            }
         } else {
             setError("Invalid or expired OTP");
         }
@@ -337,7 +358,15 @@ function GetLoginOTP({ holdCont, userEmail }){
                 </div>
 
                 <button className='Ver_LogIn' onClick={handleVerify}>Verify & Login ✓</button>
-                <button className='back'  onClick={() => {holdCont('GetLoginInfo')}}>← Back</button>
+                <button 
+                    className='back' 
+                    onClick={() => {
+                        if (type === "signup") {
+                            holdCont('Create_Acc');
+                        } else {
+                            holdCont('GetLoginInfo');
+                        }
+                    }}>← Back</button>
             </div>
         </>
     )
@@ -390,17 +419,19 @@ function ForgotPass({holdCont}){
 
 
 function LogInDone({holdCont}){
+    const navigate = useNavigate();
+
     return (
-        <>
-            <div id="LogInDone">
-                <span>✓</span>
+        <div id="LogInDone">
+            <span>✓</span>
 
-                <h3>You're in, <em> welcome back!</em></h3>
-                <p>Identity verified. Redirecting you to your dashboard in a moment...</p>
+            <h3>You're in, <em> welcome back!</em></h3>
+            <p>Identity verified. Redirecting you to your dashboard in a moment...</p>
 
-                <button onClick={holdCont('')}>Go To Dashboard →</button>
-            </div>
-        </>
+            <button onClick={() => navigate("/dashboard")}>
+                Go To Dashboard →
+            </button>
+        </div>
     )
 }
 
@@ -419,42 +450,190 @@ function AlertBox({AlertMsg}){
 
 // SignUp components:
 
-function CreateAcc(){
+function CreateAcc({holdCont, setUserEmail, setSwitchTab}){
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
+
+    // regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[._\-\/@])[A-Za-z\d._\-\/@]{8,}$/;
+
+    const handleSignup = async () => {
+
+        if (!name) return setErrorMsg("Name is required");
+
+        if (!email) return setErrorMsg("Email is required");
+        if (!emailRegex.test(email)) return setErrorMsg("Invalid email format (abc@domain.xyz)");
+
+        if (!password) return setErrorMsg("Password is required");
+        if (!passwordRegex.test(password)) {
+            return setErrorMsg("Password must include [A-Z], [a-z], [0-9] & (._-/@)");
+        }
+
+        if (!termsAccepted) return setErrorMsg("Accept Terms & Conditions");
+
+        setErrorMsg("");
+
+        try {
+            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+                cache: "no-store"
+            });
+
+            const data = await res.json();
+
+            if (data.message === "OTP sent") {
+                setUserEmail(email);
+                holdCont('OTPVerify');
+            } else {
+                setErrorMsg("Failed to send OTP");
+            }
+
+        } catch (err) {
+            console.error(err);
+            setErrorMsg("Server error. Try again.");
+        }
+    };
+
     return (
         <>
-        
+            <div id="CreateAcc">
+                <div className="lines">
+                    <span></span><span></span><span></span>
+                </div>
+
+                <p className='Acc_text'><span>1</span> Account Details</p>
+
+                <h3>Create your <em>account.</em></h3>
+                <p className="captn">It's free. No credit card needed</p>
+
+                {errorMsg && <AlertBox AlertMsg={errorMsg} />}
+
+                <div className="getname">
+                    <label>Full Name</label>
+                    <input
+                        type="text"
+                        placeholder="e.g Mubashir Ahmad"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                </div>
+
+                <div className="getmail">
+                    <label>Email Address</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+
+                <div className="getpass">
+                    <p className='instruct'>min. 8 characters</p>
+                    <label>Password</label>
+                    <input
+                        type="password"
+                        placeholder="Set Your Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+
+                <div className="passwordStrongBar">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <div className="terms">
+                    <input
+                        type="checkbox"
+                        checked={termsAccepted}
+                        onChange={(e) => setTermsAccepted(e.target.checked)}
+                    />
+                    <p>Agree Our <a href="">Terms & Service</a> and <a href="">Privacy Policy</a></p>
+                </div>
+
+                <button onClick={handleSignup}>Continue →</button>
+
+                <p className='logIn'>
+                    Already have an account? 
+                    <button onClick={() => {
+                        setSwitchTab('LogInContainer');
+                        holdCont("GetLoginInfo");
+                    }}>
+                        Log in
+                    </button>
+                </p>
+            </div>
         </>
     )
 }
 
-function VerifyEmail(){
+
+function UserType({holdCont}){
     return (
         <>
-        
-        </>
-    )
-}
+            <div id="UserType">
+                <p className='U_Type_text'><span>3</span> One Last Thing</p>
 
-function UserType(){
-    retrun (
-        <>
-        
+                <h3>What best <em>describes you?</em></h3>
+                <p className="captn">We'll recommend the best templates for you.</p>
+
+                <div className="options">
+                    <div className="cardtag">
+                        <span className="icon"></span>
+                        <div className="info">
+                            <h4>Student</h4>
+                            <p>Currently studying, building my first projects</p>
+                        </div>
+                    </div>
+
+                    <div className="cardtag">
+                        <span className="icon"></span>
+                        <div className="info">
+                            <h4>Fresher / Job Seeker</h4>
+                            <p>Recently graduated, looking for my first role</p>
+                        </div>
+                    </div>
+
+                    <div className="cardtag">
+                        <span className="icon"></span>
+                        <div className="info">
+                            <h4>Professional / Freelancer</h4>
+                            <p>Working in the industry, updating my presence</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onClick={() => holdCont('SignUpDone')}>Finish →</button>
+            </div>
         </>
     )
 }
 
 function SignUpDone({holdCont}){
+    const navigate = useNavigate();
+
     return (
-        <>
-            <div id="SignUpDone">
-                <span>✓</span>
+        <div id="SignUpDone">
+            <span>✓</span>
 
-                <h3>Account Created Successfully, <em> welcome!</em></h3>
-                <p>Identity Stored. Redirecting you to your dashboard in a moment...</p>
+            <h3>Account Created Successfully, <em> welcome!</em></h3>
+            <p>Identity Stored. Redirecting you to your dashboard in a moment...</p>
 
-                <button onClick={holdCont('')}>Go To Dashboard →</button>
-            </div>
-        </>
+            <button onClick={() => navigate("/dashboard")} >
+                Go To Dashboard →
+            </button>
+        </div>
     )
 }
 

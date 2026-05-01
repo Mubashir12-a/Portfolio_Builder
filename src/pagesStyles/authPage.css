@@ -425,7 +425,7 @@ input[type="checkbox"]:checked::after {
     color: var(--text-2);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 5px;
 }
 
@@ -435,6 +435,7 @@ input[type="checkbox"]:checked::after {
     text-decoration: underline;
     font-family: "Zen Dots", sans-serif;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 /*Alert box*/
@@ -834,5 +835,192 @@ input[type="checkbox"]:checked::after {
     color: var(--coral);
 }
 
-/*SignUp*/
+/*SignUp and UserType*/ 
+
+#CreateAcc,
+#UserType {
+    background-color: var(--bg2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px solid var(--border);
+}
+
+#UserType .U_Type_text,
+#CreateAcc .Acc_text {
+    font-family: "Zen Dots", sans-serif;
+    font-size: 0.6rem;
+    color: var(--text-3);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+#UserType .U_Type_text span,
+#CreateAcc .Acc_text span {
+    background: var(--violet-dim);
+    border: 1px solid var(--violet);
+    border-radius: 50%;
+    font-size: 0.8rem;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#UserType h3,
+#CreateAcc h3 {
+    font-size: 2rem;
+    font-family: "Orbitron", sans-serif;
+    color: var(--text);
+}
+
+#UserType h3 em,
+#CreateAcc h3 em {
+    font-family: "syne", sans-serif;
+    color: var(--violet);
+}
+
+#UserType .captn,
+#CreateAcc .captn {
+    font-family: "syne", sans-serif;
+    color: var(--text-2);
+    font-size: 1rem;
+}
+
+
+
+
+#CreateAcc .getpass {
+    position: relative;
+}
+
+#CreateAcc .getpass .instruct {
+    all: initial;
+    position: absolute;
+    font-family: "syne", sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    right: 0;
+    transition: var(--transition);
+    bottom: -10%;
+    cursor: pointer;
+}
+
+#CreateAcc .getname,
+#CreateAcc .getmail,
+#CreateAcc .getpass {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    gap: 5px;
+}
+
+#CreateAcc .getname label,
+#CreateAcc .getmail label,
+#CreateAcc .getpass label {
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    color: var(--text-2);
+    padding-left: 5px;
+}
+
+#CreateAcc .getname input:focus,
+#CreateAcc .getmail input:focus,
+#CreateAcc .getpass input:focus {
+    outline: 1px solid var(--violet);
+}
+
+#CreateAcc .getname input,
+#CreateAcc .getmail input,
+#CreateAcc .getpass input {
+    font-family: "syne", sans-serif;
+    font-size: 1.3rem;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: var(--bg);
+    color: var(--text-2);
+    outline: none;
+}
+
+#CreateAcc .terms {
+    font-family: "syne", sans-serif;
+    display: flex;
+    align-content: center;
+    gap: 5px;
+    color: var(--text-2);
+    margin: 10px 0;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--violet);
+  border-radius: 6px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--violet);
+  border-color: var(--violet);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  color: white;
+  font-size: 12px;
+  display: block;
+  text-align: center;
+}
+
+#CreateAcc .terms a {
+    color: var(--mint);
+}
+
+#CreateAcc button {
+    font-family: "Zen Dots", sans-serif;
+    background-color: var(--surface2);
+    color: var(--violet);
+    height: 50px;
+    width: 80%;
+    font-size: 1.5rem;
+    margin: 20px 10%;
+    border-radius: 10px;
+    border: 2px solid var(--violet);
+    box-shadow: var(--logo-glow);
+    transition: var(--transition);
+}
+
+#CreateAcc button:active {
+    transform: scale(0.95);
+    transition: var(--transition);
+}
+
+#CreateAcc .logIn {
+    font-family: "syne", sans-serif;
+    font-size: 1rem;
+    color: var(--text-2);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+#CreateAcc .logIn button {
+    all: initial;
+    color: var(--violet);
+    text-decoration: underline;
+    font-family: "Zen Dots", sans-serif;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+
+/*UserType*/
 
