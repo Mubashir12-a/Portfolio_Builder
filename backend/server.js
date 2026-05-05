@@ -70,6 +70,8 @@ app.post("/send-otp", async (req, res) => {
 
 // ================= VERIFY OTP =================
 app.post("/verify-otp", async (req, res) => {
+  console.log("FULL BODY:", req.body);
+
   const { email, otp, name, password } = req.body;
 
   const record = otpStore[email];
@@ -109,7 +111,7 @@ app.post("/verify-otp", async (req, res) => {
       return res.json({ success: true });
 
     } catch (err) {
-      console.error("DB ERROR:", err);
+      console.error("DB ERROR FULL:", err);
       return res.status(500).json({ success: false });
     }
   }
