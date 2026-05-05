@@ -40,6 +40,7 @@ function LoginRSignupComp() {
     const [HoldLogInCont, setHoldLogInCont] = useState("GetLoginInfo");
     const [switchTab, setSwitchTab] = useState("LogInContainer")
     const [userEmail, setUserEmail] = useState("");
+    const [userData, setUserData] = useState({});
 
 
     return (
@@ -60,8 +61,21 @@ function LoginRSignupComp() {
                 </div>
 
                 <div className="show">
-                    {switchTab === 'LogInContainer' && <LogInContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} setSwitchTab={setSwitchTab} />}
-                    {switchTab === 'SignupContainer' && <SignupContainer setHoldLogInCont={setHoldLogInCont} HoldLogInCont={HoldLogInCont} userEmail={userEmail} setUserEmail={setUserEmail} setSwitchTab={setSwitchTab}  />}
+                    {switchTab === 'LogInContainer' && <LogInContainer 
+                                                                setHoldLogInCont={setHoldLogInCont} 
+                                                                HoldLogInCont={HoldLogInCont} 
+                                                                userEmail={userEmail} 
+                                                                setUserEmail={setUserEmail} 
+                                                                setSwitchTab={setSwitchTab}/>}
+
+                    {switchTab === 'SignupContainer' && <SignupContainer 
+                                                                setHoldLogInCont={setHoldLogInCont} 
+                                                                HoldLogInCont={HoldLogInCont} 
+                                                                userEmail={userEmail} 
+                                                                setUserEmail={setUserEmail} 
+                                                                setSwitchTab={setSwitchTab}
+                                                                userData={userData}
+                                                                setUserData={setUserData}/>}
                 </div>
             </div>
         </>
@@ -101,7 +115,7 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
     );
 }
 
-function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab}){
+function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab, userData, setUserData}){
     return (
         <>
             {HoldLogInCont === 'OTPVerify' && (
@@ -109,6 +123,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
                     holdCont={setHoldLogInCont} 
                     userEmail={userEmail}
                     type="signup"
+                    userData={userData}
                 />
             )}
 
@@ -121,6 +136,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
                     holdCont={setHoldLogInCont}
                     setUserEmail={setUserEmail}
                     setSwitchTab={setSwitchTab}
+                    setUserData={setUserData}
                 />
             )}
         </>
@@ -238,7 +254,7 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
 
 
 
-function GetLoginOTP({ holdCont, userEmail, type }){
+function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     const [time, setTime] = useState(30);
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
@@ -278,6 +294,8 @@ function GetLoginOTP({ holdCont, userEmail, type }){
             body: JSON.stringify({
                 email: userEmail,
                 otp: finalOTP,
+                name: userData.name,
+                password: userData.password
             }),
             cache: "no-store" // 🔥 important
         });
@@ -452,7 +470,7 @@ function AlertBox({AlertMsg}){
 
 // SignUp components:
 
-function CreateAcc({holdCont, setUserEmail, setSwitchTab}){
+function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -493,6 +511,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab}){
 
             if (data.message === "OTP sent") {
                 setUserEmail(email);
+                setUserData({ name, password }); 
                 holdCont('OTPVerify');
             } else {
                 setErrorMsg("Failed to send OTP");
