@@ -1024,3 +1024,16 @@ input[type="checkbox"]:checked::after {
 
 /*UserType*/
 
+
+
+
+#loadAni {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loadAni img {
+    height: 300%;
+}

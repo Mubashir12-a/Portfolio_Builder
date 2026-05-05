@@ -1,5 +1,7 @@
 import '../pagesStyles/authPage.css';
 
+import loadingAuth from "../assets/loadingAuth.gif"
+
 import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
 import { useState } from 'react';
@@ -156,46 +158,50 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [showTermsAlert, setShowTermsAlert] = useState(false);   
     const [errorMsg, setErrorMsg] = useState(""); 
+    const [loading, setLoading] = useState(false);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  
     const handleLogin = async () => {
-    console.log("LOGIN CLICKED");
+        console.log("LOGIN CLICKED");
 
-    if (!email) return setErrorMsg("Email is required");
-    if (!emailRegex.test(email)) return setErrorMsg("Invalid email format");
-    if (!password) return setErrorMsg("Password is required");
-    if (password.length < 8) return setErrorMsg("Password must be at least 8 characters");
-    if (!termsAccepted) return setErrorMsg("Accept Terms & Conditions");
+        if (!email) return setErrorMsg("Email is required");
+        if (!emailRegex.test(email)) return setErrorMsg("Invalid email format");
+        if (!password) return setErrorMsg("Password is required");
+        if (password.length < 8) return setErrorMsg("Password must be at least 8 characters");
+        if (!termsAccepted) return setErrorMsg("Accept Terms & Conditions");
 
-    setErrorMsg("");
-    setUserEmail(email);
+        setErrorMsg("");
+        setUserEmail(email);
 
-    console.log("Calling API...");
+        console.log("Calling API...");
+        setLoading(true);
 
-    try {
-        const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email }),
-            cache: "no-store" // 🔥 important
-        });
+        try {
+            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+                cache: "no-store" // 🔥 important
+            });
 
-        const data = await res.json();
-        console.log("SEND OTP RESPONSE:", data);
+            const data = await res.json();
+            console.log("SEND OTP RESPONSE:", data);
 
-        if (data.message === "OTP sent") {
-            holdCont("OTPVerify");
-        } else {
-            setErrorMsg("Failed to send OTP");
+            if (data.message === "OTP sent") {
+                holdCont("OTPVerify");
+            } else {
+                setErrorMsg("Failed to send OTP");
+            }
+
+        } catch (err) {
+            console.error(err);
+            setErrorMsg("Server error. Try again.");
+        } finally {
+            setLoading(false);
         }
-
-    } catch (err) {
-        console.error(err);
-        setErrorMsg("Server error. Try again.");
-    }
     };
 
 
@@ -241,7 +247,9 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
                 <a href="">Terms & Conditions</a>
             </div>
 
-            <button onClick={handleLogin}>Log In</button>
+            <button onClick={handleLogin}>
+                {loading ? <LoadingForAuth /> : "Log In"}
+            </button>
 
             <div className="signup">
                 <p>Don't have an account?</p>
@@ -258,6 +266,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     const [time, setTime] = useState(30);
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         if (time <= 0) return;
@@ -284,6 +293,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     }
 
     console.log("VERIFYING OTP:", finalOTP);
+    setLoading(true);
 
     try {
         const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
@@ -318,6 +328,8 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     } catch (err) {
         console.error(err);
         setError("Server error. Try again.");
+    } finally {
+        setLoading(false);
     }
 };
 
@@ -375,8 +387,8 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
                     )}
                 </div>
 
-                <button className='Ver_LogIn' onClick={handleVerify}>
-                    {type === "signup" ? "Verify & Sign Up ✓" : "Verify & Login ✓"}
+               <button className='Ver_LogIn' onClick={handleVerify}>
+                    {loading ? <LoadingForAuth /> : (type === "signup" ? "Verify & Sign Up ✓" : "Verify & Login ✓")}
                 </button>
                 <button 
                     className='back' 
@@ -476,6 +488,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
     const [password, setPassword] = useState("");
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
 
     // regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -496,6 +509,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
         if (!termsAccepted) return setErrorMsg("Accept Terms & Conditions");
 
         setErrorMsg("");
+        setLoading(true);
 
         try {
             const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
@@ -520,6 +534,8 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
         } catch (err) {
             console.error(err);
             setErrorMsg("Server error. Try again.");
+        } finally {
+           setLoading(false);
         }
     };
 
@@ -583,7 +599,9 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                     <p>Agree Our <a href="">Terms & Service</a> and <a href="">Privacy Policy</a></p>
                 </div>
 
-                <button onClick={handleSignup}>Continue →</button>
+                <button onClick={handleSignup}>
+                    {loading ? <LoadingForAuth /> : "Continue →"}
+                </button>
 
                 <p className='logIn'>
                     Already have an account? 
@@ -658,6 +676,16 @@ function SignUpDone({holdCont}){
     )
 }
 
+
+function LoadingForAuth(){
+    return (
+        <>
+            <div id="loadAni">
+                <img src={loadingAuth} alt="" />
+            </div>
+        </>
+    )
+}
 
 
 
