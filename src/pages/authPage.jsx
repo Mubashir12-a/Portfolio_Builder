@@ -113,7 +113,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
             )}
 
             {HoldLogInCont === 'SignUpDone' && (
-                <LogInDone holdCont={setHoldLogInCont}/>
+                <SignUpDone holdCont={setHoldLogInCont}/>
             )}
 
             {HoldLogInCont === 'Create_Acc' && (
@@ -357,7 +357,9 @@ function GetLoginOTP({ holdCont, userEmail, type }){
                     )}
                 </div>
 
-                <button className='Ver_LogIn' onClick={handleVerify}>Verify & Login ✓</button>
+                <button className='Ver_LogIn' onClick={handleVerify}>
+                    {type === "signup" ? "Verify & Sign Up ✓" : "Verify & Login ✓"}
+                </button>
                 <button 
                     className='back' 
                     onClick={() => {

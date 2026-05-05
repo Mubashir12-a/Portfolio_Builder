@@ -2,6 +2,7 @@
 
 require("dotenv").config();
 const mongoose = require("mongoose");
+const User = require("./models/User");
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
@@ -68,14 +69,13 @@ app.post("/send-otp", async (req, res) => {
 });
 
 // ================= VERIFY OTP =================
-app.post("/verify-otp", (req, res) => {
-  const { email, otp } = req.body;
+app.post("/verify-otp", async (req, res) => {
+  const { email, otp, name, password } = req.body;
 
   const record = otpStore[email];
 
   console.log("RECEIVED OTP:", otp);
   console.log("STORED RECORD:", record);
-  console.log("FULL STORE:", otpStore);
 
   if (!record) {
     return res.json({ success: false });
@@ -88,8 +88,30 @@ app.post("/verify-otp", (req, res) => {
   }
 
   if (record.otp == otp) {
-    delete otpStore[email];
-    return res.json({ success: true });
+
+    try {
+      // 🔥 CHECK IF USER EXISTS
+      let existingUser = await User.findOne({ email });
+
+      if (!existingUser) {
+        await User.create({
+          name,
+          email,
+          password
+        });
+
+        console.log("USER SAVED ✅");
+      } else {
+        console.log("USER ALREADY EXISTS ⚠️");
+      }
+
+      delete otpStore[email];
+      return res.json({ success: true });
+
+    } catch (err) {
+      console.error("DB ERROR:", err);
+      return res.status(500).json({ success: false });
+    }
   }
 
   return res.json({ success: false });

@@ -8,6 +8,8 @@ import Subscription from './pages/subscriptionPage'
 import AuthPage from './pages/authPage.jsx';
 import UserDash from './pages/userDash.jsx';
 
+import ProtectedRoute from './components/Protected/protectedRoute.jsx';
+
 
 function App() {
   return (
@@ -18,8 +20,17 @@ function App() {
           <Route path='/' element={<LandingPage/>}></Route>
           <Route path='/subscription' element={<Subscription/>}></Route>
           <Route path='/auth' element={<AuthPage/>}></Route>
-          <Route path='/userDash' element={<UserDash/>}></Route>
+          
+          <Route 
+                path="/userDash" 
+                element={
+                          <ProtectedRoute>
+                            <UserDash />
+                          </ProtectedRoute>
+                        } 
+          />
         </Routes>
+
       </BrowserRouter>
 
 
