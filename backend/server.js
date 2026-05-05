@@ -7,6 +7,11 @@ const User = require("./models/User");
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("MongoDB Connected ✅");
+
+  app.listen(PORT, () => {
+    console.log("Server running on", PORT);
+  });
+
 })
 .catch((err) => {
   console.error("MongoDB Error ❌", err);
