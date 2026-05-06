@@ -1,0 +1,270 @@
+#MainCont {
+    height: auto;
+    width: 100%;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#MainCont .Header {
+    background: green;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+#MainCont .Header .headerDetailed {
+    background: violet;
+    width: 100%;
+    height: 50%;
+}
+
+#MainCont .Container {
+    background: blue;
+    width: 100%;
+    height: calc(100vh - 100px);
+    display: flex;
+    overflow: hidden;
+}
+
+#MainCont .Container .Sidebar {
+    background: orange;
+    flex: 1;
+    height: 100%;
+}
+
+#MainCont .Container .Grid {
+    overflow-y: auto;
+    height: 100%;
+    background: var(--bg);
+    background-position: center;
+    background-size: contain;
+    flex: 10;
+    padding: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 60px;
+    gap: 20px;
+}
+
+/*///////////////Profilr Details/////////////////*/
+
+/* #experinceDetails, */
+#Resume,
+#SocialMedia,
+.exp_card,
+#profileDetails,
+#skillsDetails,
+#educationDetails,
+.ProjectCards {
+    background: var(--Neo_bg);
+    border-radius: 30px;
+    box-shadow: var(--box-shadow);
+}
+
+#profileDetails {
+    grid-column: 1/4;
+    grid-row: 1/3;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+
+#profileDetails ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    list-style: none;
+}
+
+#profileDetails ul li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+
+#skillsDetails {
+    grid-column: 4/5;
+    grid-row: 1/5;
+    padding: 20px;
+}
+
+#skillsDetails ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    list-style: none;
+    overflow: auto;
+    scrollbar-width: none;
+}
+
+#skillsDetails ul li {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#skillsDetails ul li .bar {
+    position: relative;
+    background-color: cyan;
+    height: 10px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+#skillsDetails ul li .bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    border-radius: 20px;
+    background: blue;
+}
+
+
+
+
+
+
+#SocialMedia {
+    grid-column: 1/4;
+    grid-row: 3/5;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+#SocialMedia ul {
+    flex: 1;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#SocialMedia ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    width: 90%;
+}
+
+
+
+
+
+#Resume {
+    grid-column: 4/5;
+    grid-row: 5/7;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow: hidden;
+}
+
+#Resume button {
+    flex: 1;
+    background: var(--amber);
+    border: none;
+}
+
+
+
+
+
+
+#educationDetails {
+    grid-column: 1/4;
+    grid-row: 5/7;
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+}
+
+#educationDetails .edu_card {
+    background-color: var(--coral);
+    flex: 1;
+}
+
+
+
+
+
+
+#projectDetails {
+    grid-column: 1/-1;
+    grid-row: 7/10;
+}
+
+#projectDetails .headTag {
+    margin: 30px 0;
+    font-size: 3rem;
+}
+
+.ProjectCards {
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 20px;
+    overflow: hidden;
+}
+
+.ProjectCards .proj_card {
+    background: var(--mint);
+    height: 100%;
+    flex: 1;
+}
+
+
+
+
+
+#experinceDetails {
+    grid-column: 1/-1;
+    grid-row: 11/16;
+}
+
+#experinceDetails .headTag {
+    margin: 30px 0;
+    font-size: 3rem;
+}
+
+#experinceDetails .Exp_Tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#experinceDetails .exp_card {
+    width: 100%;
+    height: 80px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    gap: 20px;
+
+}
+
+#experinceDetails .exp_card h2 {
+    border-right: 3px solid var(--coral);
+    padding-right: 10px;
+}

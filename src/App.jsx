@@ -6,7 +6,7 @@ import './pagesStyles/landingPage.css'
 import LandingPage from "../src/pages/landingPage"
 import Subscription from './pages/subscriptionPage'
 import AuthPage from './pages/authPage.jsx';
-import UserDash from './pages/userDash.jsx';
+import Dash from "./pages/Dashboard.jsx";
 
 import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 
@@ -16,7 +16,7 @@ function App() {
     <>
 
       <BrowserRouter>
-        <Routes>
+        {/* <Routes>
           <Route path='/' element={<LandingPage/>}></Route>
           <Route path='/subscription' element={<Subscription/>}></Route>
           <Route path='/auth' element={<AuthPage/>}></Route>
@@ -29,10 +29,11 @@ function App() {
                           </ProtectedRoute>
                         } 
           />
-        </Routes>
+        </Routes> */}
+
+        <Dash/>
 
       </BrowserRouter>
-
 
     </>
   )
