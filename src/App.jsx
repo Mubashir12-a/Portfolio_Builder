@@ -22,7 +22,7 @@ function App() {
           <Route path='/auth' element={<AuthPage/>}></Route>
           
           <Route 
-                path="/userDash" 
+                path="/Dash" 
                 element={
                           <ProtectedRoute>
                               <Dash/>
