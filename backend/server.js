@@ -57,8 +57,8 @@ app.post("/send-otp", async (req, res) => {
     const response = await resend.emails.send({
       from: "Portfolio Builder <noreply@portfolio-builder.online>",
       to: email,
-      subject: "Your OTP Code",
-      html: `<h1>Your OTP is ${otp}</h1>`,
+      subject: "Hello there, Here is your portfolio builder OTP",
+      html: `<h1>Your OTP is ${otp} Thanks for joining</h1>`,
     });
 
     console.log("EMAIL RESPONSE:", response);
