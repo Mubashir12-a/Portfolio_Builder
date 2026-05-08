@@ -57,8 +57,110 @@ app.post("/send-otp", async (req, res) => {
     const response = await resend.emails.send({
       from: "Portfolio Builder <noreply@portfolio-builder.online>",
       to: email,
-      subject: "Hello there, Here is your portfolio builder OTP",
-      html: `<h1>Your OTP is ${otp} Thanks for joining</h1>`,
+      subject: "Your Verification Code • Portfolio Builder",
+        
+      html: `
+        <div style="
+          font-family: Arial, sans-serif;
+          background:#f4f7fb;
+          padding:40px 20px;
+          color:#111827;
+        ">
+        
+          <div style="
+            max-width:520px;
+            margin:auto;
+            background:white;
+            border-radius:16px;
+            overflow:hidden;
+            border:1px solid #e5e7eb;
+            box-shadow:0 10px 30px rgba(0,0,0,0.06);
+          ">
+        
+            <div style="
+              background:#7B5EF8;
+              padding:28px;
+              text-align:center;
+              color:white;
+            ">
+              <h1 style="
+                margin:0;
+                font-size:28px;
+              ">
+                Portfolio Builder
+              </h1>
+        
+              <p style="
+                margin-top:8px;
+                opacity:0.9;
+                font-size:14px;
+              ">
+                Secure Email Verification
+              </p>
+            </div>
+        
+            <div style="padding:35px;">
+        
+              <h2 style="
+                margin-top:0;
+                font-size:24px;
+                color:#111827;
+              ">
+                Verify your email
+              </h2>
+        
+              <p style="
+                font-size:15px;
+                line-height:1.7;
+                color:#4b5563;
+              ">
+                Use the verification code below to continue accessing your account.
+                This code will expire in 5 minutes.
+              </p>
+        
+              <div style="
+                margin:30px 0;
+                text-align:center;
+              ">
+        
+                <div style="
+                  display:inline-block;
+                  background:#f3f4f6;
+                  padding:18px 36px;
+                  border-radius:14px;
+                  font-size:34px;
+                  font-weight:bold;
+                  letter-spacing:8px;
+                  color:#7B5EF8;
+                ">
+                  ${otp}
+                </div>
+        
+              </div>
+        
+              <p style="
+                font-size:14px;
+                color:#6b7280;
+                line-height:1.6;
+              ">
+                If you did not request this verification code, you can safely ignore this email.
+              </p>
+        
+            </div>
+        
+            <div style="
+              border-top:1px solid #e5e7eb;
+              padding:20px;
+              text-align:center;
+              font-size:13px;
+              color:#9ca3af;
+            ">
+              © 2026 Portfolio Builder. All rights reserved.
+            </div>
+        
+          </div>
+        </div>
+      `,
     });
 
     console.log("EMAIL RESPONSE:", response);
