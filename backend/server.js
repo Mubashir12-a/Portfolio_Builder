@@ -58,7 +58,7 @@ app.post("/send-otp", async (req, res) => {
       from: "Portfolio Builder <noreply@portfolio-builder.online>",
       to: email,
       subject: "Your Verification Code • Portfolio Builder",
-        
+
       html: `
         <div style="
           font-family: Arial, sans-serif;
@@ -66,7 +66,7 @@ app.post("/send-otp", async (req, res) => {
           padding:40px 20px;
           color:#111827;
         ">
-        
+
           <div style="
             max-width:520px;
             margin:auto;
@@ -76,7 +76,7 @@ app.post("/send-otp", async (req, res) => {
             border:1px solid #e5e7eb;
             box-shadow:0 10px 30px rgba(0,0,0,0.06);
           ">
-        
+
             <div style="
               background:#7B5EF8;
               padding:28px;
@@ -89,7 +89,7 @@ app.post("/send-otp", async (req, res) => {
               ">
                 Portfolio Builder
               </h1>
-        
+
               <p style="
                 margin-top:8px;
                 opacity:0.9;
@@ -98,9 +98,9 @@ app.post("/send-otp", async (req, res) => {
                 Secure Email Verification
               </p>
             </div>
-        
+
             <div style="padding:35px;">
-        
+
               <h2 style="
                 margin-top:0;
                 font-size:24px;
@@ -108,21 +108,21 @@ app.post("/send-otp", async (req, res) => {
               ">
                 Verify your email
               </h2>
-        
+
               <p style="
                 font-size:15px;
                 line-height:1.7;
                 color:#4b5563;
               ">
-                Use the verification code below to continue accessing your account.
+                Use the verification code below to continue.
                 This code will expire in 5 minutes.
               </p>
-        
+
               <div style="
                 margin:30px 0;
                 text-align:center;
               ">
-        
+
                 <div style="
                   display:inline-block;
                   background:#f3f4f6;
@@ -135,9 +135,9 @@ app.post("/send-otp", async (req, res) => {
                 ">
                   ${otp}
                 </div>
-        
+
               </div>
-        
+
               <p style="
                 font-size:14px;
                 color:#6b7280;
@@ -145,9 +145,9 @@ app.post("/send-otp", async (req, res) => {
               ">
                 If you did not request this verification code, you can safely ignore this email.
               </p>
-        
+
             </div>
-        
+
             <div style="
               border-top:1px solid #e5e7eb;
               padding:20px;
@@ -157,7 +157,7 @@ app.post("/send-otp", async (req, res) => {
             ">
               © 2026 Portfolio Builder. All rights reserved.
             </div>
-        
+
           </div>
         </div>
       `,
@@ -181,6 +181,8 @@ app.post("/send-otp", async (req, res) => {
 app.post("/verify-otp", async (req, res) => {
   console.log("FULL BODY:", req.body);
 
+  console.log(name, email, password);
+
   const { email, otp, name, password } = req.body;
 
   const record = otpStore[email];
@@ -201,19 +203,24 @@ app.post("/verify-otp", async (req, res) => {
   if (record.otp == otp) {
 
     try {
-      // 🔥 CHECK IF USER EXISTS
       let existingUser = await User.findOne({ email });
 
-      if (!existingUser) {
-        await User.create({
-          name,
-          email,
-          password
-        });
+      if (type === "signup") {
 
-        console.log("USER SAVED ✅");
-      } else {
-        console.log("USER ALREADY EXISTS ⚠️");
+        let existingUser = await User.findOne({ email });
+
+        if (!existingUser) {
+          await User.create({
+            name,
+            email,
+            password
+          });
+        
+          console.log("USER SAVED ✅");
+        } else {
+          console.log("USER ALREADY EXISTS ⚠️");
+        }
+      
       }
 
       delete otpStore[email];
@@ -228,10 +235,9 @@ app.post("/verify-otp", async (req, res) => {
   return res.json({ success: false });
 });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log("Server running on", PORT));
 
 
 
-// MongoDB
+
+
 
