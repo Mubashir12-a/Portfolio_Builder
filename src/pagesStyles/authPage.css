@@ -1033,3 +1033,107 @@ input[type="checkbox"]:checked::after {
 #loadAni img {
     height: 300%;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 768px) {
+
+  /* ── Layout ── */
+  #auth {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+    gap: 0;
+  }
+
+  /* ── Left panel ── */
+  .parent {
+    flex: none;
+    padding: 28px 20px 20px;
+    overflow: hidden;
+  }
+  .parent::after { display: none; }   /* hide the decorative radial blob */
+
+  .parent .tag       { width: 170px; height: 26px; margin-bottom: 14px; }
+  .parent .tag p     { font-size: 0.7rem; }
+  .parent h1         { font-size: 1.6rem; }
+  .parent .para      { font-size: 0.85rem; padding-top: 12px; }
+  .parent .tabs      { margin-top: 20px; gap: 12px; }
+  .parent .tab       { padding: 12px; border-radius: 14px; gap: 12px; }
+  .parent .tab h4    { font-size: 0.95rem; }
+  .parent .tab p     { font-size: 0.72rem; }
+  .parent .MajorTab  { margin-top: 20px; padding: 12px; border-radius: 14px; }
+  .parent .MajorTab h3 { font-size: 1.1rem; }
+
+  /* ── Right panel / form container ── */
+  #LogSigncontainer {
+    flex: none;
+    padding: 16px 16px 32px;
+    gap: 14px;
+  }
+
+  #LogSigncontainer .switchTab {
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+  }
+  #LogSigncontainer .switchTab button { font-size: 0.95rem; }
+  #LogSigncontainer .show            { width: 100%; }
+
+  /* ── Login form ── */
+  #LogSigncontainer #GetLoginInfo {
+    border-radius: 16px;
+    padding: 0 16px;
+  }
+  #GetLoginInfo .heading      { padding: 16px 0 10px; }
+  #GetLoginInfo .heading h3   { font-size: 2rem; }
+  #GetLoginInfo .heading p    { font-size: 0.85rem; }
+  #GetLoginInfo .getmail input,
+  #GetLoginInfo .getpass input { font-size: 1.1rem; }
+  #GetLoginInfo button         { font-size: 1.2rem; height: 44px; }
+  #GetLoginInfo .signup        { font-size: 0.85rem; }
+
+  /* ── OTP screen ── */
+  #getLoginOTP              { border-radius: 16px; }
+  #getLoginOTP h3           { font-size: 1.6rem; }
+  #getLoginOTP .EnterOTP input { width: 42px; height: 52px; font-size: 1.6rem; }
+  #getLoginOTP .Ver_LogIn,
+  #getLoginOTP .back        { height: 44px; font-size: 1.1rem; }
+
+  /* ── Success screens ── */
+  #LogInDone, #SignUpDone    { border-radius: 16px; }
+  #LogInDone button,
+  #SignUpDone button         { height: 44px; font-size: 1.1rem; }
+
+  /* ── Forgot password ── */
+  #ForgotPass               { border-radius: 16px; }
+  #ForgotPass h3            { font-size: 1.5rem; }
+  #ForgotPass .sendResetLink,
+  #ForgotPass .BackToLog    { height: 44px; font-size: 1rem; }
+
+  /* ── Sign-up / user type ── */
+  #CreateAcc, #UserType     { border-radius: 16px; }
+  #CreateAcc h3             { font-size: 1.6rem; }
+  #CreateAcc .getname input,
+  #CreateAcc .getmail input,
+  #CreateAcc .getpass input { font-size: 1.1rem; }
+  #CreateAcc button         { font-size: 1.2rem; height: 44px; }
+}
