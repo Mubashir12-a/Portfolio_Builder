@@ -27,7 +27,10 @@ const { Resend } = require("resend");
 const app = express();
 
 app.use(cors({
-  origin: "https://pb.portfoliobuilder153.workers.dev"
+  origin:  [
+    "https://portfolio-builder.online",
+    "https://pb.portfoliobuilder153.workers.dev"
+  ]
 }));
 
 app.use(express.json());
