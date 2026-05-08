@@ -461,7 +461,7 @@ function LogInDone({holdCont}){
             <h3>You're in, <em> welcome back!</em></h3>
             <p>Identity verified. Redirecting you to your dashboard in a moment...</p>
 
-            <button onClick={() => navigate("/userDash")}>
+            <button onClick={() => navigate("/Dash")}>
                 Go To Dashboard →
             </button>
         </div>
@@ -670,7 +670,7 @@ function SignUpDone({holdCont}){
             <h3>Account Created Successfully, <em> welcome!</em></h3>
             <p>Identity Stored. Redirecting you to your dashboard in a moment...</p>
 
-            <button onClick={() => navigate("/userDash")} >
+            <button onClick={() => navigate("/Dash")} >
                 Go To Dashboard →
             </button>
         </div>

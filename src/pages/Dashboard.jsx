@@ -4,6 +4,18 @@ import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from "../components/GeneralComponents/buttonPrimary.jsx";
 import Btn_Secondry from "../components/GeneralComponents/buttonSecondry.jsx";
 
+import profileImg from "../assets/profileImg.png";
+
+
+// Icons for Social Links:
+
+import Insta from "../assets/dashLinkIcons/Instagram.png";
+import faceB from "../assets/dashLinkIcons/Facebook.png";
+import Linked from "../assets/dashLinkIcons/LinkedIn.png";
+import git from "../assets/dashLinkIcons/Github.png";
+import port from "../assets/dashLinkIcons/Portfolio.png";
+import link from "../assets/dashLinkIcons/Link.png";
+
 
 function Dashboard(){
     return (
@@ -15,7 +27,9 @@ function Dashboard(){
 
                         <div className="headerDetailed">
                             <div className="burger">
-                                <img src="/" alt="" />
+                                <span className="lines"></span>
+                                <span className="lines"></span>
+                                <span className="lines"></span>
                             </div>
 
                             <div className="introTag">
@@ -29,18 +43,21 @@ function Dashboard(){
 
                     <section className="Container">
                         <section className="Sidebar">
-                            fghjkl
+                            <AddTabToSideBar TabName={"Theme"}/>
+                            <AddTabToSideBar TabName={"Theme"}/>
+                            <AddTabToSideBar TabName={"Theme"}/>
                         </section>
 
 
                         <section className="Grid">
                             <Details/>
-                            <Skills/>
+                            <ProfileImg url={profileImg}/>
                             <SocialMedia/>
                             <Resume/>
                             <Education/>
-                            <Projects/>
-                            <Experince/>
+                            {/* <Projects/> */}
+                            {/* <Experince/> */}
+                            {/* <Skills/> */}
                         </section>
                     </section>
 
@@ -66,7 +83,7 @@ function Details(){
         <>
             <div id="profileDetails">
                 <div className="aboutuser">
-                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel quae iste magni quod cupiditate ipsam, nobis nemo praesentium expedita sunt! Eaque magnam rerum explicabo commodi.</p>
+                    <p>Final-year BCA student and passionate developer focused on building modern web applications. Interested in programming, technology, and problem-solving, with hands-on experience in MERN stack projects and creating user-friendly digital experiences.</p>
                 </div>
 
                 <ul>
@@ -84,10 +101,22 @@ function Details(){
     )
 }
 
+function ProfileImg({url}){
+    return (
+        <>
+            <div id="ProfileImg">
+                <img src={url} alt="" />
+            </div>
+        </>
+    )
+}
+
 function Skills(){
     return (
         <>
             <div id="skillsDetails">
+                <h2>Skills:</h2>
+
                 <ul>
 
                     <Bars icon={"🪲"} prog={50}/>
@@ -125,32 +154,62 @@ function SocialMedia(){
             <div id="SocialMedia">
                 <ul>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={Insta} alt="" /></span>
+                            <div className="ref">
+                                <p>INSTAGRAM</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={faceB} alt="" /></span>
+                            <div className="ref">
+                                <p>FACEBOOK</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={git} alt="" /></span>
+                            <div className="ref">
+                                <p>GITHUB</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={Linked} alt="" /></span>
+                            <div className="ref">
+                                <p>LINKED-IN</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={port} alt="" /></span>
+                            <div className="ref">
+                                <p>PORTFOLIO</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                     <li>
-                        <span className="icon">🌱</span>
-                        <p>Lorem, ipsum dolor.</p>
+                        <a href="">
+                            <span className="icon"><img src={link} alt="" /></span>
+                            <div className="ref">
+                                <p>EXTRA</p>
+                                <p>https://demo.dev/home</p>
+                            </div>
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -163,10 +222,30 @@ function Education(){
     return (
         <>
             <div id="educationDetails">
-                <div className="edu_card school"></div>
-                <div className="edu_card higherEdu"></div>
-                <div className="edu_card college"></div>
-                <div className="edu_card highDegree"></div>
+                <div className="edu_card school">
+                    <h1>10Th</h1>
+                    <h2 className="name">Ramzan Memorial Educational Institute</h2>
+                    <h3 className="address">Soura Srinagar, J&K, 190011 India</h3>
+                    <h4 className="status">Completed</h4>
+                </div>
+                <div className="edu_card higherEdu">
+                    <h1>11Th/12Th</h1>
+                    <h2 className="name">Govt Boys Higher Secondary School Soura</h2>
+                    <h3 className="address">Soura Srinagar, J&K, 190011 India</h3>
+                    <h4 className="status">Completed</h4>
+                </div>
+                <div className="edu_card UG">
+                    <h1>UG Degree</h1>
+                    <h2>Islamia College of Sceince and Commerce</h2>
+                    <h3>Hawal Srinagar, J&K, 190011 India</h3>
+                    <h4 className="status">Ongoing</h4>
+                </div>
+                <div className="edu_card PG">
+                    <h1>PG Degree</h1>
+                    <h2>Islamia College of Sceince and Commerce</h2>
+                    <h3>Hawal Srinagar, J&K, 190011 India</h3>
+                    <h4 className="status">Not yet</h4>
+                </div>
             </div>
         </>
     )
@@ -224,6 +303,16 @@ function Exp_tabs({company, text}){
             <div className="exp_card exp_3">
                 <h2>{company}</h2>
                 <p>{text}</p>
+            </div>
+        </>
+    )
+}
+
+function AddTabToSideBar({TabName}){
+    return (
+        <>
+            <div id="SideTab">
+                <button>{TabName}</button>
             </div>
         </>
     )

@@ -8,18 +8,82 @@
 }
 
 #MainCont .Header {
-    background: green;
     width: 100%;
     height: 100px;
     display: flex;
     flex-direction: column;
+    border-bottom: 2px solid var(--violet);
 }
 
 #MainCont .Header .headerDetailed {
-    background: violet;
+    background: var(--bg2);
     width: 100%;
     height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
 }
+
+#MainCont .Header .headerDetailed .burger {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+    transition: var(--transition);
+}
+
+#MainCont .Header .headerDetailed .burger .lines {
+    height: 5px;
+    width: 100%;
+    background: var(--text);
+    border-radius: 20px;
+    transition: var(--transition);
+}   
+
+#MainCont .Header .headerDetailed .burger:hover .lines:nth-child(1) {
+    transform:  rotate(50deg) translate(10px,5px);
+    transition: var(--transition);
+}
+
+#MainCont .Header .headerDetailed .burger:hover .lines:nth-child(2) {
+    transform: translateX(15px);
+    transition: var(--transition);
+}
+
+#MainCont .Header .headerDetailed .burger:hover .lines:nth-child(3) {
+    transform:  rotate(-50deg) translate(10px,-5px);
+    transition: var(--transition);
+}
+
+#MainCont .Header .introTag {
+    height: 100%;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    color: var(--text-2);
+}
+
+#MainCont .Header .introTag .icon {
+    border: 2px solid var(--border);
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+
+
+
+
 
 #MainCont .Container {
     background: blue;
@@ -29,11 +93,42 @@
     overflow: hidden;
 }
 
+
+
+
+
+
 #MainCont .Container .Sidebar {
-    background: orange;
+    background: var(--bg2);
+    border-right: 2px solid var(--violet);
     flex: 1;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
 }
+
+#SideTab {
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+}
+
+#SideTab button {
+    height: 100%;
+    width: 100%;
+    background: var(--violet-dim);
+    border: 2px solid var(--violet);
+    border-radius: 5px;
+    color: var(--violet);
+    cursor: pointer;
+}
+
+
+
+
+
 
 #MainCont .Container .Grid {
     overflow-y: auto;
@@ -52,11 +147,11 @@
 /*///////////////Profilr Details/////////////////*/
 
 /* #experinceDetails, */
-#Resume,
 #SocialMedia,
+#skillsDetails ul,
 .exp_card,
 #profileDetails,
-#skillsDetails,
+#ProfileImg,
 #educationDetails,
 .ProjectCards {
     background: var(--Neo_bg);
@@ -71,6 +166,11 @@
     flex-direction: column;
     padding: 20px;
     justify-content: space-between;
+}
+
+#profileDetails .aboutuser {
+    font-size: 1.1rem;
+    color: var(--text);
 }
 
 
@@ -88,14 +188,40 @@
     border: 2px solid var(--border);
     border-radius: 10px;
     padding: 10px;
+    color: var(--text-2);
 }
 
 
 
-#skillsDetails {
+
+
+#ProfileImg {
     grid-column: 4/5;
     grid-row: 1/5;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to right, var(--violet), var(--coral));
+}
+
+#ProfileImg img {
+    height: 100%;
+}
+
+
+
+
+
+
+#skillsDetails {
+    grid-column: 1/2;
+    grid-row: 16/20;
+    padding: 20px;
+}
+
+#skillsDetails h2 {
+    font-size: 3rem;
 }
 
 #skillsDetails ul {
@@ -106,6 +232,8 @@
     list-style: none;
     overflow: auto;
     scrollbar-width: none;
+    margin: 20px 0;
+    padding: 10px;
 }
 
 #skillsDetails ul li {
@@ -143,7 +271,7 @@
     grid-row: 3/5;
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px 0;
 }
 
 #SocialMedia ul {
@@ -156,13 +284,49 @@
 }
 
 #SocialMedia ul li {
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 5px;
+    width: 90%;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+#SocialMedia ul li a {
+    text-decoration: none;
     display: flex;
     align-items: center;
     gap: 10px;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 10px;
-    width: 90%;
+}
+
+#SocialMedia ul li a span {
+    display: flex;
+    display: block;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#SocialMedia ul li a p {
+    color: var(--sky);
+    font-size: 1.2rem;
+}
+
+#SocialMedia ul li a p:nth-child(2){
+    color: var(--text-2);
+    text-decoration: underline;
+    font-size: 0.8rem;
+}
+
+#SocialMedia ul li a span img {
+    height: 150%;
+}
+
+#SocialMedia ul li:hover,
+#SocialMedia ul li:active {
+    transform: translateY(-5px);
+    transition: var(--transition);
 }
 
 
@@ -182,6 +346,25 @@
     flex: 1;
     background: var(--amber);
     border: none;
+    font-size: 1.5rem;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+#Resume button:nth-child(1){
+    border-radius: 20px 20px 0 0;
+    background: linear-gradient(to right, var(--coral), var(--amber));
+}
+
+#Resume button:nth-child(2){
+    border-radius: 0 0 20px 20px;
+    background: linear-gradient(to right, var(--amber), var(--coral));
+}
+
+#Resume button:active,
+#Resume button:hover {
+    transform: scale(0.95);
+    transition: var(--transition);
 }
 
 
@@ -195,13 +378,36 @@
     display: flex;
     gap: 20px;
     overflow: hidden;
+    background: linear-gradient(to right, var(--violet), var(--coral));
 }
 
 #educationDetails .edu_card {
-    background-color: var(--coral);
+    background: var(--Neo_bg);
     flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    color: var(--text-2);
 }
 
+#educationDetails .edu_card h1 {
+    font-size: 1.2rem;
+    color: var(--violet);
+}
+#educationDetails .edu_card h2 {
+    font-size: 0.9rem;
+}
+#educationDetails .edu_card h3 {
+    font-size: 0.6rem;
+    color: var(--coral);
+}
+
+#educationDetails .edu_card .status {
+    height: 20px;
+    width: 80%;
+    color: var(--mint);
+}
 
 
 
@@ -224,12 +430,14 @@
     align-items: center;
     gap: 20px;
     overflow: hidden;
+    background: linear-gradient(to right, var(--coral), var(--amber));
 }
 
 .ProjectCards .proj_card {
     background: var(--mint);
     height: 100%;
     flex: 1;
+    background: var(--Neo_bg);
 }
 
 
@@ -268,3 +476,8 @@
     border-right: 3px solid var(--coral);
     padding-right: 10px;
 }
+
+
+
+
+
