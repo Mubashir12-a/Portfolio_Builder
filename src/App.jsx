@@ -16,7 +16,7 @@ function App() {
     <>
 
       <BrowserRouter>
-        {/* <Routes>
+        <Routes>
           <Route path='/' element={<LandingPage/>}></Route>
           <Route path='/subscription' element={<Subscription/>}></Route>
           <Route path='/auth' element={<AuthPage/>}></Route>
@@ -25,13 +25,11 @@ function App() {
                 path="/userDash" 
                 element={
                           <ProtectedRoute>
-                            <UserDash />
+                              <Dash/>
                           </ProtectedRoute>
                         } 
           />
-        </Routes> */}
-
-        <Dash/>
+        </Routes> 
 
       </BrowserRouter>
 

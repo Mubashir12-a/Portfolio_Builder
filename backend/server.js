@@ -42,10 +42,9 @@ app.post("/send-otp", async (req, res) => {
 
   const otp = Math.floor(100000 + Math.random() * 900000);
 
-  // 🔥 STORE OTP (you forgot this earlier)
   otpStore[email] = {
     otp,
-    expires: Date.now() + 5 * 60 * 1000 // 5 minutes
+    expires: Date.now() + 5 * 60 * 1000
   };
 
   console.log("SENT OTP:", otp);
@@ -53,7 +52,7 @@ app.post("/send-otp", async (req, res) => {
 
   try {
     const response = await resend.emails.send({
-      from: "Portfolio Builder <onboarding@resend.dev>",
+      from: "Portfolio Builder <noreply@portfolio-builder.online>",
       to: email,
       subject: "Your OTP Code",
       html: `<h1>Your OTP is ${otp}</h1>`,
