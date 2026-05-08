@@ -10,7 +10,7 @@ import profileImg from "../assets/profileImg.png";
 // Icons for Social Links:
 
 import Insta from "../assets/dashLinkIcons/Instagram.png";
-import faceB from "../assets/dashLinkIcons/Facebook.png";
+import faceB from "../assets/dashLinkIcons/facebook.png";
 import Linked from "../assets/dashLinkIcons/LinkedIn.png";
 import git from "../assets/dashLinkIcons/Github.png";
 import port from "../assets/dashLinkIcons/Portfolio.png";
