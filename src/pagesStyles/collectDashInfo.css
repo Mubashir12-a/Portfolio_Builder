@@ -22,17 +22,48 @@
 #GetContact,
 #GetSocial {
     height: 100%;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    padding: 20px;
+    gap: 10px;
+    padding: 30px 20px;
 }
 
 #GetAbout h1,
 #GetContact h1,
 #GetSocial h1 {
-    color: var(--text-2);
+    display: none;
+}
+
+.step-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.step-badge {
+    background: rgba(123, 94, 248, 0.1);
+    color: var(--violet);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 1px solid rgba(123, 94, 248, 0.2);
+}
+
+.step-header h2 {
+    color: var(--text);
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.step-header h2 em {
+    color: var(--violet);
+    font-style: normal;
 }
 
 #GetAbout textarea {
@@ -55,19 +86,97 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-    margin: 30px 0;
+    margin: 20px 0;
 }
 
-#GetContact .inputs input,
-#GetSocial .inputs input {
-    width: 50%;
-    height: 100%;
+.phone-input-group {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.country-code-select {
+    background: var(--violet);
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 10px;
+    border: none;
+    cursor: pointer;
+    min-width: 140px;
+    font-weight: 600;
+    outline: none;
+}
+
+.country-code-select option {
+    background: var(--bg2);
+    color: var(--text-2);
+}
+
+.phone-input-group input {
+    flex: 1;
     background: var(--bg2);
     color: var(--sky);
-    padding: 10px;
-    font-size: 1.5rem;
+    padding: 12px 15px;
+    font-size: 1.3rem;
     border: none;
+    outline: none;
+}
+
+.social-inputs {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.social-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
     border-radius: 10px;
+    padding: 10px 15px;
+    transition: border-color 0.2s ease;
+}
+
+.social-input-row:focus-within {
+    border-color: var(--violet);
+}
+
+.social-input-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    min-width: 60px;
+}
+
+.social-input-icon span {
+    font-size: 1.5rem;
+}
+
+.social-input-icon label {
+    font-size: 0.65rem;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.social-input-row input {
+    flex: 1;
+    background: transparent;
+    color: var(--sky);
+    border: none;
+    outline: none;
+    font-size: 0.95rem;
+    padding: 5px 0;
 }
 
 .btns,
@@ -110,7 +219,7 @@
 }
 
 .dynamic-section h1 {
-    color: var(--text-2);
+    display: none;
 }
 
 .dynamic-item {

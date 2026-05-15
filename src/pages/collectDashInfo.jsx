@@ -171,6 +171,11 @@ function GetAbout({ setStep, formData, setFormData }) {
     return (
         <section id="GetAbout" className="dynamic-section">
             <h1>Step 1/7: Personal Info</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 1 of 7</span>
+                <h2>Tell us about <em>yourself.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Upload a photo and fill in your basic details.</p>
+            </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'var(--bg2)', overflow: 'hidden', border: '2px solid var(--border)', position: 'relative' }}>
@@ -200,11 +205,65 @@ function GetAbout({ setStep, formData, setFormData }) {
 }
 
 function GetContact({ setStep, formData, setFormData }) {
+    const [countryCode, setCountryCode] = useState('+91');
+
+    const countryCodes = [
+        { code: '+1', flag: '🇺🇸', label: 'US' },
+        { code: '+44', flag: '🇬🇧', label: 'UK' },
+        { code: '+91', flag: '🇮🇳', label: 'IN' },
+        { code: '+92', flag: '🇵🇰', label: 'PK' },
+        { code: '+971', flag: '🇦🇪', label: 'UAE' },
+        { code: '+966', flag: '🇸🇦', label: 'SA' },
+        { code: '+61', flag: '🇦🇺', label: 'AU' },
+        { code: '+49', flag: '🇩🇪', label: 'DE' },
+        { code: '+33', flag: '🇫🇷', label: 'FR' },
+        { code: '+81', flag: '🇯🇵', label: 'JP' },
+        { code: '+86', flag: '🇨🇳', label: 'CN' },
+        { code: '+55', flag: '🇧🇷', label: 'BR' },
+        { code: '+7',  flag: '🇷🇺', label: 'RU' },
+        { code: '+27', flag: '🇿🇦', label: 'ZA' },
+        { code: '+20', flag: '🇪🇬', label: 'EG' },
+    ];
+
+    const handlePhoneChange = (num) => {
+        setFormData({ ...formData, phone: `${countryCode} ${num}` });
+    };
+
+    const handleCodeChange = (code) => {
+        setCountryCode(code);
+        const numOnly = formData.phone?.replace(/^\+\d+\s*/, '') || '';
+        setFormData({ ...formData, phone: `${code} ${numOnly}` });
+    };
+
+    const numOnly = formData.phone?.replace(/^\+\d+\s*/, '') || '';
+
     return (
         <section id="GetContact">
-            <h1>Step 2/7: Enter Phone Number (with country code)</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 2 of 7</span>
+                <h2>Your <em>contact number.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Select your country code and enter your number.</p>
+            </div>
             <div className="inputs">
-                <input type="number" placeholder='Enter Phone no.' value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
+                <div className="phone-input-group">
+                    <select
+                        className="country-code-select"
+                        value={countryCode}
+                        onChange={(e) => handleCodeChange(e.target.value)}
+                    >
+                        {countryCodes.map(c => (
+                            <option key={c.code} value={c.code}>
+                                {c.flag} {c.code} ({c.label})
+                            </option>
+                        ))}
+                    </select>
+                    <input
+                        type="number"
+                        placeholder='Phone number'
+                        value={numOnly}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
+                    />
+                </div>
             </div>
             <div className="btns">
                 <button onClick={() => setStep(1)}>Back</button>
@@ -215,16 +274,38 @@ function GetContact({ setStep, formData, setFormData }) {
 }
 
 function GetSocial({ setStep, formData, handleSocialChange }) {
+    const socialFields = [
+        { name: 'instagram', label: 'Instagram', icon: '📸', placeholder: 'https://instagram.com/yourhandle' },
+        { name: 'facebook',  label: 'Facebook',  icon: '📘', placeholder: 'https://facebook.com/yourpage' },
+        { name: 'github',    label: 'GitHub',    icon: '🐙', placeholder: 'https://github.com/yourusername' },
+        { name: 'linkedin',  label: 'LinkedIn',  icon: '💼', placeholder: 'https://linkedin.com/in/yourprofile' },
+        { name: 'portfolio', label: 'Portfolio', icon: '🌐', placeholder: 'https://yourportfolio.com' },
+        { name: 'extra',     label: 'Extra Link',icon: '🔗', placeholder: 'Any other link' },
+    ];
+
     return (
         <section id="GetSocial">
-            <h1>Step 3/7: Paste Social Media Links</h1>
-            <div className="inputs">
-                <input type="text" name="instagram" placeholder='Instagram' value={formData.socialLinks.instagram} onChange={handleSocialChange} />
-                <input type="text" name="facebook" placeholder='Facebook' value={formData.socialLinks.facebook} onChange={handleSocialChange} />
-                <input type="text" name="github" placeholder='Github' value={formData.socialLinks.github} onChange={handleSocialChange} />
-                <input type="text" name="linkedin" placeholder='Linked-In' value={formData.socialLinks.linkedin} onChange={handleSocialChange} />
-                <input type="text" name="portfolio" placeholder='Portfolio' value={formData.socialLinks.portfolio} onChange={handleSocialChange} />
-                <input type="text" name="extra" placeholder='Extra' value={formData.socialLinks.extra} onChange={handleSocialChange} />
+            <div className="step-header">
+                <span className="step-badge">Step 3 of 7</span>
+                <h2>Social <em>links.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Paste your public profile URLs below.</p>
+            </div>
+            <div className="social-inputs">
+                {socialFields.map(field => (
+                    <div key={field.name} className="social-input-row">
+                        <div className="social-input-icon">
+                            <span>{field.icon}</span>
+                            <label>{field.label}</label>
+                        </div>
+                        <input
+                            type="text"
+                            name={field.name}
+                            placeholder={field.placeholder}
+                            value={formData.socialLinks[field.name]}
+                            onChange={handleSocialChange}
+                        />
+                    </div>
+                ))}
             </div>
             <div className="btns">
                 <button onClick={() => setStep(2)}>Back</button>
@@ -238,6 +319,11 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
     return (
         <section id="GetEducation" className="dynamic-section">
             <h1>Step 4/7: Education Details</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 4 of 7</span>
+                <h2>Your <em>education.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Fill in your academic qualifications below.</p>
+            </div>
             {formData.education.map((edu, idx) => (
                 <div key={idx} className="dynamic-item">
                     <h3>{edu.level}</h3>
@@ -293,6 +379,11 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
     return (
         <section id="GetProjects" className="dynamic-section">
             <h1>Step 5/7: Projects</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 5 of 7</span>
+                <h2>Your <em>projects.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Showcase your best work with links and images.</p>
+            </div>
             {formData.projects.map((proj, idx) => (
                 <div key={idx} className="dynamic-item">
                     <h3>Project {idx + 1}</h3>
@@ -349,6 +440,11 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
     return (
         <section id="GetExperience" className="dynamic-section">
             <h1>Step 6/7: Experience</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 6 of 7</span>
+                <h2>Your <em>experience.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Add companies and roles you've worked with.</p>
+            </div>
             {formData.experience.map((exp, idx) => (
                 <div key={idx} className="dynamic-item">
                     <h3>Experience {idx + 1}</h3>
@@ -404,6 +500,11 @@ function GetSkills({ setStep, formData, handleArrayChange, handleSubmit }) {
     return (
         <section id="GetSkills" className="dynamic-section">
             <h1>Step 7/7: Skills</h1>
+            <div className="step-header">
+                <span className="step-badge">Step 7 of 7 · Final</span>
+                <h2>Your <em>skills.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Upload icons and rate each skill out of 100.</p>
+            </div>
             {formData.skills.map((skill, idx) => (
                 <div key={idx} className="dynamic-item-horizontal">
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>

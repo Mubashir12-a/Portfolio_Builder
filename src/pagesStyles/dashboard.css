@@ -146,11 +146,18 @@
   background-position: center;
   background-size: contain;
   flex: 10;
-  padding: 20px 20px 50px 20px;
+  padding: 20px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 60px;
   gap: 20px;
+}
+
+#MainCont .Container .Grid::after {
+  content: "";
+  grid-column: 1 / -1;
+  grid-row: 20 / 21;
+  height: 50px;
 }
 
 /*///////////////Profilr Details/////////////////*/

@@ -96,7 +96,6 @@ function Dashboard() {
                         <Projects projects={userData.projects || []} />
                         <Experince experience={userData.experience || []} />
                         <Skills skills={userData.skills || []} />
-                        <Education education={userData.education || []} />
                     </section>
                 </section>
 
