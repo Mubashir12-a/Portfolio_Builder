@@ -21,6 +21,13 @@ import link from "../assets/dashLinkIcons/Link.png";
 
 function Dashboard() {
     const [userData, setUserData] = useState(null);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/auth');
+    };
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -53,7 +60,7 @@ function Dashboard() {
                     <Header comp={BtnsSet} />
 
                     <div className="headerDetailed">
-                        <div className="burger">
+                        <div className={`burger ${isSidebarOpen ? 'open' : ''}`} onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                             <span className="lines"></span>
                             <span className="lines"></span>
                             <span className="lines"></span>
@@ -61,7 +68,11 @@ function Dashboard() {
 
                         <div className="introTag">
                             <h3>{userData.name}</h3>
-                            <div className="icon">{userData.name.substring(0, 2).toUpperCase()}</div>
+                            {userData.profileImage ? (
+                                <img src={userData.profileImage} alt="Profile" className="icon" style={{ objectFit: 'cover', padding: 0 }} />
+                            ) : (
+                                <div className="icon">{userData.name.substring(0, 2).toUpperCase()}</div>
+                            )}
                         </div>
                     </div>
                 </section>
@@ -69,15 +80,11 @@ function Dashboard() {
 
 
                 <section className="Container">
-                    <section className="Sidebar">
-                        <AddTabToSideBar TabName={"Templates"} />
-                        <AddTabToSideBar TabName={"BookMarked"} />
-                        <AddTabToSideBar TabName={"View Resume"} />
-                        <AddTabToSideBar TabName={"Download Resume"} />
-                        <AddTabToSideBar TabName={"Primary Portfolio"} />
-                        <AddTabToSideBar TabName={"ACtive Plan"} />
-                        <AddTabToSideBar TabName={"Help/Support"} />
-                        <AddTabToSideBar TabName={"Logout"} />
+                    <section className={`Sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
+                        <AddTabToSideBar TabName={"Edit Profile"} icon="✏️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/collect-info")} />
+                        <AddTabToSideBar TabName={"View Resume"} icon="📄" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume")} />
+                        <AddTabToSideBar TabName={"Download Resume"} icon="⬇️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume")} />
+                        <AddTabToSideBar TabName={"Logout"} icon="🚪" isSidebarOpen={isSidebarOpen} onClick={handleLogout} />
                     </section>
 
 
@@ -175,11 +182,26 @@ function Skills({ skills }) {
 }
 
 function Bars({ icon, prog }) {
+    // Check if icon is a URL or emoji
+    const isUrl = icon && icon.startsWith('http');
+    const [animatedProg, setAnimatedProg] = useState(0);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setAnimatedProg(Math.max(1, prog));
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [prog]);
+
     return (
         <>
             <li>
-                <span className="icon">{icon}</span>
-                <div className="bar"></div>
+                <span className="icon">
+                    {isUrl ? <img src={icon} alt="skill" style={{ width: '24px', height: '24px', objectFit: 'contain' }} /> : icon}
+                </span>
+                <div className="bar">
+                    <div className="bar-fill" style={{ width: `${animatedProg}%`, height: '100%', background: 'linear-gradient(50deg, var(--violet), var(--coral), var(--amber))', borderRadius: '20px', transition: 'width 1s ease-in-out' }}></div>
+                </div>
                 <p className="progress">{prog}%</p>
             </li>
         </>
@@ -314,9 +336,22 @@ function Projects({ projects }) {
                     {projects.length > 0 ? projects.map((proj, i) => {
                         if (!proj.title) return null;
                         return (
-                            <div key={i} className={`proj_card Proj_${(i % 3) + 1}`} style={{ padding: '1rem', color: '#fff' }}>
-                                <h3 style={{ margin: 0, fontSize: '20px' }}>{proj.title}</h3>
-                                <p style={{ fontSize: '12px', marginTop: '10px' }}>{proj.description}</p>
+                            <div key={i} className={`proj_card Proj_${(i % 3) + 1}`} style={{ padding: '1rem', color: '#fff', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                                {proj.image && (
+                                    <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0, opacity: 0.3 }}>
+                                        <img src={proj.image} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
+                                )}
+                                <div style={{ zIndex: 1, position: 'relative' }}>
+                                    {proj.link ? (
+                                        <a href={proj.link.startsWith('http') ? proj.link : `https://${proj.link}`} target="_blank" rel="noreferrer" style={{ color: '#fff', textDecoration: 'none' }}>
+                                            <h3 style={{ margin: 0, fontSize: '20px', textDecoration: 'underline' }}>{proj.title}</h3>
+                                        </a>
+                                    ) : (
+                                        <h3 style={{ margin: 0, fontSize: '20px' }}>{proj.title}</h3>
+                                    )}
+                                    <p style={{ fontSize: '12px', marginTop: '10px' }}>{proj.description}</p>
+                                </div>
                             </div>
                         )
                     }) : <p>No projects added.</p>}
@@ -355,11 +390,14 @@ function Exp_tabs({ company, text }) {
     )
 }
 
-function AddTabToSideBar({ TabName }) {
+function AddTabToSideBar({ TabName, icon, isSidebarOpen, onClick }) {
     return (
         <>
-            <div id="SideTab">
-                <button>{TabName}</button>
+            <div id="SideTab" onClick={onClick}>
+                <button style={{ display: 'flex', alignItems: 'center', justifyContent: isSidebarOpen ? 'flex-start' : 'center', padding: '0 10px' }}>
+                    <span className="icon" style={{ fontSize: '1.2rem', marginRight: isSidebarOpen ? '10px' : '0' }}>{icon}</span>
+                    <span className="text" style={{ display: isSidebarOpen ? 'inline' : 'none' }}>{TabName}</span>
+                </button>
             </div>
         </>
     )

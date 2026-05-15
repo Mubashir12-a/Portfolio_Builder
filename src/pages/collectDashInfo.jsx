@@ -23,9 +23,9 @@ function CollectDashInfo() {
             { level: 'PG Degree', name: '', address: '', status: 'Not yet' }
         ],
         projects: [
-            { title: '', description: '' },
-            { title: '', description: '' },
-            { title: '', description: '' }
+            { title: '', description: '', link: '', image: '' },
+            { title: '', description: '', link: '', image: '' },
+            { title: '', description: '', link: '', image: '' }
         ],
         experience: [
             { company: '', description: '' },
@@ -259,6 +259,37 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
 }
 
 function GetProjects({ setStep, formData, handleArrayChange }) {
+    const handleImageUpload = async (e, idx) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert("File is too large (max 1MB).");
+            return;
+        }
+
+        const data = new FormData();
+        data.append("image", file);
+
+        try {
+            const token = localStorage.getItem('token');
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: data
+            });
+            const result = await res.json();
+            if (result.success) {
+                handleArrayChange('projects', idx, 'image', result.url);
+            } else {
+                alert(result.message || "Upload failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed");
+        }
+    };
+
     return (
         <section id="GetProjects" className="dynamic-section">
             <h1>Step 5/7: Projects</h1>
@@ -267,6 +298,12 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
                     <h3>Project {idx + 1}</h3>
                     <input type="text" placeholder="Project Title" value={proj.title} onChange={(e) => handleArrayChange('projects', idx, 'title', e.target.value)} />
                     <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)}></textarea>
+                    <input type="text" placeholder="Live Link/URL" value={proj.link || ''} onChange={(e) => handleArrayChange('projects', idx, 'link', e.target.value)} />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', fontSize: '12px' }}>
+                        {proj.image && <img src={proj.image} alt="Project" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '5px' }} />}
+                        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} />
+                        <span>Project Image</span>
+                    </div>
                 </div>
             ))}
             <div className="btns">
@@ -297,12 +334,50 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
 }
 
 function GetSkills({ setStep, formData, handleArrayChange, handleSubmit }) {
+    const handleImageUpload = async (e, idx) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert("File is too large (max 1MB).");
+            return;
+        }
+
+        const data = new FormData();
+        data.append("image", file);
+
+        try {
+            const token = localStorage.getItem('token');
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: data
+            });
+            const result = await res.json();
+            if (result.success) {
+                handleArrayChange('skills', idx, 'icon', result.url);
+            } else {
+                alert(result.message || "Upload failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed");
+        }
+    };
+
     return (
         <section id="GetSkills" className="dynamic-section">
             <h1>Step 7/7: Skills</h1>
             {formData.skills.map((skill, idx) => (
                 <div key={idx} className="dynamic-item-horizontal">
-                    <input type="text" placeholder="Emoji (💻)" value={skill.icon} onChange={(e) => handleArrayChange('skills', idx, 'icon', e.target.value)} style={{ width: '80px', flex: 'none' }} />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+                        {skill.icon && skill.icon.startsWith('http') ? (
+                            <img src={skill.icon} alt="icon" style={{ width: '30px', height: '30px', objectFit: 'contain' }} />
+                        ) : (
+                            <span style={{ fontSize: '24px' }}>{skill.icon || '💻'}</span>
+                        )}
+                        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} style={{ width: '80px', fontSize: '10px' }} title="Upload Skill Icon" />
+                    </div>
                     <input type="text" placeholder="Skill Name" value={skill.name} onChange={(e) => handleArrayChange('skills', idx, 'name', e.target.value)} style={{ flex: 1 }} />
                     <input type="number" placeholder="%" value={skill.progress} onChange={(e) => handleArrayChange('skills', idx, 'progress', parseInt(e.target.value))} style={{ width: '80px', flex: 'none' }} min="0" max="100" />
                 </div>

@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
   },
 
   education: [{ level: String, name: String, address: String, status: String }],
-  projects: [{ title: String, description: String }],
+  projects: [{ title: String, description: String, link: String, image: String }],
   experience: [{ company: String, description: String }],
   skills: [{ name: String, icon: String, progress: Number }]
 
