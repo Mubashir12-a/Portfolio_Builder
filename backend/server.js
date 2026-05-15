@@ -41,6 +41,7 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.use(cors({
   origin:  [
+    "http://localhost:5173",
     "https://portfolio-builder.online",
     "https://pb.portfoliobuilder153.workers.dev"
   ]
