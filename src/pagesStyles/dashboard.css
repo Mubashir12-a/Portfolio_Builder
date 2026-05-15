@@ -152,8 +152,7 @@
 .exp_card,
 #profileDetails,
 #ProfileImg,
-#educationDetails,
-.ProjectCards {
+#educationDetails {
   background: var(--Neo_bg);
   border-radius: 10px;
   box-shadow: var(--box-shadow);

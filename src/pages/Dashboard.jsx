@@ -19,7 +19,7 @@ import port from "../assets/dashLinkIcons/Portfolio.png";
 import link from "../assets/dashLinkIcons/Link.png";
 
 
-function Dashboard(){
+function Dashboard() {
     const [userData, setUserData] = useState(null);
 
     useEffect(() => {
@@ -42,51 +42,56 @@ function Dashboard(){
     }, []);
 
     if (!userData) {
-        return <div style={{textAlign: 'center', marginTop: '50px'}}>Loading...</div>;
+        return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</div>;
     }
 
     return (
         <>
             <section id="MainCont">
-                    
-                    <section className="Header">
-                        <Header comp={BtnsSet}/>
 
-                        <div className="headerDetailed">
-                            <div className="burger">
-                                <span className="lines"></span>
-                                <span className="lines"></span>
-                                <span className="lines"></span>
-                            </div>
+                <section className="Header">
+                    <Header comp={BtnsSet} />
 
-                            <div className="introTag">
-                                <h3>{userData.name}</h3>
-                                <div className="icon">{userData.name.substring(0,2).toUpperCase()}</div>
-                            </div>
+                    <div className="headerDetailed">
+                        <div className="burger">
+                            <span className="lines"></span>
+                            <span className="lines"></span>
+                            <span className="lines"></span>
                         </div>
+
+                        <div className="introTag">
+                            <h3>{userData.name}</h3>
+                            <div className="icon">{userData.name.substring(0, 2).toUpperCase()}</div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+                <section className="Container">
+                    <section className="Sidebar">
+                        <AddTabToSideBar TabName={"Templates"} />
+                        <AddTabToSideBar TabName={"BookMarked"} />
+                        <AddTabToSideBar TabName={"View Resume"} />
+                        <AddTabToSideBar TabName={"Download Resume"} />
+                        <AddTabToSideBar TabName={"Primary Portfolio"} />
+                        <AddTabToSideBar TabName={"ACtive Plan"} />
+                        <AddTabToSideBar TabName={"Help/Support"} />
+                        <AddTabToSideBar TabName={"Logout"} />
                     </section>
 
 
-
-                    <section className="Container">
-                        <section className="Sidebar">
-                            <AddTabToSideBar TabName={"Theme"}/>
-                            <AddTabToSideBar TabName={"Theme"}/>
-                            <AddTabToSideBar TabName={"Theme"}/>
-                        </section>
-
-
-                        <section className="Grid">
-                            <Details userData={userData}/>
-                            <ProfileImg url={userData.profileImage || profileImg}/>
-                            <SocialMedia socialLinks={userData.socialLinks || {}}/>
-                            <Resume/>
-                            <Education education={userData.education || []}/>
-                            <Projects projects={userData.projects || []}/>
-                            <Experince experience={userData.experience || []}/>
-                            <Skills skills={userData.skills || []}/>
-                        </section>
+                    <section className="Grid">
+                        <Details userData={userData} />
+                        <ProfileImg url={userData.profileImage || profileImg} />
+                        <SocialMedia socialLinks={userData.socialLinks || {}} />
+                        <Resume />
+                        <Education education={userData.education || []} />
+                        <Projects projects={userData.projects || []} />
+                        <Experince experience={userData.experience || []} />
+                        <Skills skills={userData.skills || []} />
                     </section>
+                </section>
 
             </section>
         </>
@@ -95,25 +100,25 @@ function Dashboard(){
 
 export default Dashboard;
 
-function BtnsSet(){
+function BtnsSet() {
     return (
         <>
-            <Btn_Primary title={"Home"} to={"/"}/>
-            <Btn_Primary title={"Templates"} to={"/"}/>
+            <Btn_Primary title={"Home"} to={"/"} />
+            <Btn_Primary title={"Templates"} to={"/"} />
         </>
     )
 }
 
 
-function Details({userData}){
+function Details({ userData }) {
     const navigate = useNavigate();
     return (
         <>
             <div id="profileDetails">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                     <h3 style={{ margin: 0, color: 'var(--text-2)' }}>About Me</h3>
-                    <button 
-                        onClick={() => navigate("/collect-info")} 
+                    <button
+                        onClick={() => navigate("/collect-info")}
                         style={{ background: 'var(--violet)', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
                     >
                         Edit Profile
@@ -142,7 +147,7 @@ function Details({userData}){
     )
 }
 
-function ProfileImg({url}){
+function ProfileImg({ url }) {
     return (
         <>
             <div id="ProfileImg" style={{ position: 'relative', overflow: 'hidden' }}>
@@ -152,7 +157,7 @@ function ProfileImg({url}){
     )
 }
 
-function Skills({skills}){
+function Skills({ skills }) {
     return (
         <>
             <div id="skillsDetails">
@@ -161,7 +166,7 @@ function Skills({skills}){
                 <ul>
                     {skills.length > 0 ? skills.map((s, i) => {
                         if (!s.name) return null;
-                        return <Bars key={i} icon={s.icon || "💻"} prog={s.progress || 50}/>
+                        return <Bars key={i} icon={s.icon || "💻"} prog={s.progress || 50} />
                     }) : <p>No skills added.</p>}
                 </ul>
             </div>
@@ -169,7 +174,7 @@ function Skills({skills}){
     )
 }
 
-function Bars({icon, prog}){
+function Bars({ icon, prog }) {
     return (
         <>
             <li>
@@ -182,7 +187,7 @@ function Bars({icon, prog}){
 }
 
 
-function SocialMedia({socialLinks}){
+function SocialMedia({ socialLinks }) {
     return (
         <>
             <div id="SocialMedia">
@@ -264,7 +269,7 @@ function SocialMedia({socialLinks}){
 }
 
 
-function Education({education}){
+function Education({ education }) {
     return (
         <>
             <div id="educationDetails">
@@ -280,14 +285,14 @@ function Education({education}){
                             <h4 className="status">{edu.status}</h4>
                         </div>
                     );
-                }) : <p style={{padding:'20px'}}>No education added.</p>}
+                }) : <p style={{ padding: '20px' }}>No education added.</p>}
             </div>
         </>
     )
 }
 
 
-function Resume(){
+function Resume() {
     const navigate = useNavigate();
     return (
         <>
@@ -299,19 +304,19 @@ function Resume(){
 }
 
 
-function Projects({projects}){
+function Projects({ projects }) {
     return (
         <>
             <div id="projectDetails">
                 <h2 className="headTag">Projects:</h2>
-                
+
                 <div className="ProjectCards">
                     {projects.length > 0 ? projects.map((proj, i) => {
                         if (!proj.title) return null;
                         return (
-                            <div key={i} className={`proj_card Proj_${(i%3)+1}`} style={{padding:'1rem', color:'#fff'}}>
-                                <h3 style={{margin:0, fontSize:'20px'}}>{proj.title}</h3>
-                                <p style={{fontSize:'12px', marginTop:'10px'}}>{proj.description}</p>
+                            <div key={i} className={`proj_card Proj_${(i % 3) + 1}`} style={{ padding: '1rem', color: '#fff' }}>
+                                <h3 style={{ margin: 0, fontSize: '20px' }}>{proj.title}</h3>
+                                <p style={{ fontSize: '12px', marginTop: '10px' }}>{proj.description}</p>
                             </div>
                         )
                     }) : <p>No projects added.</p>}
@@ -321,7 +326,7 @@ function Projects({projects}){
     )
 }
 
-function Experince({experience}){
+function Experince({ experience }) {
     return (
         <>
             <div id="experinceDetails">
@@ -330,16 +335,16 @@ function Experince({experience}){
                 <div className="Exp_Tabs">
                     {experience.length > 0 ? experience.map((exp, i) => {
                         if (!exp.company) return null;
-                        return <Exp_tabs key={i} company={exp.company} text={exp.description}/>;
+                        return <Exp_tabs key={i} company={exp.company} text={exp.description} />;
                     }) : <p>No experience added.</p>}
                 </div>
-                
+
             </div>
         </>
     )
 }
 
-function Exp_tabs({company, text}){
+function Exp_tabs({ company, text }) {
     return (
         <>
             <div className="exp_card exp_3">
@@ -350,7 +355,7 @@ function Exp_tabs({company, text}){
     )
 }
 
-function AddTabToSideBar({TabName}){
+function AddTabToSideBar({ TabName }) {
     return (
         <>
             <div id="SideTab">

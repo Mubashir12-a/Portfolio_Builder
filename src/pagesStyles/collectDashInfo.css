@@ -1,6 +1,6 @@
 #collectinfo {
     background: var(--bg);
-    height: 500px;
+    height: auto;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -9,6 +9,7 @@
 
 #collectinfo .container {
     height: auto;
+    margin-top: 50px;
     width: 80%;
     background: var(--surface2);
     border: 2px solid var(--border);
@@ -38,8 +39,8 @@
     resize: none;
     height: 300px;
     width: 95%;
-    border-radius: 10px;   
-    background: var(--bg2); 
+    border-radius: 10px;
+    background: var(--bg2);
     color: var(--text-2);
     padding: 20px;
     font-size: 1rem;
@@ -61,12 +62,12 @@
 #GetSocial .inputs input {
     width: 50%;
     height: 100%;
-    background: var(--bg2); 
+    background: var(--bg2);
     color: var(--sky);
     padding: 10px;
     font-size: 1.5rem;
     border: none;
-    border-radius: 10px;   
+    border-radius: 10px;
 }
 
 .btns,
@@ -83,7 +84,7 @@
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--bg);
-    color: white;
+    color: var(--text-2);
     font-size: 1rem;
     letter-spacing: 2px;
     font-weight: bold;
@@ -130,7 +131,9 @@
     font-size: 18px;
 }
 
-.dynamic-item input, .dynamic-item select, .dynamic-item textarea {
+.dynamic-item input,
+.dynamic-item select,
+.dynamic-item textarea {
     background: var(--bg);
     color: var(--text-2);
     border: 1px solid var(--border);
