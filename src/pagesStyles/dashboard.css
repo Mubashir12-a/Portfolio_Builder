@@ -357,39 +357,76 @@
   grid-column: 1/5;
   grid-row: 7/10;
   display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+#educationDetails .headTag {
+  margin: 30px 0 10px 0;
+  font-size: 3rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+#educationDetails .EduCards {
+  display: flex;
+  height: 100%;
+  justify-content: space-evenly;
+  align-items: center;
   gap: 20px;
   overflow: hidden;
-  background: linear-gradient(to right, var(--violet), var(--coral));
 }
 
-#educationDetails .edu_card {
-  background: var(--Neo_bg);
+#educationDetails .EduCards .edu_card {
+  height: 100%;
   flex: 1;
-  padding: 10px;
+  background: var(--Neo_bg);
+  border-radius: 10px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
+  gap: 15px;
   color: var(--text-2);
+  border: 2px solid var(--border);
+  transition: var(--transition);
 }
 
-#educationDetails .edu_card h1 {
-  font-size: 1.2rem;
+#educationDetails .EduCards .edu_card:hover {
+  border-color: var(--violet);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+#educationDetails .EduCards .edu_card h1 {
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 5px;
+}
+
+#educationDetails .EduCards .edu_card h2 {
+  font-size: 1.1rem;
   color: var(--violet);
+  font-weight: 600;
 }
 
-#educationDetails .edu_card h2 {
+#educationDetails .EduCards .edu_card h3 {
   font-size: 0.9rem;
+  color: var(--text-2);
+  opacity: 0.8;
 }
 
-#educationDetails .edu_card h3 {
-  font-size: 0.6rem;
-  color: var(--coral);
-}
-
-#educationDetails .edu_card .status {
-  height: 20px;
-  width: 80%;
-  color: var(--mint);
+#educationDetails .EduCards .edu_card .status {
+  margin-top: auto;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  background: rgba(123, 94, 248, 0.1);
+  color: var(--violet);
+  border-radius: 6px;
+  display: inline-block;
+  width: fit-content;
+  border: 1px solid rgba(123, 94, 248, 0.3);
 }
 
 

@@ -65,6 +65,13 @@ app.post("/send-otp", async (req, res) => {
     }
   }
 
+  if (type === "forgot-password") {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found. Please sign up." });
+    }
+  }
+
   if (type === "signup") {
     const user = await User.findOne({ email });
     if (user) {
@@ -247,11 +254,17 @@ app.post("/verify-otp", async (req, res) => {
       }
 
       // LOGIN CHECK
-      if (!user) {
+      if (!user && type !== "forgot-password") {
         return res.json({
           success: false,
           message: "User not found"
         });
+      }
+
+      if (type === "forgot-password") {
+        delete otpStore[email];
+        const resetToken = jwt.sign({ email }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '15m' });
+        return res.json({ success: true, resetToken });
       }
 
       delete otpStore[email];
@@ -275,6 +288,31 @@ app.post("/verify-otp", async (req, res) => {
   }
 
   return res.json({ success: false });
+});
+
+// ================= RESET PASSWORD =================
+app.post("/reset-password", async (req, res) => {
+  const { resetToken, newPassword } = req.body;
+
+  if (!resetToken || !newPassword) {
+    return res.status(400).json({ message: "Missing token or password" });
+  }
+
+  try {
+    const decoded = jwt.verify(resetToken, process.env.JWT_SECRET || 'secret_key');
+    const user = await User.findOne({ email: decoded.email });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return res.json({ success: true, message: "Password updated successfully" });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
 });
 
 // ================= MIDDLEWARE =================

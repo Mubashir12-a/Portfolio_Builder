@@ -112,7 +112,19 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
             )}
 
             {HoldLogInCont === 'ForgotPass' && (
-                <ForgotPass holdCont={setHoldLogInCont}/>
+                <ForgotPass holdCont={setHoldLogInCont} setUserEmail={setUserEmail}/>
+            )}
+
+            {HoldLogInCont === 'OTPVerify_Forgot' && (
+                <GetLoginOTP 
+                    holdCont={setHoldLogInCont} 
+                    userEmail={userEmail}
+                    type="forgot-password"
+                />
+            )}
+
+            {HoldLogInCont === 'ResetPassword' && (
+                <ResetPassword holdCont={setHoldLogInCont} />
             )}
         </>
     );
@@ -325,20 +337,17 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
                 setOtp(["", "", "", "", "", ""]);
 
                 if (type === "signup") {
-                
                     navigate("/collect-info");
-                
                 } 
+                else if (type === "forgot-password") {
+                    localStorage.setItem("resetToken", data.resetToken);
+                    holdCont("ResetPassword");
+                }
                 else {
-                
                     if (data.user.profileCompleted) {
-                    
                         holdCont("LogInDone");
-                    
                     } else {
-                    
                         navigate("/collect-info");
-                    
                     }
                 }
             } else {
@@ -446,12 +455,47 @@ const BackJump = (e) => {
 
 
 
-function ForgotPass({holdCont}){
+function ForgotPass({holdCont, setUserEmail}){
+    const [email, setEmail] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const handleSendOTP = async () => {
+        if (!email) return setErrorMsg("Email is required");
+
+        setErrorMsg("");
+        setLoading(true);
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/send-otp`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, type: "forgot-password" })
+            });
+
+            const data = await res.json();
+            if (data.message === "OTP sent") {
+                setUserEmail(email);
+                holdCont('OTPVerify_Forgot');
+            } else {
+                setErrorMsg(data.message || "Failed to send OTP");
+            }
+        } catch (err) {
+            console.error(err);
+            setErrorMsg("Server error. Try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <>
-            <div id="ForgotPass">
+            <div id="ForgotPass" style={{display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto'}}>
                 <h3>Reset your <em>password.</em></h3>
                 <p>Enter your email and we'll send a reset link.</p>
+
+                {errorMsg && <AlertBox AlertMsg={errorMsg} />}
 
                 <div className="getmail">
                     <label>Email Address</label>
@@ -459,14 +503,102 @@ function ForgotPass({holdCont}){
                         type="email"
                         id="forgotEmail"
                         placeholder="you@domain.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
 
-                <button className='sendResetLink'>Send Reset Link →</button>
+                <button className='sendResetLink' onClick={handleSendOTP}>
+                    {loading ? <LoadingForAuth /> : "Send Reset Code →"}
+                </button>
                 <button className='BackToLog' onClick={() => {holdCont('GetLoginInfo')}}>← Back To Log-In</button>
             </div>
         </>
     )
+}
+
+function ResetPassword({ holdCont }) {
+    const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [successMsg, setSuccessMsg] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[._\-\/@])[A-Za-z\d._\-\/@]{8,}$/;
+
+    const handleReset = async () => {
+        if (!password) return setErrorMsg("Password is required");
+        if (!passwordRegex.test(password)) {
+            return setErrorMsg("Password must include [A-Z], [a-z], [0-9] & (._-/@)");
+        }
+
+        setErrorMsg("");
+        setLoading(true);
+        const resetToken = localStorage.getItem("resetToken");
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/reset-password`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ resetToken, newPassword: password })
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                localStorage.removeItem("resetToken");
+                setSuccessMsg("Password reset successfully. Redirecting...");
+                setTimeout(() => holdCont('GetLoginInfo'), 2000);
+            } else {
+                setErrorMsg(data.message || "Failed to reset password");
+            }
+        } catch (err) {
+            console.error(err);
+            setErrorMsg("Server error. Try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (successMsg) {
+        return (
+            <div id="LogInDone">
+                <span>✓</span>
+                <h3><em>Success!</em></h3>
+                <p>{successMsg}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div id="ResetPassword" style={{display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto'}}>
+            <h3>Create new <em>password.</em></h3>
+            <p>Please enter your new secure password.</p>
+
+            {errorMsg && <AlertBox AlertMsg={errorMsg} />}
+
+            <div className="getpass">
+                <p className='instruct'>min. 8 characters</p>
+                <label>New Password</label>
+                <input
+                    type="password"
+                    placeholder="Set Your New Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+            </div>
+
+            <div className="passwordStrongBar">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <button onClick={handleReset}>
+                {loading ? <LoadingForAuth /> : "Reset Password ✓"}
+            </button>
+        </div>
+    );
 }
 
 

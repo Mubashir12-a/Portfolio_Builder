@@ -288,19 +288,20 @@ function Education({ education }) {
     return (
         <>
             <div id="educationDetails">
-                {education.length > 0 ? education.map((edu, i) => {
-                    if (!edu.name) return null;
-                    const classes = ['school', 'higherEdu', 'UG', 'PG'];
-                    const cardClass = classes[i % classes.length];
-                    return (
-                        <div key={i} className={`edu_card ${cardClass}`}>
-                            <h1>{edu.level}</h1>
-                            <h2 className="name">{edu.name}</h2>
-                            <h3 className="address">{edu.address}</h3>
-                            <h4 className="status">{edu.status}</h4>
-                        </div>
-                    );
-                }) : <p style={{ padding: '20px' }}>No education added.</p>}
+                <h2 className="headTag">Education:</h2>
+                <div className="EduCards">
+                    {education.length > 0 ? education.map((edu, i) => {
+                        if (!edu.name) return null;
+                        return (
+                            <div key={i} className="edu_card">
+                                <h1>{edu.level}</h1>
+                                <h2 className="name">{edu.name}</h2>
+                                <h3 className="address">{edu.address}</h3>
+                                <h4 className="status">{edu.status}</h4>
+                            </div>
+                        );
+                    }) : <p style={{ padding: '20px' }}>No education added.</p>}
+                </div>
             </div>
         </>
     )

@@ -34,12 +34,12 @@ export default function ResumeView() {
     const handleDownload = () => {
         const element = resumeRef.current;
         const opt = {
-            margin:       0,
+            margin:       [10, 0, 10, 0],
             filename:     `${userData.name.replace(/\\s+/g, '_')}_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak:    { mode: ['css', 'legacy'] }
+            html2canvas:  { scale: 2, useCORS: true },
+            jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'], avoid: ['.resume-item', '.resume-visual-item', '.resume-header', 'h2', 'h3', '.resume-large-image'] }
         };
         html2pdf().set(opt).from(element).save();
     };
