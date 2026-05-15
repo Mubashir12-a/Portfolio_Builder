@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../pagesStyles/CollectDashInfo.css';
+import '../pagesStyles/collectDashInfo.css';
 
 function CollectDashInfo() {
     const [step, setStep] = useState(1);
@@ -55,7 +55,7 @@ function CollectDashInfo() {
         try {
             const token = localStorage.getItem('token');
             const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-            
+
             const res = await fetch(`${apiUrl}/api/user/profile`, {
                 method: 'PUT',
                 headers: {
@@ -79,7 +79,7 @@ function CollectDashInfo() {
 
     return (
         <section id="collectinfo">
-            <div className="container" style={{maxWidth: '800px', padding: '2rem'}}>
+            <div className="container" style={{ maxWidth: '800px', padding: '2rem' }}>
                 {step === 1 && <GetAbout setStep={setStep} formData={formData} setFormData={setFormData} />}
                 {step === 2 && <GetContact setStep={setStep} formData={formData} setFormData={setFormData} />}
                 {step === 3 && <GetSocial setStep={setStep} formData={formData} handleSocialChange={handleSocialChange} />}
@@ -98,7 +98,7 @@ function GetAbout({ setStep, formData, setFormData }) {
     return (
         <section id="GetAbout">
             <h1>Step 1/7: About You (Max-50 words)</h1>
-            <textarea value={formData.about} onChange={(e) => setFormData({...formData, about: e.target.value})}></textarea>
+            <textarea value={formData.about} onChange={(e) => setFormData({ ...formData, about: e.target.value })}></textarea>
             <div className="btns">
                 <button disabled>Back</button>
                 <button onClick={() => setStep(2)}>NEXT</button>
@@ -112,7 +112,7 @@ function GetContact({ setStep, formData, setFormData }) {
         <section id="GetContact">
             <h1>Step 2/7: Enter Phone Number (with country code)</h1>
             <div className="inputs">
-                <input type="number" placeholder='Enter Phone no.' value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
+                <input type="number" placeholder='Enter Phone no.' value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
             </div>
             <div className="btns">
                 <button onClick={() => setStep(1)}>Back</button>
@@ -144,14 +144,14 @@ function GetSocial({ setStep, formData, handleSocialChange }) {
 
 function GetEducation({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetEducation" style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <section id="GetEducation" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1>Step 4/7: Education Details</h1>
             {formData.education.map((edu, idx) => (
-                <div key={idx} style={{background:'#f3f4f6', padding:'1rem', borderRadius:'8px', display:'flex', flexDirection:'column', gap:'0.5rem'}}>
-                    <h3 style={{margin:0, color:'#111827', fontSize:'18px'}}>{edu.level}</h3>
+                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>{edu.level}</h3>
                     <input type="text" placeholder="Institution Name" value={edu.name} onChange={(e) => handleArrayChange('education', idx, 'name', e.target.value)} />
                     <input type="text" placeholder="Address / Location" value={edu.address} onChange={(e) => handleArrayChange('education', idx, 'address', e.target.value)} />
-                    <select value={edu.status} onChange={(e) => handleArrayChange('education', idx, 'status', e.target.value)} style={{padding:'12px', borderRadius:'14px', border:'1px solid #e5e7eb'}}>
+                    <select value={edu.status} onChange={(e) => handleArrayChange('education', idx, 'status', e.target.value)} style={{ padding: '12px', borderRadius: '14px', border: '1px solid #e5e7eb' }}>
                         <option value="Completed">Completed</option>
                         <option value="Ongoing">Ongoing</option>
                         <option value="Not yet">Not yet</option>
@@ -168,13 +168,13 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
 
 function GetProjects({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetProjects" style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <section id="GetProjects" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1>Step 5/7: Projects</h1>
             {formData.projects.map((proj, idx) => (
-                <div key={idx} style={{background:'#f3f4f6', padding:'1rem', borderRadius:'8px', display:'flex', flexDirection:'column', gap:'0.5rem'}}>
-                    <h3 style={{margin:0, color:'#111827', fontSize:'18px'}}>Project {idx + 1}</h3>
+                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>Project {idx + 1}</h3>
                     <input type="text" placeholder="Project Title" value={proj.title} onChange={(e) => handleArrayChange('projects', idx, 'title', e.target.value)} />
-                    <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)} style={{height:'80px'}}></textarea>
+                    <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)} style={{ height: '80px' }}></textarea>
                 </div>
             ))}
             <div className="btns">
@@ -187,13 +187,13 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
 
 function GetExperience({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetExperience" style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <section id="GetExperience" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1>Step 6/7: Experience</h1>
             {formData.experience.map((exp, idx) => (
-                <div key={idx} style={{background:'#f3f4f6', padding:'1rem', borderRadius:'8px', display:'flex', flexDirection:'column', gap:'0.5rem'}}>
-                    <h3 style={{margin:0, color:'#111827', fontSize:'18px'}}>Experience {idx + 1}</h3>
+                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>Experience {idx + 1}</h3>
                     <input type="text" placeholder="Company Name" value={exp.company} onChange={(e) => handleArrayChange('experience', idx, 'company', e.target.value)} />
-                    <textarea placeholder="Description / Role" value={exp.description} onChange={(e) => handleArrayChange('experience', idx, 'description', e.target.value)} style={{height:'80px'}}></textarea>
+                    <textarea placeholder="Description / Role" value={exp.description} onChange={(e) => handleArrayChange('experience', idx, 'description', e.target.value)} style={{ height: '80px' }}></textarea>
                 </div>
             ))}
             <div className="btns">
@@ -206,18 +206,18 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
 
 function GetSkills({ setStep, formData, handleArrayChange, handleSubmit }) {
     return (
-        <section id="GetSkills" style={{display: 'flex', flexDirection: 'column', gap: '1rem'}}>
+        <section id="GetSkills" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <h1>Step 7/7: Skills</h1>
             {formData.skills.map((skill, idx) => (
-                <div key={idx} style={{background:'#f3f4f6', padding:'1rem', borderRadius:'8px', display:'flex', gap:'0.5rem', alignItems:'center'}}>
-                    <input type="text" placeholder="Emoji (💻)" value={skill.icon} onChange={(e) => handleArrayChange('skills', idx, 'icon', e.target.value)} style={{width:'80px', flex:'none'}} />
-                    <input type="text" placeholder="Skill Name" value={skill.name} onChange={(e) => handleArrayChange('skills', idx, 'name', e.target.value)} style={{flex:1}} />
-                    <input type="number" placeholder="%" value={skill.progress} onChange={(e) => handleArrayChange('skills', idx, 'progress', parseInt(e.target.value))} style={{width:'80px', flex:'none'}} min="0" max="100" />
+                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <input type="text" placeholder="Emoji (💻)" value={skill.icon} onChange={(e) => handleArrayChange('skills', idx, 'icon', e.target.value)} style={{ width: '80px', flex: 'none' }} />
+                    <input type="text" placeholder="Skill Name" value={skill.name} onChange={(e) => handleArrayChange('skills', idx, 'name', e.target.value)} style={{ flex: 1 }} />
+                    <input type="number" placeholder="%" value={skill.progress} onChange={(e) => handleArrayChange('skills', idx, 'progress', parseInt(e.target.value))} style={{ width: '80px', flex: 'none' }} min="0" max="100" />
                 </div>
             ))}
             <div className="btns">
                 <button onClick={() => setStep(6)}>Back</button>
-                <button onClick={handleSubmit} style={{background: '#7B5EF8', color: '#fff'}}>Complete!</button>
+                <button onClick={handleSubmit} style={{ background: '#7B5EF8', color: '#fff' }}>Complete!</button>
             </div>
         </section>
     )
