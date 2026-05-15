@@ -215,13 +215,13 @@
 
 
 #skillsDetails {
-    grid-column: 1/2;
-    grid-row: 16/20;
+    grid-column: 3/5;
+    grid-row: 15/21;
     padding: 20px;
 }
 
 #skillsDetails h2 {
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 #skillsDetails ul {
@@ -373,8 +373,8 @@
 
 
 #educationDetails {
-    grid-column: 1/4;
-    grid-row: 5/7;
+    grid-column: 1/5;
+    grid-row: 7/11;
     display: flex;
     gap: 20px;
     overflow: hidden;
@@ -414,8 +414,8 @@
 
 
 #projectDetails {
-    grid-column: 1/-1;
-    grid-row: 7/10;
+    grid-column: 1/5;
+    grid-row: 11/15;
 }
 
 #projectDetails .headTag {
@@ -445,13 +445,13 @@
 
 
 #experinceDetails {
-    grid-column: 1/-1;
-    grid-row: 11/16;
+    grid-column: 1/3;
+    grid-row: 15/21;
 }
 
 #experinceDetails .headTag {
-    margin: 30px 0;
-    font-size: 3rem;
+    margin: 20px 0;
+    font-size: 2rem;
 }
 
 #experinceDetails .Exp_Tabs {

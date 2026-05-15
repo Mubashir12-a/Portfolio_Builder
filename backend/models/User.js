@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
   about: String,
 
   phone: String,
+  address: String,
 
   socialLinks: {
     instagram: String,

@@ -57,7 +57,7 @@ export default function ResumeView() {
             <div className="resume-document" ref={resumeRef}>
                 <div className="resume-header">
                     <h1>{userData.name}</h1>
-                    <p>{userData.email} {userData.phone ? `| ${userData.phone}` : ''}</p>
+                    <p>{userData.email} {userData.phone ? `| ${userData.phone}` : ''} {userData.address ? `| ${userData.address}` : ''}</p>
                     <p>{userData.socialLinks?.portfolio || userData.socialLinks?.linkedin || ''}</p>
                 </div>
 

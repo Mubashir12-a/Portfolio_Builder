@@ -296,11 +296,13 @@ const authenticateToken = (req, res, next) => {
 // ================= UPDATE PROFILE =================
 app.put("/api/user/profile", authenticateToken, async (req, res) => {
   try {
-    const { about, phone, socialLinks, education, projects, experience, skills } = req.body;
+    const { name, address, about, phone, socialLinks, education, projects, experience, skills } = req.body;
     
     const user = await User.findById(req.user.userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    if (name) user.name = name;
+    if (address) user.address = address;
     if (about) user.about = about;
     if (phone) user.phone = phone;
     if (socialLinks) user.socialLinks = socialLinks;

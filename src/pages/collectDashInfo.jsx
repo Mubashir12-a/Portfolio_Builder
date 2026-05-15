@@ -7,6 +7,9 @@ function CollectDashInfo() {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
+        name: '',
+        address: '',
+        profileImage: '',
         about: '',
         phone: '',
         socialLinks: {
@@ -54,6 +57,9 @@ function CollectDashInfo() {
                     const u = data.user;
                     setFormData(prev => ({
                         ...prev,
+                        name: u.name || prev.name,
+                        address: u.address || prev.address,
+                        profileImage: u.profileImage || prev.profileImage,
                         about: u.about || prev.about,
                         phone: u.phone || prev.phone,
                         socialLinks: u.socialLinks || prev.socialLinks,
@@ -127,11 +133,65 @@ function CollectDashInfo() {
 export default CollectDashInfo;
 
 function GetAbout({ setStep, formData, setFormData }) {
+    const [uploading, setUploading] = useState(false);
+
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert("File is too large (max 1MB).");
+            return;
+        }
+
+        setUploading(true);
+        const data = new FormData();
+        data.append("image", file);
+
+        try {
+            const token = localStorage.getItem('token');
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: data
+            });
+            const result = await res.json();
+            if (result.success) {
+                setFormData({ ...formData, profileImage: result.url });
+            } else {
+                alert(result.message || "Upload failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed");
+        }
+        setUploading(false);
+    };
+
     return (
-        <section id="GetAbout">
-            <h1>Step 1/7: About You (Max-50 words)</h1>
-            <textarea value={formData.about} onChange={(e) => setFormData({ ...formData, about: e.target.value })}></textarea>
-            <div className="btns">
+        <section id="GetAbout" className="dynamic-section">
+            <h1>Step 1/7: Personal Info</h1>
+            
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
+                <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'var(--bg2)', overflow: 'hidden', border: '2px solid var(--border)', position: 'relative' }}>
+                    {formData.profileImage ? (
+                        <img src={formData.profileImage} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: uploading ? 0.5 : 1 }} />
+                    ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-3)' }}>No Image</div>
+                    )}
+                    {uploading && <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontSize: '10px' }}>Uploading...</div>}
+                    <input type="file" accept="image/*" onChange={handleUpload} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }} />
+                </div>
+                <span style={{ fontSize: '12px', color: 'var(--text-3)' }}>Click to upload profile picture</span>
+            </div>
+
+            <div style={{ width: '100%', maxWidth: '500px', display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                <input type="text" placeholder="Full Name" value={formData.name || ''} onChange={(e) => setFormData({ ...formData, name: e.target.value })} style={{ width: '100%', padding: '15px', background: 'var(--bg2)', color: 'var(--text-2)', border: '1px solid var(--border)', borderRadius: '10px' }} />
+                <input type="text" placeholder="Address (e.g. New York, USA)" value={formData.address || ''} onChange={(e) => setFormData({ ...formData, address: e.target.value })} style={{ width: '100%', padding: '15px', background: 'var(--bg2)', color: 'var(--text-2)', border: '1px solid var(--border)', borderRadius: '10px' }} />
+                <textarea placeholder="About You (Max-50 words)" value={formData.about || ''} onChange={(e) => setFormData({ ...formData, about: e.target.value })} style={{ width: '100%', padding: '15px', background: 'var(--bg2)', color: 'var(--text-2)', border: '1px solid var(--border)', borderRadius: '10px', height: '150px', resize: 'none' }}></textarea>
+            </div>
+            
+            <div className="btns" style={{ marginTop: '20px' }}>
                 <button disabled>Back</button>
                 <button onClick={() => setStep(2)}>NEXT</button>
             </div>
