@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pagesStyles/collectDashInfo.css';
 
@@ -37,6 +37,38 @@ function CollectDashInfo() {
             { name: '', icon: '📈', progress: 50 }
         ]
     });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) return;
+
+                const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+                const res = await fetch(`${apiUrl}/api/user/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const data = await res.json();
+                if (data.success && data.user.profileCompleted) {
+                    const u = data.user;
+                    setFormData(prev => ({
+                        ...prev,
+                        about: u.about || prev.about,
+                        phone: u.phone || prev.phone,
+                        socialLinks: u.socialLinks || prev.socialLinks,
+                        education: u.education?.length ? u.education : prev.education,
+                        projects: u.projects?.length ? u.projects : prev.projects,
+                        experience: u.experience?.length ? u.experience : prev.experience,
+                        skills: u.skills?.length ? u.skills : prev.skills,
+                    }));
+                }
+            } catch (err) {
+                console.error("Error fetching user data:", err);
+            }
+        };
+        fetchUserData();
+    }, []);
 
     const handleSocialChange = (e) => {
         setFormData({
@@ -144,14 +176,14 @@ function GetSocial({ setStep, formData, handleSocialChange }) {
 
 function GetEducation({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetEducation" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <section id="GetEducation" className="dynamic-section">
             <h1>Step 4/7: Education Details</h1>
             {formData.education.map((edu, idx) => (
-                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>{edu.level}</h3>
+                <div key={idx} className="dynamic-item">
+                    <h3>{edu.level}</h3>
                     <input type="text" placeholder="Institution Name" value={edu.name} onChange={(e) => handleArrayChange('education', idx, 'name', e.target.value)} />
                     <input type="text" placeholder="Address / Location" value={edu.address} onChange={(e) => handleArrayChange('education', idx, 'address', e.target.value)} />
-                    <select value={edu.status} onChange={(e) => handleArrayChange('education', idx, 'status', e.target.value)} style={{ padding: '12px', borderRadius: '14px', border: '1px solid #e5e7eb' }}>
+                    <select value={edu.status} onChange={(e) => handleArrayChange('education', idx, 'status', e.target.value)}>
                         <option value="Completed">Completed</option>
                         <option value="Ongoing">Ongoing</option>
                         <option value="Not yet">Not yet</option>
@@ -168,13 +200,13 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
 
 function GetProjects({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetProjects" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <section id="GetProjects" className="dynamic-section">
             <h1>Step 5/7: Projects</h1>
             {formData.projects.map((proj, idx) => (
-                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>Project {idx + 1}</h3>
+                <div key={idx} className="dynamic-item">
+                    <h3>Project {idx + 1}</h3>
                     <input type="text" placeholder="Project Title" value={proj.title} onChange={(e) => handleArrayChange('projects', idx, 'title', e.target.value)} />
-                    <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)} style={{ height: '80px' }}></textarea>
+                    <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)}></textarea>
                 </div>
             ))}
             <div className="btns">
@@ -187,13 +219,13 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
 
 function GetExperience({ setStep, formData, handleArrayChange }) {
     return (
-        <section id="GetExperience" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <section id="GetExperience" className="dynamic-section">
             <h1>Step 6/7: Experience</h1>
             {formData.experience.map((exp, idx) => (
-                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <h3 style={{ margin: 0, color: '#111827', fontSize: '18px' }}>Experience {idx + 1}</h3>
+                <div key={idx} className="dynamic-item">
+                    <h3>Experience {idx + 1}</h3>
                     <input type="text" placeholder="Company Name" value={exp.company} onChange={(e) => handleArrayChange('experience', idx, 'company', e.target.value)} />
-                    <textarea placeholder="Description / Role" value={exp.description} onChange={(e) => handleArrayChange('experience', idx, 'description', e.target.value)} style={{ height: '80px' }}></textarea>
+                    <textarea placeholder="Description / Role" value={exp.description} onChange={(e) => handleArrayChange('experience', idx, 'description', e.target.value)}></textarea>
                 </div>
             ))}
             <div className="btns">
@@ -206,18 +238,18 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
 
 function GetSkills({ setStep, formData, handleArrayChange, handleSubmit }) {
     return (
-        <section id="GetSkills" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <section id="GetSkills" className="dynamic-section">
             <h1>Step 7/7: Skills</h1>
             {formData.skills.map((skill, idx) => (
-                <div key={idx} style={{ background: '#f3f4f6', padding: '1rem', borderRadius: '8px', display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <div key={idx} className="dynamic-item-horizontal">
                     <input type="text" placeholder="Emoji (💻)" value={skill.icon} onChange={(e) => handleArrayChange('skills', idx, 'icon', e.target.value)} style={{ width: '80px', flex: 'none' }} />
                     <input type="text" placeholder="Skill Name" value={skill.name} onChange={(e) => handleArrayChange('skills', idx, 'name', e.target.value)} style={{ flex: 1 }} />
                     <input type="number" placeholder="%" value={skill.progress} onChange={(e) => handleArrayChange('skills', idx, 'progress', parseInt(e.target.value))} style={{ width: '80px', flex: 'none' }} min="0" max="100" />
                 </div>
             ))}
-            <div className="btns">
+            <div className="btns" style={{marginTop: '20px'}}>
                 <button onClick={() => setStep(6)}>Back</button>
-                <button onClick={handleSubmit} style={{ background: '#7B5EF8', color: '#fff' }}>Complete!</button>
+                <button onClick={handleSubmit} style={{ background: 'var(--violet)', color: '#fff', border: 'none' }}>Complete!</button>
             </div>
         </section>
     )

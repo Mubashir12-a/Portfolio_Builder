@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../pagesStyles/dashboard.css";
 
 import Header from '../components/LandingPageComponents/header';
@@ -77,7 +78,7 @@ function Dashboard(){
 
                         <section className="Grid">
                             <Details userData={userData}/>
-                            <ProfileImg url={profileImg}/>
+                            <ProfileImg url={userData.profileImage || profileImg} setUserData={setUserData}/>
                             <SocialMedia socialLinks={userData.socialLinks || {}}/>
                             <Resume/>
                             <Education education={userData.education || []}/>
@@ -105,9 +106,19 @@ function BtnsSet(){
 
 
 function Details({userData}){
+    const navigate = useNavigate();
     return (
         <>
             <div id="profileDetails">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <h3 style={{ margin: 0, color: 'var(--text-2)' }}>About Me</h3>
+                    <button 
+                        onClick={() => navigate("/collect-info")} 
+                        style={{ background: 'var(--violet)', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                    >
+                        Edit Profile
+                    </button>
+                </div>
                 <div className="aboutuser">
                     <p>{userData.about || "Write something about yourself..."}</p>
                 </div>
@@ -127,11 +138,57 @@ function Details({userData}){
     )
 }
 
-function ProfileImg({url}){
+function ProfileImg({url, setUserData}){
+    const [uploading, setUploading] = useState(false);
+
+    const handleUpload = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert("File is too large (max 1MB).");
+            return;
+        }
+
+        setUploading(true);
+        const formData = new FormData();
+        formData.append("image", file);
+
+        try {
+            const token = localStorage.getItem('token');
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                setUserData(prev => ({ ...prev, profileImage: data.url }));
+            } else {
+                alert(data.message || "Upload failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed");
+        }
+        setUploading(false);
+    };
+
     return (
         <>
-            <div id="ProfileImg">
-                <img src={url} alt="" />
+            <div id="ProfileImg" style={{ position: 'relative', overflow: 'hidden' }}>
+                <img src={url} alt="Profile" style={{ opacity: uploading ? 0.5 : 1, width: '100%', height: '100%', objectFit: 'cover' }} />
+                {uploading && <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', color: 'white', fontWeight: 'bold' }}>Uploading...</div>}
+                <input 
+                    type="file" 
+                    accept="image/*" 
+                    onChange={handleUpload} 
+                    style={{
+                        position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                        opacity: 0, cursor: 'pointer'
+                    }} 
+                    title="Click to upload new image (max 1MB)"
+                />
             </div>
         </>
     )
@@ -273,11 +330,11 @@ function Education({education}){
 
 
 function Resume(){
+    const navigate = useNavigate();
     return (
         <>
             <div id="Resume">
-                <button>View Resume</button>
-                <button>Download Resume</button>
+                <button onClick={() => navigate("/resume")}>View / Download Resume</button>
             </div>
         </>
     )

@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
     default: false
   },
 
+  profileImage: String,
+
   about: String,
 
   phone: String,

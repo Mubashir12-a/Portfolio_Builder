@@ -8,6 +8,7 @@ import Subscription from './pages/subscriptionPage';
 import AuthPage from './pages/authPage.jsx';
 import Dash from "./pages/Dashboard.jsx";
 import GetInfo from "./pages/collectDashInfo.jsx";
+import ResumeView from "./pages/ResumeView.jsx";
 
 import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 
@@ -42,6 +43,15 @@ function App() {
           element={
             <ProtectedRoute>
               <Dash />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path='/resume'
+          element={
+            <ProtectedRoute>
+              <ResumeView />
             </ProtectedRoute>
           }
         />

@@ -8,6 +8,19 @@ const express = require("express");
 const cors = require("cors");
 const { Resend } = require("resend");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 1 * 1024 * 1024 } // 1MB
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -316,5 +329,31 @@ app.get("/api/user/profile", authenticateToken, async (req, res) => {
   } catch (err) {
     console.error("Get profile error:", err);
     return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= UPLOAD IMAGE =================
+app.post("/api/user/upload-image", authenticateToken, upload.single("image"), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image provided" });
+    }
+
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+
+    const result = await cloudinary.uploader.upload(dataURI, {
+      folder: "portfolio_builder_profiles",
+      resource_type: "auto",
+    });
+
+    const user = await User.findById(req.user.userId);
+    user.profileImage = result.secure_url;
+    await user.save();
+
+    return res.json({ success: true, url: result.secure_url });
+  } catch (err) {
+    console.error("Upload error:", err);
+    return res.status(500).json({ message: err.message || "Upload failed" });
   }
 });

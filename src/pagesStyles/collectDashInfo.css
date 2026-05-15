@@ -98,3 +98,70 @@
     border: 1px solid var(--violet);
     transition: var(--transition);
 }
+
+.dynamic-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+}
+
+.dynamic-section h1 {
+    color: var(--text-2);
+}
+
+.dynamic-item {
+    background: var(--bg2);
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 500px;
+}
+
+.dynamic-item h3 {
+    margin: 0;
+    color: var(--text-2);
+    font-size: 18px;
+}
+
+.dynamic-item input, .dynamic-item select, .dynamic-item textarea {
+    background: var(--bg);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.dynamic-item textarea {
+    resize: none;
+    height: 80px;
+}
+
+.dynamic-item-horizontal {
+    background: var(--bg2);
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 500px;
+}
+
+.dynamic-item-horizontal input {
+    background: var(--bg);
+    color: var(--text-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+}
