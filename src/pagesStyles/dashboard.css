@@ -216,12 +216,13 @@
 
 #skillsDetails {
   grid-column: 3/5;
-  grid-row: 14/17;
+  grid-row: 14/18;
   padding: 20px;
 }
 
 #skillsDetails h2 {
-  font-size: 2rem;
+  font-size: 3rem;
+  margin: 30px 0;
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 5px;
@@ -241,8 +242,9 @@
 
 #skillsDetails ul li {
   display: flex;
-  gap: 5px;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 #skillsDetails ul li .icon {
@@ -271,7 +273,7 @@
   height: 100%;
   width: 50%;
   border-radius: 20px;
-  background: blue;
+  background: linear-gradient(50deg, var(--violet), var(--coral), var(--amber))
 }
 
 
@@ -423,6 +425,7 @@
 #projectDetails {
   grid-column: 1/5;
   grid-row: 10/13;
+  background: transparent;
 }
 
 #projectDetails .headTag {
@@ -452,6 +455,19 @@
   border: 2px solid var(--border);
 }
 
+.ProjectCards .proj_card h3 {
+  font-size: 1.5rem;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.ProjectCards .proj_card p {
+  font-size: 1rem;
+  color: var(--text-2);
+  text-align: justify;
+}
+
 
 
 
@@ -462,8 +478,8 @@
 }
 
 #experinceDetails .headTag {
-  margin: 20px 0;
   font-size: 3rem;
+  margin: 30px 0;
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 5px;
