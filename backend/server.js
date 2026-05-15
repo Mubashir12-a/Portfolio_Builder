@@ -4,6 +4,14 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 const User = require("./models/User");
 
+const express = require("express");
+const cors = require("cors");
+const { Resend } = require("resend");
+const jwt = require("jsonwebtoken");
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log("MongoDB Connected ✅");
@@ -17,14 +25,6 @@ mongoose.connect(process.env.MONGO_URI)
   console.error("MongoDB Error ❌", err);
 });
 
-
-
-
-const express = require("express");
-const cors = require("cors");
-const { Resend } = require("resend");
-
-const app = express();
 
 app.use(cors({
   origin:  [
@@ -41,7 +41,24 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // ================= SEND OTP =================
 app.post("/send-otp", async (req, res) => {
-  const { email } = req.body;
+  const { email, type, password } = req.body;
+
+  if (type === "login") {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    if (user.password !== password) {
+      return res.status(401).json({ message: "Incorrect password" });
+    }
+  }
+
+  if (type === "signup") {
+    const user = await User.findOne({ email });
+    if (user) {
+      return res.status(400).json({ message: "User already exists" });
+    }
+  }
 
   const otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -179,65 +196,125 @@ app.post("/send-otp", async (req, res) => {
 
 // ================= VERIFY OTP =================
 app.post("/verify-otp", async (req, res) => {
-  console.log("FULL BODY:", req.body);
 
-  console.log(name, email, password);
-
-  const { email, otp, name, password } = req.body;
+  const { email, otp, name, password, type } = req.body;
 
   const record = otpStore[email];
-
-  console.log("RECEIVED OTP:", otp);
-  console.log("STORED RECORD:", record);
 
   if (!record) {
     return res.json({ success: false });
   }
 
-  // expiry check
+  // OTP expired
   if (Date.now() > record.expires) {
     delete otpStore[email];
     return res.json({ success: false });
   }
 
+  // OTP matched
   if (record.otp == otp) {
 
     try {
-      let existingUser = await User.findOne({ email });
 
+      let user = await User.findOne({ email });
+
+      // SIGNUP
       if (type === "signup") {
 
-        let existingUser = await User.findOne({ email });
+        if (!user) {
 
-        if (!existingUser) {
-          await User.create({
+          user = await User.create({
             name,
             email,
-            password
+            password,
+            profileCompleted: false
           });
-        
-          console.log("USER SAVED ✅");
-        } else {
-          console.log("USER ALREADY EXISTS ⚠️");
+
+          console.log("USER CREATED ✅");
         }
-      
+      }
+
+      // LOGIN CHECK
+      if (!user) {
+        return res.json({
+          success: false,
+          message: "User not found"
+        });
       }
 
       delete otpStore[email];
-      return res.json({ success: true });
+
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '7d' });
+
+      return res.json({
+        success: true,
+        user,
+        token
+      });
 
     } catch (err) {
-      console.error("DB ERROR FULL:", err);
-      return res.status(500).json({ success: false });
+
+      console.error(err);
+
+      return res.status(500).json({
+        success: false
+      });
     }
   }
 
   return res.json({ success: false });
 });
 
+// ================= MIDDLEWARE =================
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
 
+  if (!token) return res.status(401).json({ message: "No token provided" });
 
+  jwt.verify(token, process.env.JWT_SECRET || 'secret_key', (err, user) => {
+    if (err) return res.status(403).json({ message: "Invalid token" });
+    req.user = user;
+    next();
+  });
+};
 
+// ================= UPDATE PROFILE =================
+app.put("/api/user/profile", authenticateToken, async (req, res) => {
+  try {
+    const { about, phone, socialLinks, education, projects, experience, skills } = req.body;
+    
+    const user = await User.findById(req.user.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
 
+    if (about) user.about = about;
+    if (phone) user.phone = phone;
+    if (socialLinks) user.socialLinks = socialLinks;
+    if (education) user.education = education;
+    if (projects) user.projects = projects;
+    if (experience) user.experience = experience;
+    if (skills) user.skills = skills;
+    
+    user.profileCompleted = true;
 
+    await user.save();
+    
+    return res.json({ success: true, user });
+  } catch (err) {
+    console.error("Profile update error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
 
+// ================= GET PROFILE =================
+app.get("/api/user/profile", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+    
+    return res.json({ success: true, user });
+  } catch (err) {
+    console.error("Get profile error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});

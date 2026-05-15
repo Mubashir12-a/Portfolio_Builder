@@ -179,12 +179,13 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
         setLoading(true);
 
         try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/send-otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email, password, type: "login" }),
                 cache: "no-store" // 🔥 important
             });
 
@@ -194,7 +195,7 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
             if (data.message === "OTP sent") {
                 holdCont("OTPVerify");
             } else {
-                setErrorMsg("Failed to send OTP");
+                setErrorMsg(data.message || "Failed to send OTP");
             }
 
         } catch (err) {
@@ -268,6 +269,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     
     useEffect(() => {
         if (time <= 0) return;
@@ -286,53 +288,70 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
     };
 
     const handleVerify = async () => {
-    const finalOTP = otp.join("");
+        const finalOTP = otp.join("");
 
-    if (finalOTP.length < 6) {
-        setError("Enter full OTP");
-        return;
-    }
-
-    console.log("VERIFYING OTP:", finalOTP);
-    setLoading(true);
-
-    try {
-        const res = await fetch("https://portfolio-builder-wgp1.onrender.com/verify-otp", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                email: userEmail,
-                otp: finalOTP,
-                name: userData.name,
-                password: userData.password
-            }),
-            cache: "no-store" // 🔥 important
-        });
-
-        const data = await res.json();
-        console.log("VERIFY RESPONSE:", data);
-
-        if (data.success) {
-            setOtp(["", "", "", "", "", ""]);
-
-            if (type === "signup") {
-                holdCont("SignUpDone");
-            } else {
-                holdCont("LogInDone");
-            }
-        } else {
-            setError("Invalid or expired OTP");
+        if (finalOTP.length < 6) {
+            setError("Enter full OTP");
+            return;
         }
 
-    } catch (err) {
-        console.error(err);
-        setError("Server error. Try again.");
-    } finally {
-        setLoading(false);
-    }
-};
+        console.log("VERIFYING OTP:", finalOTP);
+        setLoading(true);
+
+        try {
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/verify-otp`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: userEmail,
+                    otp: finalOTP,
+                    name: userData.name,
+                    password: userData.password,
+                    type: type
+                }),
+                cache: "no-store" 
+            });
+
+            const data = await res.json();
+            console.log("VERIFY RESPONSE:", data);
+
+            if (data.success) {
+
+                localStorage.setItem("token", data.token);
+
+                setOtp(["", "", "", "", "", ""]);
+
+                if (type === "signup") {
+                
+                    navigate("/collect-info");
+                
+                } 
+                else {
+                
+                    if (data.user.profileCompleted) {
+                    
+                        holdCont("LogInDone");
+                    
+                    } else {
+                    
+                        navigate("/collect-info");
+                    
+                    }
+                }
+            } else {
+                setError(data.message || "Invalid OTP");
+            }
+
+        } catch (err) {
+            console.error(err);
+            setError("Server error. Try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -513,12 +532,13 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
         setLoading(true);
 
         try {
-            const res = await fetch("https://portfolio-builder-wgp1.onrender.com/send-otp", {
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/send-otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email, type: "signup" }),
                 cache: "no-store"
             });
 
@@ -529,7 +549,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                 setUserData({ name, password }); 
                 holdCont('OTPVerify');
             } else {
-                setErrorMsg("Failed to send OTP");
+                setErrorMsg(data.message || "Failed to send OTP");
             }
 
         } catch (err) {
@@ -670,7 +690,7 @@ function SignUpDone({holdCont}){
             <h3>Account Created Successfully, <em> welcome!</em></h3>
             <p>Identity Stored. Redirecting you to your dashboard in a moment...</p>
 
-            <button onClick={() => navigate("/Dash")} >
+            <button onClick={() => navigate("/collect-info")} >
                 Go To Dashboard →
             </button>
         </div>

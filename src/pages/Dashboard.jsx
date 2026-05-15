@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import "../pagesStyles/dashboard.css";
 
 import Header from '../components/LandingPageComponents/header';
@@ -18,6 +19,31 @@ import link from "../assets/dashLinkIcons/Link.png";
 
 
 function Dashboard(){
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+                const res = await fetch(`${apiUrl}/api/user/profile`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                if (data.success) {
+                    setUserData(data.user);
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        };
+        fetchProfile();
+    }, []);
+
+    if (!userData) {
+        return <div style={{textAlign: 'center', marginTop: '50px'}}>Loading...</div>;
+    }
+
     return (
         <>
             <section id="MainCont">
@@ -33,8 +59,8 @@ function Dashboard(){
                             </div>
 
                             <div className="introTag">
-                                <h3>Mubashir Ahmad</h3>
-                                <div className="icon">MA</div>
+                                <h3>{userData.name}</h3>
+                                <div className="icon">{userData.name.substring(0,2).toUpperCase()}</div>
                             </div>
                         </div>
                     </section>
@@ -50,14 +76,14 @@ function Dashboard(){
 
 
                         <section className="Grid">
-                            <Details/>
+                            <Details userData={userData}/>
                             <ProfileImg url={profileImg}/>
-                            <SocialMedia/>
+                            <SocialMedia socialLinks={userData.socialLinks || {}}/>
                             <Resume/>
-                            <Education/>
-                            {/* <Projects/> */}
-                            {/* <Experince/> */}
-                            {/* <Skills/> */}
+                            <Education education={userData.education || []}/>
+                            <Projects projects={userData.projects || []}/>
+                            <Experince experience={userData.experience || []}/>
+                            <Skills skills={userData.skills || []}/>
                         </section>
                     </section>
 
@@ -78,22 +104,22 @@ function BtnsSet(){
 }
 
 
-function Details(){
+function Details({userData}){
     return (
         <>
             <div id="profileDetails">
                 <div className="aboutuser">
-                    <p>Final-year BCA student and passionate developer focused on building modern web applications. Interested in programming, technology, and problem-solving, with hands-on experience in MERN stack projects and creating user-friendly digital experiences.</p>
+                    <p>{userData.about || "Write something about yourself..."}</p>
                 </div>
 
                 <ul>
                     <li>
                         <span className="icon">📞</span>
-                        <p>+91-7889825292</p>
+                        <p>{userData.phone || "N/A"}</p>
                     </li>
                     <li>
                         <span className="icon">📧</span>
-                        <p>ma2625645@gmail.com</p>
+                        <p>{userData.email}</p>
                     </li>
                 </ul>
             </div>
@@ -111,24 +137,17 @@ function ProfileImg({url}){
     )
 }
 
-function Skills(){
+function Skills({skills}){
     return (
         <>
             <div id="skillsDetails">
                 <h2>Skills:</h2>
 
                 <ul>
-
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    <Bars icon={"🪲"} prog={50}/>
-                    
+                    {skills.length > 0 ? skills.map((s, i) => {
+                        if (!s.name) return null;
+                        return <Bars key={i} icon={s.icon || "💻"} prog={s.progress || 50}/>
+                    }) : <p>No skills added.</p>}
                 </ul>
             </div>
         </>
@@ -148,69 +167,81 @@ function Bars({icon, prog}){
 }
 
 
-function SocialMedia(){
+function SocialMedia({socialLinks}){
     return (
         <>
             <div id="SocialMedia">
                 <ul>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={Insta} alt="" /></span>
-                            <div className="ref">
-                                <p>INSTAGRAM</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={faceB} alt="" /></span>
-                            <div className="ref">
-                                <p>FACEBOOK</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
+                    {socialLinks.instagram && (
+                        <li>
+                            <a href={socialLinks.instagram} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={Insta} alt="" /></span>
+                                <div className="ref">
+                                    <p>INSTAGRAM</p>
+                                    <p>{socialLinks.instagram.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
+                    {socialLinks.facebook && (
+                        <li>
+                            <a href={socialLinks.facebook} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={faceB} alt="" /></span>
+                                <div className="ref">
+                                    <p>FACEBOOK</p>
+                                    <p>{socialLinks.facebook.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
                 </ul>
                 <ul>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={git} alt="" /></span>
-                            <div className="ref">
-                                <p>GITHUB</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={Linked} alt="" /></span>
-                            <div className="ref">
-                                <p>LINKED-IN</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
+                    {socialLinks.github && (
+                        <li>
+                            <a href={socialLinks.github} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={git} alt="" /></span>
+                                <div className="ref">
+                                    <p>GITHUB</p>
+                                    <p>{socialLinks.github.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
+                    {socialLinks.linkedin && (
+                        <li>
+                            <a href={socialLinks.linkedin} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={Linked} alt="" /></span>
+                                <div className="ref">
+                                    <p>LINKED-IN</p>
+                                    <p>{socialLinks.linkedin.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
                 </ul>
                 <ul>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={port} alt="" /></span>
-                            <div className="ref">
-                                <p>PORTFOLIO</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="">
-                            <span className="icon"><img src={link} alt="" /></span>
-                            <div className="ref">
-                                <p>EXTRA</p>
-                                <p>https://demo.dev/home</p>
-                            </div>
-                        </a>
-                    </li>
+                    {socialLinks.portfolio && (
+                        <li>
+                            <a href={socialLinks.portfolio} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={port} alt="" /></span>
+                                <div className="ref">
+                                    <p>PORTFOLIO</p>
+                                    <p>{socialLinks.portfolio.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
+                    {socialLinks.extra && (
+                        <li>
+                            <a href={socialLinks.extra} target="_blank" rel="noreferrer">
+                                <span className="icon"><img src={link} alt="" /></span>
+                                <div className="ref">
+                                    <p>EXTRA</p>
+                                    <p>{socialLinks.extra.substring(0, 20)}...</p>
+                                </div>
+                            </a>
+                        </li>
+                    )}
                 </ul>
             </div>
         </>
@@ -218,34 +249,23 @@ function SocialMedia(){
 }
 
 
-function Education(){
+function Education({education}){
     return (
         <>
             <div id="educationDetails">
-                <div className="edu_card school">
-                    <h1>10Th</h1>
-                    <h2 className="name">Ramzan Memorial Educational Institute</h2>
-                    <h3 className="address">Soura Srinagar, J&K, 190011 India</h3>
-                    <h4 className="status">Completed</h4>
-                </div>
-                <div className="edu_card higherEdu">
-                    <h1>11Th/12Th</h1>
-                    <h2 className="name">Govt Boys Higher Secondary School Soura</h2>
-                    <h3 className="address">Soura Srinagar, J&K, 190011 India</h3>
-                    <h4 className="status">Completed</h4>
-                </div>
-                <div className="edu_card UG">
-                    <h1>UG Degree</h1>
-                    <h2>Islamia College of Sceince and Commerce</h2>
-                    <h3>Hawal Srinagar, J&K, 190011 India</h3>
-                    <h4 className="status">Ongoing</h4>
-                </div>
-                <div className="edu_card PG">
-                    <h1>PG Degree</h1>
-                    <h2>Islamia College of Sceince and Commerce</h2>
-                    <h3>Hawal Srinagar, J&K, 190011 India</h3>
-                    <h4 className="status">Not yet</h4>
-                </div>
+                {education.length > 0 ? education.map((edu, i) => {
+                    if (!edu.name) return null;
+                    const classes = ['school', 'higherEdu', 'UG', 'PG'];
+                    const cardClass = classes[i % classes.length];
+                    return (
+                        <div key={i} className={`edu_card ${cardClass}`}>
+                            <h1>{edu.level}</h1>
+                            <h2 className="name">{edu.name}</h2>
+                            <h3 className="address">{edu.address}</h3>
+                            <h4 className="status">{edu.status}</h4>
+                        </div>
+                    );
+                }) : <p style={{padding:'20px'}}>No education added.</p>}
             </div>
         </>
     )
@@ -264,32 +284,39 @@ function Resume(){
 }
 
 
-function Projects(){
+function Projects({projects}){
     return (
         <>
             <div id="projectDetails">
                 <h2 className="headTag">Projects:</h2>
                 
                 <div className="ProjectCards">
-                    <div className="proj_card Proj_1"></div>
-                    <div className="proj_card Proj_2"></div>
-                    <div className="proj_card Proj_3"></div> 
+                    {projects.length > 0 ? projects.map((proj, i) => {
+                        if (!proj.title) return null;
+                        return (
+                            <div key={i} className={`proj_card Proj_${(i%3)+1}`} style={{padding:'1rem', color:'#fff'}}>
+                                <h3 style={{margin:0, fontSize:'20px'}}>{proj.title}</h3>
+                                <p style={{fontSize:'12px', marginTop:'10px'}}>{proj.description}</p>
+                            </div>
+                        )
+                    }) : <p>No projects added.</p>}
                 </div>
             </div>
         </>
     )
 }
 
-function Experince(){
+function Experince({experience}){
     return (
         <>
             <div id="experinceDetails">
                 <h2 className="headTag">Experince:</h2>
 
                 <div className="Exp_Tabs">
-                    <Exp_tabs company={"Company"} text={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nihil accusantium eligendi animi delectus cum sapiente ipsum explicabo rem blanditiis commodi quidem, maiores ab similique."}/>
-                    <Exp_tabs company={"Company"} text={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nihil accusantium eligendi animi delectus cum sapiente ipsum explicabo rem blanditiis commodi quidem, maiores ab similique."}/>
-                    <Exp_tabs company={"Company"} text={"Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime nihil accusantium eligendi animi delectus cum sapiente ipsum explicabo rem blanditiis commodi quidem, maiores ab similique."}/>
+                    {experience.length > 0 ? experience.map((exp, i) => {
+                        if (!exp.company) return null;
+                        return <Exp_tabs key={i} company={exp.company} text={exp.description}/>;
+                    }) : <p>No experience added.</p>}
                 </div>
                 
             </div>
