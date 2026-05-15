@@ -92,7 +92,6 @@ function Dashboard() {
                         <Details userData={userData} />
                         <ProfileImg url={userData.profileImage || profileImg} />
                         <SocialMedia socialLinks={userData.socialLinks || {}} />
-                        <Resume />
                         <Education education={userData.education || []} />
                         <Projects projects={userData.projects || []} />
                         <Experince experience={userData.experience || []} />
@@ -124,12 +123,6 @@ function Details({ userData }) {
             <div id="profileDetails">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                     <h3 style={{ margin: 0, color: 'var(--text-2)' }}>About Me</h3>
-                    <button
-                        onClick={() => navigate("/collect-info")}
-                        style={{ background: 'var(--violet)', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
-                    >
-                        Edit Profile
-                    </button>
                 </div>
                 <div className="aboutuser">
                     <p>{userData.about || "Write something about yourself..."}</p>
@@ -314,16 +307,7 @@ function Education({ education }) {
 }
 
 
-function Resume() {
-    const navigate = useNavigate();
-    return (
-        <>
-            <div id="Resume">
-                <button onClick={() => navigate("/resume")}>View / Download Resume</button>
-            </div>
-        </>
-    )
-}
+
 
 
 function Projects({ projects }) {
@@ -370,7 +354,7 @@ function Experince({ experience }) {
                 <div className="Exp_Tabs">
                     {experience.length > 0 ? experience.map((exp, i) => {
                         if (!exp.company) return null;
-                        return <Exp_tabs key={i} company={exp.company} text={exp.description} />;
+                        return <Exp_tabs key={i} company={exp.company} text={exp.description} certificate={exp.certificate} />;
                     }) : <p>No experience added.</p>}
                 </div>
 
@@ -379,12 +363,21 @@ function Experince({ experience }) {
     )
 }
 
-function Exp_tabs({ company, text }) {
+function Exp_tabs({ company, text, certificate }) {
     return (
         <>
-            <div className="exp_card exp_3">
-                <h2>{company}</h2>
-                <p>{text}</p>
+            <div className="exp_card exp_3" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ flex: 1 }}>
+                    <h2>{company}</h2>
+                    <p>{text}</p>
+                </div>
+                {certificate && (
+                    <div className="cert" style={{ width: '60px', height: '60px', flexShrink: 0, marginLeft: '10px' }}>
+                        <a href={certificate} target="_blank" rel="noreferrer">
+                            <img src={certificate} alt="Certificate" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '5px', border: '1px solid var(--border)' }} />
+                        </a>
+                    </div>
+                )}
             </div>
         </>
     )

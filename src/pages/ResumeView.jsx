@@ -38,7 +38,8 @@ export default function ResumeView() {
             filename:     `${userData.name.replace(/\\s+/g, '_')}_Resume.pdf`,
             image:        { type: 'jpeg', quality: 0.98 },
             html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' },
+            pagebreak:    { mode: ['css', 'legacy'] }
         };
         html2pdf().set(opt).from(element).save();
     };
@@ -124,6 +125,46 @@ export default function ResumeView() {
                             })}
                         </div>
                     </div>
+                )}
+
+                {/* Visuals Section */}
+                {(userData.projects?.some(p => p.image) || userData.experience?.some(e => e.certificate)) && (
+                    <>
+                        <div className="html2pdf__page-break"></div>
+                        <div className="resume-section resume-visual-section">
+                            <h2>Visual Portfolio & Certificates</h2>
+                            
+                            {userData.projects && userData.projects.some(p => p.image) && (
+                                <div className="resume-visual-category">
+                                    <h3>Project Highlights</h3>
+                                    {userData.projects.map((proj, i) => {
+                                        if (!proj.title || !proj.image) return null;
+                                        return (
+                                            <div key={`proj-${i}`} className="resume-visual-item">
+                                                <h4>{proj.title}</h4>
+                                                <img src={proj.image} alt={proj.title} className="resume-large-image" />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+
+                            {userData.experience && userData.experience.some(e => e.certificate) && (
+                                <div className="resume-visual-category">
+                                    <h3 style={{marginTop: '30px'}}>Experience Certificates</h3>
+                                    {userData.experience.map((exp, i) => {
+                                        if (!exp.company || !exp.certificate) return null;
+                                        return (
+                                            <div key={`exp-${i}`} className="resume-visual-item">
+                                                <h4>{exp.company}</h4>
+                                                <img src={exp.certificate} alt={`${exp.company} Certificate`} className="resume-large-image" />
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            )}
+                        </div>
+                    </>
                 )}
             </div>
         </div>

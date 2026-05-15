@@ -104,3 +104,54 @@
     border-radius: 3px;
     font-size: 14px;
 }
+
+/* Page Break specifically for html2pdf and print */
+.html2pdf__page-break {
+    page-break-before: always;
+    margin-top: 20px;
+}
+
+@media print {
+    .html2pdf__page-break {
+        page-break-before: always;
+    }
+}
+
+.resume-visual-section {
+    margin-top: 40px;
+}
+
+.resume-visual-category {
+    margin-bottom: 30px;
+}
+
+.resume-visual-category h3 {
+    font-size: 18px;
+    color: #444;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.resume-visual-item {
+    margin-bottom: 40px;
+    page-break-inside: avoid;
+}
+
+.resume-visual-item h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #333;
+    font-style: italic;
+}
+
+.resume-large-image {
+    max-width: 100%;
+    max-height: 800px;
+    object-fit: contain;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    page-break-inside: avoid;
+}

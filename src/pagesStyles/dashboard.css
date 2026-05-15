@@ -280,7 +280,7 @@
 
 
 #SocialMedia {
-  grid-column: 1/4;
+  grid-column: 1/5;
   grid-row: 5/7;
   display: flex;
   justify-content: space-between;
@@ -346,31 +346,7 @@
 
 
 
-#Resume {
-  grid-column: 4/5;
-  grid-row: 5/6;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  overflow: hidden;
-}
 
-#Resume button {
-  flex: 1;
-  font-size: 1.5rem;
-  transition: var(--transition);
-  border-radius: 0 0 20px 20px;
-  background: var(--violet-dim);
-  color: var(--violet);
-  border: 2px solid var(--violet);
-  cursor: pointer;
-}
-
-#Resume button:active,
-#Resume button:hover {
-  transform: scale(0.95);
-  transition: var(--transition);
-}
 
 
 
@@ -684,29 +660,7 @@
     font-size: 0.65rem;
   }
 
-  /* ── Resume buttons ── */
-  #Resume {
-    grid-column: unset;
-    grid-row: unset;
-    order: 4;
-    flex-direction: row;
-    height: 56px;
-    border-radius: 20px;
-    overflow: hidden;
-    gap: 3px;
-  }
 
-  #Resume button {
-    font-size: 1rem;
-  }
-
-  #Resume button:nth-child(1) {
-    border-radius: 20px 0 0 20px;
-  }
-
-  #Resume button:nth-child(2) {
-    border-radius: 0 20px 20px 0;
-  }
 
   /* ── Projects ── */
   #projectDetails {

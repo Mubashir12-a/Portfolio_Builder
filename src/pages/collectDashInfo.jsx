@@ -28,9 +28,9 @@ function CollectDashInfo() {
             { title: '', description: '', link: '', image: '' }
         ],
         experience: [
-            { company: '', description: '' },
-            { company: '', description: '' },
-            { company: '', description: '' }
+            { company: '', description: '', certificate: '' },
+            { company: '', description: '', certificate: '' },
+            { company: '', description: '', certificate: '' }
         ],
         skills: [
             { name: '', icon: '💻', progress: 50 },
@@ -315,6 +315,37 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
 }
 
 function GetExperience({ setStep, formData, handleArrayChange }) {
+    const handleImageUpload = async (e, idx) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        if (file.size > 1024 * 1024) {
+            alert("File is too large (max 1MB).");
+            return;
+        }
+
+        const data = new FormData();
+        data.append("image", file);
+
+        try {
+            const token = localStorage.getItem('token');
+            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
+                method: "POST",
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: data
+            });
+            const result = await res.json();
+            if (result.success) {
+                handleArrayChange('experience', idx, 'certificate', result.url);
+            } else {
+                alert(result.message || "Upload failed");
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Upload failed");
+        }
+    };
+
     return (
         <section id="GetExperience" className="dynamic-section">
             <h1>Step 6/7: Experience</h1>
@@ -323,6 +354,11 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
                     <h3>Experience {idx + 1}</h3>
                     <input type="text" placeholder="Company Name" value={exp.company} onChange={(e) => handleArrayChange('experience', idx, 'company', e.target.value)} />
                     <textarea placeholder="Description / Role" value={exp.description} onChange={(e) => handleArrayChange('experience', idx, 'description', e.target.value)}></textarea>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', fontSize: '12px' }}>
+                        {exp.certificate && <img src={exp.certificate} alt="Certificate" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '5px' }} />}
+                        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} />
+                        <span>Experience Certificate</span>
+                    </div>
                 </div>
             ))}
             <div className="btns">
