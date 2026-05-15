@@ -18,14 +18,9 @@ function App() {
     <BrowserRouter>
 
       <Routes>
-
         <Route path='/' element={<LandingPage />} />
-
         <Route path='/subscription' element={<Subscription />} />
-
         <Route path='/auth' element={<AuthPage />} />
-
-
 
         <Route
           path='/collect-info'
@@ -35,8 +30,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
 
         <Route
           path='/dash'
