@@ -141,7 +141,7 @@
 
 #MainCont .Container .Grid {
   overflow-y: auto;
-  height: 1000px;
+  height: 100%;
   background: var(--bg);
   background-position: center;
   background-size: contain;
@@ -160,8 +160,7 @@
 #skillsDetails ul,
 .exp_card,
 #profileDetails,
-#ProfileImg,
-#educationDetails {
+#ProfileImg {
   background: var(--Neo_bg);
   border-radius: 10px;
   box-shadow: var(--box-shadow);
