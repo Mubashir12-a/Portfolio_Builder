@@ -69,7 +69,9 @@ function LoginRSignupComp() {
                                                                 HoldLogInCont={HoldLogInCont} 
                                                                 userEmail={userEmail} 
                                                                 setUserEmail={setUserEmail} 
-                                                                setSwitchTab={setSwitchTab}/>}
+                                                                setSwitchTab={setSwitchTab}
+                                                                userData={userData}
+                                                                setUserData={setUserData}/>}
 
                     {switchTab === 'SignupContainer' && <SignupContainer 
                                                                 setHoldLogInCont={setHoldLogInCont} 
@@ -88,7 +90,7 @@ function LoginRSignupComp() {
 
 // LogIn Container:
 
-function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab }) {
+function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab, userData, setUserData }) {
     return (
         <>
             {HoldLogInCont === 'GetLoginInfo' && (
@@ -96,6 +98,7 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
                     holdCont={setHoldLogInCont} 
                     setUserEmail={setUserEmail}
                     setSwitchTab={setSwitchTab}
+                    setUserData={setUserData}
                 />
             )}
 
@@ -104,6 +107,7 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
                     holdCont={setHoldLogInCont} 
                     userEmail={userEmail}
                     type="login"
+                    userData={userData}
                 />
             )}
 
@@ -164,7 +168,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
 
 // Login Components Parts:
 
-function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
+function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showAlert, setShowAlert] = useState(false);
@@ -186,6 +190,7 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab }) {
 
         setErrorMsg("");
         setUserEmail(email);
+        if (setUserData) setUserData({ password });
 
         console.log("Calling API...");
         setLoading(true);
@@ -293,9 +298,34 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
         return () => clearInterval(timer);
     }, [time]);
     
-    const handleResend = () => {
+    const handleResend = async () => {
         if (time === 0) {
-            setTime(30);
+            setError("");
+            setLoading(true);
+            try {
+                const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
+                const res = await fetch(`${apiUrl}/send-otp`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email: userEmail, password: userData?.password, type }),
+                    cache: "no-store" 
+                });
+
+                const data = await res.json();
+                if (data.message === "OTP sent") {
+                    setTime(30);
+                    setError("OTP resent successfully!");
+                } else {
+                    setError(data.message || "Failed to resend OTP");
+                }
+            } catch (err) {
+                console.error(err);
+                setError("Server error. Try again.");
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
