@@ -9,6 +9,8 @@ import AuthPage from './pages/authPage.jsx';
 import Dash from "./pages/Dashboard.jsx";
 import GetInfo from "./pages/collectDashInfo.jsx";
 import ResumeView from "./pages/ResumeView.jsx";
+import AdminLogin from "./pages/AdminLogin.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
 
 import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 
@@ -49,10 +51,14 @@ function App() {
           }
         />
 
+        {/* Admin — guarded internally via sessionStorage */}
+        <Route path='/admin'           element={<AdminLogin />} />
+        <Route path='/admin/dashboard' element={<AdminDashboard />} />
+
       </Routes>
 
     </BrowserRouter>
   )
 }
 
-export default App;
+export default App;

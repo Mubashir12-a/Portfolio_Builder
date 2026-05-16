@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import html2pdf from 'html2pdf.js';
 import '../pagesStyles/resume.css';
 
@@ -7,6 +7,8 @@ export default function ResumeView() {
     const [userData, setUserData] = useState(null);
     const resumeRef = useRef();
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const autoDownload = searchParams.get('download') === 'true';
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -30,6 +32,13 @@ export default function ResumeView() {
         };
         fetchProfile();
     }, [navigate]);
+
+    // Auto-trigger download if ?download=true
+    useEffect(() => {
+        if (userData && autoDownload) {
+            setTimeout(() => handleDownload(), 500);
+        }
+    }, [userData, autoDownload]);
 
     const handleDownload = () => {
         const element = resumeRef.current;

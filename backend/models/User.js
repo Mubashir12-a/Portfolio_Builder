@@ -16,6 +16,8 @@ const userSchema = new mongoose.Schema({
     default: false
   },
 
+  lastLogin: Date,
+
   profileImage: String,
 
   about: String,
@@ -35,7 +37,18 @@ const userSchema = new mongoose.Schema({
   education: [{ level: String, name: String, address: String, status: String }],
   projects: [{ title: String, description: String, link: String, image: String }],
   experience: [{ company: String, description: String, certificate: String }],
-  skills: [{ name: String, icon: String, progress: Number }]
+  skills: [{ name: String, icon: String, progress: Number }],
+
+  // Subscription
+  plan: { type: String, enum: ['free', 'studio', 'pro'], default: 'free' },
+  planExpiry: Date,
+  planPending: {
+    utr:         String,
+    amount:      Number,
+    billing:     String,
+    plan:        String,
+    submittedAt: Date
+  }
 
 });
 

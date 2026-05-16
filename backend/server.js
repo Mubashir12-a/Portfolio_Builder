@@ -1,6 +1,7 @@
 require("dotenv").config();
 const mongoose = require("mongoose");
-const User = require("./models/User");
+const User     = require("./models/User");
+const Feedback = require("./models/Feedback");
 
 const express = require("express");
 const cors = require("cors");
@@ -269,7 +270,11 @@ app.post("/verify-otp", async (req, res) => {
 
       delete otpStore[email];
 
-      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '7d' });
+      // Record last login time and persist
+      user.lastLogin = new Date();
+      await user.save();
+
+      const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '12h' });
 
       return res.json({
         success: true,
@@ -396,3 +401,211 @@ app.post("/api/user/upload-image", authenticateToken, upload.single("image"), as
     return res.status(500).json({ message: err.message || "Upload failed" });
   }
 });
+
+
+// ================= ADMIN CREDENTIALS (env only) =================
+const ADMIN_EMAIL    = process.env.ADMIN_EMAIL    || '';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+const ADMIN_OTP      = process.env.ADMIN_OTP      || '';
+
+// ================= ADMIN MIDDLEWARE =================
+const authenticateAdmin = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ message: "No token" });
+  jwt.verify(token, process.env.JWT_SECRET || 'secret_key', (err, decoded) => {
+    if (err || decoded.role !== 'admin')
+      return res.status(403).json({ message: "Not authorized" });
+    req.admin = decoded;
+    next();
+  });
+};
+
+// ================= ADMIN LOGIN (sends decoy OTP) =================
+app.post('/api/admin/login', async (req, res) => {
+  const { email, password } = req.body;
+  if (email !== ADMIN_EMAIL || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ message: "Invalid credentials" });
+  }
+  // Send a random decoy OTP — the real OTP is the static secret in .env
+  const decoyOtp = Math.floor(100000 + Math.random() * 900000);
+  try {
+    await resend.emails.send({
+      from: "Portfolio Builder <noreply@portfolio-builder.online>",
+      to: email,
+      subject: "Admin Verification Code • Portfolio Builder",
+      html: `<div style="font-family:Arial;padding:30px;background:#0a0a12;color:#fff;border-radius:12px">
+        <h2 style="color:#7B5EF8">Admin Panel Access</h2>
+        <p>Verification code:</p>
+        <div style="font-size:2rem;font-weight:bold;letter-spacing:8px;color:#2EDFA3;padding:16px;background:#111;border-radius:8px;display:inline-block">${decoyOtp}</div>
+        <p style="color:#666;font-size:12px;margin-top:20px">This code expires in 5 minutes.</p>
+      </div>`
+    });
+  } catch (e) { /* ignore send errors */ }
+  return res.json({ success: true, message: "OTP sent" });
+});
+
+// ================= ADMIN VERIFY OTP (static secret) =================
+app.post('/api/admin/verify-otp', (req, res) => {
+  const { otp } = req.body;
+  if (String(otp).trim() !== String(ADMIN_OTP).trim()) {
+    return res.status(401).json({ success: false, message: "Invalid OTP" });
+  }
+  const token = jwt.sign(
+    { role: 'admin' },
+    process.env.JWT_SECRET || 'secret_key',
+    { expiresIn: '8h' }
+  );
+  return res.json({ success: true, token });
+});
+
+// ================= SUBMIT PAYMENT REQUEST =================
+app.post('/api/subscription/request', authenticateToken, async (req, res) => {
+  const { plan, billing, amount, utr } = req.body;
+  if (!plan || !billing || !amount || !utr)
+    return res.status(400).json({ message: "Missing fields" });
+  try {
+    const user = await User.findById(req.user.userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    user.planPending = { utr, amount, billing, plan, submittedAt: new Date() };
+    await user.save();
+    return res.json({ success: true, message: "Payment request submitted. Awaiting verification." });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= GET PENDING PAYMENTS (admin) =================
+app.get('/api/admin/pending-payments', authenticateAdmin, async (req, res) => {
+  try {
+    const users = await User.find({ 'planPending.utr': { $exists: true, $ne: null } })
+      .select('name email plan planExpiry planPending');
+    return res.json({ success: true, users });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= APPROVE PAYMENT (admin) =================
+app.post('/api/admin/approve-payment', authenticateAdmin, async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const billing = user.planPending?.billing;
+    const plan    = user.planPending?.plan;
+
+    const daysMap = { 'Monthly': 30, '6 Months': 180, 'Yearly': 365, '3 Years': 1095 };
+    const days = daysMap[billing] || 30;
+
+    user.plan       = plan;
+    user.planExpiry = new Date(Date.now() + days * 24 * 60 * 60 * 1000);
+    user.planPending = undefined;
+    await user.save();
+    return res.json({ success: true, message: `Plan activated: ${plan} for ${days} days` });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= REJECT PAYMENT (admin) =================
+app.post('/api/admin/reject-payment', authenticateAdmin, async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    user.planPending = undefined;
+    await user.save();
+    return res.json({ success: true, message: "Payment request rejected" });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// ================= SUBMIT FEEDBACK (public) =================
+app.post('/api/feedback', async (req, res) => {
+  const { type, message, name } = req.body;
+  if (!message || message.trim().length < 5)
+    return res.status(400).json({ message: "Message too short" });
+  try {
+    const fb = await Feedback.create({
+      type:    type    || 'General',
+      message: message.trim(),
+      name:    name?.trim() || 'Anonymous'
+    });
+    return res.json({ success: true, feedback: fb });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= GET ALL FEEDBACKS (admin) =================
+app.get('/api/admin/feedbacks', authenticateAdmin, async (req, res) => {
+  try {
+    const feedbacks = await Feedback.find().sort({ submittedAt: -1 });
+    return res.json({ success: true, feedbacks });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= DELETE FEEDBACK (admin) =================
+app.delete('/api/admin/feedback/:id', authenticateAdmin, async (req, res) => {
+  try {
+    await Feedback.findByIdAndDelete(req.params.id);
+    return res.json({ success: true, message: "Feedback deleted" });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// ================= GET ALL USERS (admin) =================
+app.get('/api/admin/users', authenticateAdmin, async (req, res) => {
+  try {
+    const users = await User.find()
+      .select('name email password phone address plan planExpiry profileCompleted lastLogin createdAt')
+      .sort({ lastLogin: -1 });
+    return res.json({ success: true, users });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+// ================= CONTACT FORM =================
+app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+  if (!name || !email || !message)
+    return res.status(400).json({ message: "All fields are required" });
+  if (message.trim().length < 5)
+    return res.status(400).json({ message: "Message is too short" });
+  try {
+    await resend.emails.send({
+      from: "Portfolio Builder <noreply@portfolio-builder.online>",
+      to:   process.env.ADMIN_EMAIL || 'ma2625645@gmail.com',
+      subject: `Contact Message from ${name} — Portfolio Builder`,
+      html: `
+        <div style="font-family:Arial;padding:30px;background:#0a0a12;color:#fff;border-radius:12px;max-width:500px">
+          <h2 style="color:#7B5EF8;margin-bottom:20px">New Contact Message</h2>
+          <table style="width:100%;border-collapse:collapse">
+            <tr><td style="padding:8px 0;color:#9490B5;width:80px">Name</td><td style="color:#fff;font-weight:bold">${name}</td></tr>
+            <tr><td style="padding:8px 0;color:#9490B5">Email</td><td style="color:#38C5FF">${email}</td></tr>
+          </table>
+          <div style="background:#111;border-radius:8px;padding:16px;margin-top:16px;border-left:3px solid #7B5EF8">
+            <p style="color:#9490B5;font-size:12px;margin-bottom:8px">MESSAGE</p>
+            <p style="color:#e0e0f0;line-height:1.6">${message}</p>
+          </div>
+          <p style="color:#333344;font-size:11px;margin-top:20px">Sent via Portfolio Builder contact form</p>
+        </div>
+      `
+    });
+    return res.json({ success: true, message: "Message sent successfully" });
+  } catch (err) {
+    console.error("Contact email error:", err);
+    return res.status(500).json({ message: "Failed to send message" });
+  }
+});
+
+

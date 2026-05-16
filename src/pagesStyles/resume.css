@@ -29,6 +29,7 @@
 .resume-document {
     background: white;
     width: 210mm;
+    max-width: 100%;
     min-height: 297mm;
     padding: 20mm;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -157,4 +158,76 @@
     padding: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     page-break-inside: avoid;
+}
+
+/* ================================================ */
+/* Mobile — 768px                                   */
+/* ================================================ */
+@media (max-width: 768px) {
+
+  /* ── Background wrapper ── */
+  .resume-container {
+    padding: 20px 8px;
+  }
+
+  /* ── Action buttons: stack vertically ── */
+  .resume-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .resume-actions button {
+    width: 90%;
+    margin: 0;
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  /* ── A4 document: scale to fit screen width ── */
+  .resume-document {
+    width: 100%;
+    min-height: auto;
+    padding: 12mm 8mm;
+    font-size: 13px;
+    /* Override fixed 210mm width so it doesn't overflow */
+    box-sizing: border-box;
+  }
+
+  .resume-header h1 {
+    font-size: 22px;
+  }
+
+  .resume-header p {
+    font-size: 12px;
+  }
+
+  .resume-section h2 {
+    font-size: 16px;
+  }
+
+  .resume-item h3 {
+    font-size: 14px;
+  }
+
+  .resume-item h4,
+  .resume-item p {
+    font-size: 12px;
+  }
+
+  .resume-skills {
+    gap: 6px;
+  }
+
+  .resume-skill {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .resume-large-image {
+    max-height: 300px;
+  }
 }

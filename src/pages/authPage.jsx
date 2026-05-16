@@ -5,12 +5,22 @@ import loadingAuth from "../assets/loadingAuth.gif"
 import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
 
-import { useState } from 'react';
-import { useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 import { useNavigate } from "react-router-dom";
 
+import { getValidToken } from "../utils/auth";
+
 function AuthPage(){
+    const navigate = useNavigate();
+
+    // If a valid (non-expired) token already exists, skip the login page
+    useEffect(() => {
+        if (getValidToken()) {
+            navigate("/dash", { replace: true });
+        }
+    }, []);
+
     return (
         <>
             <Header comp={BtnsSet}/>

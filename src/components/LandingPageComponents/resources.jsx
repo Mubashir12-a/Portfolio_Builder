@@ -13,9 +13,7 @@ export default function Resources(){
 
                 <div className="container">
 
-                  <div className='cardCont' onClick={() => {
-                    console.log("pre");
-                  }}>
+                  <div className='cardCont'>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">📚</div>

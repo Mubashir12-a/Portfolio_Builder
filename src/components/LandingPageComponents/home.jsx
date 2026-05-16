@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import ProfileImg from '../../assets/profileImg.png'
 
 export default function Home(){
+    const navigate = useNavigate();
+
     return (
         <>
             <section id='Home'>
@@ -19,12 +22,12 @@ export default function Home(){
                 </div>
 
                 <div className='IntroPara'>
-                  <p>Pick a template, fill in your story, and publish a professional portfolio in minutes — no coding required. Built for students, freshers & creators.</p>
+                  <p>Pick a template, fill in your story, and publish a professional portfolio in minutes — no coding required. Built for students, freshers &amp; creators.</p>
                 </div>
 
                 <div className='RedirectBtns'>
-                  <button>☣ Build My PortFolio</button>
-                  <button>Browse Templates →</button>
+                  <button onClick={() => navigate('/auth')}>🚀 Build My Portfolio</button>
+                  <button onClick={() => navigate('/subscription')}>Browse Templates →</button>
                 </div>
                 
                 <div className='feedCard'>
@@ -53,26 +56,26 @@ export default function Home(){
                     <span></span><span></span><span></span>
                   </div>
                   <div className='Dem-URL'>
-                    <p>https://portfoliobuilder.app/MubashirAhmad</p>
+                    <p>https://portfoliobuilder.app/AaravSharma</p>
                   </div>
                 </div>
                 <div className='Container'>
                   <div className="AttractProfile">
                     <img src={ProfileImg} alt="" />
                     <div>
-                      <p>Mubashir Ahmad</p>
-                      <p>MERN-Stack Developer</p>
+                      <p>Aarav Sharma</p>
+                      <p>Full-Stack Developer</p>
                     </div>
                   </div>
                   <div className="AttractSkill">
                     <span>React.js</span>
                     <span>Node.js</span>
-                    <span>JavaScript</span>
+                    <span>TypeScript</span>
                   </div>
                   <div className="AttractProject">
-                    <div>Wheather Web-App</div>
-                    <div>E-Com Web-App</div>
-                    <div>DashBoard</div>
+                    <div>AI Chat App</div>
+                    <div>E-Commerce</div>
+                    <div>Dashboard</div>
                   </div>
                 </div>
                 </div>

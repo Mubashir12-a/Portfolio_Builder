@@ -26,6 +26,7 @@ function Dashboard() {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('resetToken');
         navigate('/auth');
     };
 
@@ -49,7 +50,13 @@ function Dashboard() {
     }, []);
 
     if (!userData) {
-        return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</div>;
+        return (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', gap: '16px', background: 'var(--bg)' }}>
+                <div style={{ width: 40, height: 40, border: '3px solid var(--violet-dim)', borderTop: '3px solid var(--violet)', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                <p style={{ color: 'var(--text-2)', fontFamily: 'Orbitron, sans-serif', fontSize: '0.85rem', letterSpacing: '2px' }}>LOADING DASHBOARD...</p>
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+            </div>
+        );
     }
 
     return (
@@ -81,10 +88,37 @@ function Dashboard() {
 
                 <section className="Container">
                     <section className={`Sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
-                        <AddTabToSideBar TabName={"Edit Profile"} icon="✏️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/collect-info")} />
-                        <AddTabToSideBar TabName={"View Resume"} icon="📄" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume")} />
-                        <AddTabToSideBar TabName={"Download Resume"} icon="⬇️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume")} />
-                        <AddTabToSideBar TabName={"Logout"} icon="🚪" isSidebarOpen={isSidebarOpen} onClick={handleLogout} />
+                        {/* Plan badge */}
+                        {isSidebarOpen && (
+                            <div style={{
+                                background: userData.plan === 'pro' ? 'rgba(255,184,48,.1)' : userData.plan === 'studio' ? 'rgba(56,197,255,.1)' : 'rgba(46,223,163,.1)',
+                                border: `1px solid ${userData.plan === 'pro' ? 'rgba(255,184,48,.35)' : userData.plan === 'studio' ? 'rgba(56,197,255,.35)' : 'rgba(46,223,163,.35)'}`,
+                                borderRadius: '10px',
+                                padding: '8px 10px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '2px'
+                            }}>
+                                <span style={{ fontSize: '0.7rem', color: 'var(--text-2)' }}>Current Plan</span>
+                                <span style={{
+                                    fontSize: '0.9rem',
+                                    fontWeight: 'bold',
+                                    color: userData.plan === 'pro' ? '#FFB830' : userData.plan === 'studio' ? '#38C5FF' : '#2EDFA3'
+                                }}>
+                                    {userData.plan === 'pro' ? '👑 Pro' : userData.plan === 'studio' ? '⚡ Studio' : '🌱 Free'}
+                                </span>
+                                {userData.planExpiry && userData.plan !== 'free' && (
+                                    <span style={{ fontSize: '0.65rem', color: 'var(--text-3)' }}>
+                                        Expires {new Date(userData.planExpiry).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                    </span>
+                                )}
+                            </div>
+                        )}
+                        <AddTabToSideBar TabName={"Edit Profile"}     icon="✏️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/collect-info")} />
+                        <AddTabToSideBar TabName={"View Resume"}      icon="📄" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume")} />
+                        <AddTabToSideBar TabName={"Download Resume"}  icon="⬇️" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/resume?download=true")} />
+                        <AddTabToSideBar TabName={"Upgrade Plan"}     icon="⚡" isSidebarOpen={isSidebarOpen} onClick={() => navigate("/subscription")} />
+                        <AddTabToSideBar TabName={"Logout"}           icon="🚪" isSidebarOpen={isSidebarOpen} onClick={handleLogout} />
                     </section>
 
 
@@ -109,8 +143,8 @@ export default Dashboard;
 function BtnsSet() {
     return (
         <>
-            <Btn_Primary title={"Home"} to={"/"} />
-            <Btn_Primary title={"Templates"} to={"/"} />
+            <Btn_Primary title={"Home"}      to={"/"} />
+            <Btn_Primary title={"Upgrade ⚡"} to={"/subscription"} />
         </>
     )
 }
@@ -159,53 +193,66 @@ function ProfileImg({ url }) {
 
 function Skills({ skills }) {
     return (
-        <>
-            <div id="skillsDetails">
-                <h2>Skills:</h2>
-
-                <ul>
-                    {skills.length > 0 ? skills.map((s, i) => {
+        <div id="skillsDetails">
+            <h2>Skills:</h2>
+            <ul>
+                {skills.length > 0
+                    ? skills.map((s, i) => {
                         if (!s.name) return null;
-                        return <Bars key={i} icon={s.icon || "💻"} prog={s.progress || 50} />
-                    }) : <p>No skills added.</p>}
-                </ul>
-            </div>
-        </>
-    )
+                        return <Bars key={i} icon={s.icon || '💻'} name={s.name} prog={s.progress || 50} />;
+                      })
+                    : <p style={{ padding: '20px', color: 'var(--text-3)' }}>No skills added yet.</p>
+                }
+            </ul>
+        </div>
+    );
 }
 
-function Bars({ icon, prog }) {
-    // Check if icon is a URL or emoji
+function Bars({ icon, name, prog }) {
     const isUrl = icon && icon.startsWith('http');
     const [animatedProg, setAnimatedProg] = useState(0);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setAnimatedProg(Math.max(1, prog));
-        }, 100);
+        const timer = setTimeout(() => { setAnimatedProg(Math.max(1, prog)); }, 100);
         return () => clearTimeout(timer);
     }, [prog]);
 
     return (
-        <>
-            <li>
-                <span className="icon">
-                    {isUrl ? <img src={icon} alt="skill" style={{ width: '24px', height: '24px', objectFit: 'contain' }} /> : icon}
-                </span>
-                <div className="bar">
-                    <div className="bar-fill" style={{ width: `${animatedProg}%`, height: '100%', background: 'linear-gradient(50deg, var(--violet), var(--coral), var(--amber))', borderRadius: '20px', transition: 'width 1s ease-in-out' }}></div>
-                </div>
-                <p className="progress">{prog}%</p>
-            </li>
-        </>
-    )
+        <li style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+            <span className="icon" style={{ minWidth: 28 }}>
+                {isUrl ? <img src={icon} alt="skill" style={{ width: '24px', height: '24px', objectFit: 'contain' }} /> : icon}
+            </span>
+            <span style={{ color: 'var(--text-2)', fontSize: '0.85rem', minWidth: 80 }}>{name}</span>
+            <div className="bar" style={{ flex: 1 }}>
+                <div className="bar-fill" style={{ width: `${animatedProg}%`, height: '100%', background: 'linear-gradient(50deg, var(--violet), var(--coral), var(--amber))', borderRadius: '20px', transition: 'width 1s ease-in-out' }} />
+            </div>
+            <p className="progress" style={{ minWidth: 36, textAlign: 'right' }}>{prog}%</p>
+        </li>
+    );
 }
 
 
 function SocialMedia({ socialLinks }) {
+    const navigate = useNavigate();
+    const hasAny = socialLinks && Object.values(socialLinks).some(v => v);
+
+    if (!hasAny) {
+        return (
+            <div id="SocialMedia" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+                <span style={{ fontSize: '2rem' }}>🔗</span>
+                <p style={{ color: 'var(--text-3)', fontSize: '0.9rem' }}>No social links added yet.</p>
+                <button
+                    onClick={() => navigate('/collect-info')}
+                    style={{ background: 'var(--violet-dim)', border: '1px solid var(--violet)', color: 'var(--violet)', padding: '8px 18px', borderRadius: '8px', cursor: 'pointer', fontSize: '0.85rem' }}
+                >
+                    Add Links →
+                </button>
+            </div>
+        );
+    }
+
     return (
-        <>
-            <div id="SocialMedia">
+        <div id="SocialMedia">
                 <ul>
                     {socialLinks.instagram && (
                         <li>
@@ -278,10 +325,10 @@ function SocialMedia({ socialLinks }) {
                         </li>
                     )}
                 </ul>
-            </div>
-        </>
-    )
+        </div>
+    );
 }
+
 
 
 function Education({ education }) {

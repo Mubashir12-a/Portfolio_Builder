@@ -1,12 +1,13 @@
-import Bento from '../../assets/Bento.png'
-import Github from '../../assets/Github.png'
-import Insta from '../../assets/Instagram.png'
+import Bento   from '../../assets/Bento.png'
+import Github  from '../../assets/Github.png'
+import Insta   from '../../assets/Instagram.png'
 import LinkedIn from '../../assets/LinkedIn.png'
-
-import logo from '../../assets/Logo.gif';
-
+import logo    from '../../assets/Logo.gif';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer(){
+    const navigate = useNavigate();
+
     return (
         <>
             <footer>
@@ -21,33 +22,30 @@ export default function Footer(){
 
                 <div className="Products footercard">
                   <h2>Product</h2>
-
                   <ul>
-                    <li>Templates</li>
-                    <li>Style Editor</li>
-                    <li>Export Code</li>
-                    <li>Pricing</li>
+                    <li onClick={() => navigate('/subscription')} style={{cursor:'pointer'}}>Templates</li>
+                    <li style={{cursor:'default',opacity:.5}}>Style Editor</li>
+                    <li style={{cursor:'default',opacity:.5}}>Export Code</li>
+                    <li onClick={() => navigate('/subscription')} style={{cursor:'pointer'}}>Pricing</li>
                   </ul>
                 </div>
 
                 <div className="Company footercard">
                   <h2>Company</h2>
-
                   <ul>
-                    <li>About</li>
-                    <li>Team</li>
-                    <li>Contact</li>
-                    <li>Blog</li>
+                    <li onClick={() => navigate('/#About')} style={{cursor:'pointer'}}>About</li>
+                    <li style={{cursor:'default',opacity:.5}}>Team</li>
+                    <li onClick={() => navigate('/#GetInTouch')} style={{cursor:'pointer'}}>Contact</li>
+                    <li style={{cursor:'default',opacity:.5}}>Blog</li>
                   </ul>
                 </div>
 
                 <div className="Legal footercard">
                   <h2>Legal</h2>
-
                   <ul>
-                    <li>Privacy Policy</li>
-                    <li>Terms Of Use</li>
-                    <li>Cookie Policy</li>
+                    <li style={{cursor:'default',opacity:.5}}>Privacy Policy</li>
+                    <li style={{cursor:'default',opacity:.5}}>Terms Of Use</li>
+                    <li style={{cursor:'default',opacity:.5}}>Cookie Policy</li>
                   </ul>
                 </div>
               </section>
@@ -55,17 +53,17 @@ export default function Footer(){
               <section className='footerBottom'>
                 <p>© 2026 PortfolioBuilder. Developer Mubashir Ahmad.</p>
                 <div>
-                  <a href="http://">
-                    <img src={Bento} alt="" />
+                  <a href="https://bento.me" target="_blank" rel="noreferrer">
+                    <img src={Bento} alt="Bento" />
                   </a>
-                  <a href="http://">
-                    <img src={Github} alt="" />
+                  <a href="https://github.com" target="_blank" rel="noreferrer">
+                    <img src={Github} alt="GitHub" />
                   </a>
-                  <a href="http://">
-                    <img src={Insta} alt="" />
+                  <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                    <img src={Insta} alt="Instagram" />
                   </a>
-                  <a href="http://">
-                    <img src={LinkedIn} alt="" />
+                  <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                    <img src={LinkedIn} alt="LinkedIn" />
                   </a>
                 </div>
               </section>
