@@ -11,6 +11,11 @@ import GetInfo from "./pages/collectDashInfo.jsx";
 import ResumeView from "./pages/ResumeView.jsx";
 import AdminLogin from "./pages/AdminLogin.jsx";
 import AdminDashboard from "./pages/AdminDashboard.jsx";
+import TemplatesPage from './pages/TemplatesPage.jsx';
+import TeamMemberPage from './pages/TeamMemberPage.jsx';
+import InfoPage from './pages/InfoPage.jsx';
+import BlogPage from './pages/BlogPage.jsx';
+import TechStackPage from './pages/TechStackPage.jsx';
 
 import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 
@@ -23,6 +28,11 @@ function App() {
         <Route path='/' element={<LandingPage />} />
         <Route path='/subscription' element={<Subscription />} />
         <Route path='/auth' element={<AuthPage />} />
+        <Route path='/templates' element={<TemplatesPage />} />
+        <Route path='/team/:memberId' element={<TeamMemberPage />} />
+        <Route path='/blog' element={<BlogPage />} />
+        <Route path='/info/stack' element={<TechStackPage />} />
+        <Route path='/info/:type' element={<InfoPage />} />
 
         <Route
           path='/collect-info'
@@ -51,8 +61,7 @@ function App() {
           }
         />
 
-        {/* Admin — guarded internally via sessionStorage */}
-        <Route path='/admin'           element={<AdminLogin />} />
+        <Route path='/admin' element={<AdminLogin />} />
         <Route path='/admin/dashboard' element={<AdminDashboard />} />
 
       </Routes>
@@ -61,4 +70,4 @@ function App() {
   )
 }
 
-export default App;
+export default App;

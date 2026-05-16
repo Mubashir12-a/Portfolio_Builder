@@ -4,6 +4,7 @@ import loadingAuth from "../assets/loadingAuth.gif"
 
 import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
+import Btn_Secondry from '../components/GeneralComponents/buttonSecondry';
 
 import { useState, useEffect } from 'react';
 
@@ -11,10 +12,9 @@ import { useNavigate } from "react-router-dom";
 
 import { getValidToken } from "../utils/auth";
 
-function AuthPage(){
+function AuthPage() {
     const navigate = useNavigate();
 
-    // If a valid (non-expired) token already exists, skip the login page
     useEffect(() => {
         if (getValidToken()) {
             navigate("/dash", { replace: true });
@@ -23,12 +23,12 @@ function AuthPage(){
 
     return (
         <>
-            <Header comp={BtnsSet}/>
+            <Header comp={BtnsSet} />
 
             <section id='auth'>
-                <Caption/>
-                
-                <LoginRSignupComp/>
+                <Caption />
+
+                <LoginRSignupComp />
 
 
             </section>
@@ -39,10 +39,11 @@ function AuthPage(){
 export default AuthPage;
 
 
-function BtnsSet(){
+function BtnsSet() {
     return (
         <>
-            <Btn_Primary title={"Home"} to={"/"}/>
+            <Btn_Secondry title={"Templates"} to={"/templates"} />
+            <Btn_Primary title={"Home"} to={"/"} />
         </>
     )
 }
@@ -74,23 +75,23 @@ function LoginRSignupComp() {
                 </div>
 
                 <div className="show">
-                    {switchTab === 'LogInContainer' && <LogInContainer 
-                                                                setHoldLogInCont={setHoldLogInCont} 
-                                                                HoldLogInCont={HoldLogInCont} 
-                                                                userEmail={userEmail} 
-                                                                setUserEmail={setUserEmail} 
-                                                                setSwitchTab={setSwitchTab}
-                                                                userData={userData}
-                                                                setUserData={setUserData}/>}
+                    {switchTab === 'LogInContainer' && <LogInContainer
+                        setHoldLogInCont={setHoldLogInCont}
+                        HoldLogInCont={HoldLogInCont}
+                        userEmail={userEmail}
+                        setUserEmail={setUserEmail}
+                        setSwitchTab={setSwitchTab}
+                        userData={userData}
+                        setUserData={setUserData} />}
 
-                    {switchTab === 'SignupContainer' && <SignupContainer 
-                                                                setHoldLogInCont={setHoldLogInCont} 
-                                                                HoldLogInCont={HoldLogInCont} 
-                                                                userEmail={userEmail} 
-                                                                setUserEmail={setUserEmail} 
-                                                                setSwitchTab={setSwitchTab}
-                                                                userData={userData}
-                                                                setUserData={setUserData}/>}
+                    {switchTab === 'SignupContainer' && <SignupContainer
+                        setHoldLogInCont={setHoldLogInCont}
+                        HoldLogInCont={HoldLogInCont}
+                        userEmail={userEmail}
+                        setUserEmail={setUserEmail}
+                        setSwitchTab={setSwitchTab}
+                        userData={userData}
+                        setUserData={setUserData} />}
                 </div>
             </div>
         </>
@@ -104,8 +105,8 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
     return (
         <>
             {HoldLogInCont === 'GetLoginInfo' && (
-                <GetLoginInfo 
-                    holdCont={setHoldLogInCont} 
+                <GetLoginInfo
+                    holdCont={setHoldLogInCont}
                     setUserEmail={setUserEmail}
                     setSwitchTab={setSwitchTab}
                     setUserData={setUserData}
@@ -113,8 +114,8 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
             )}
 
             {HoldLogInCont === 'OTPVerify' && (
-                <GetLoginOTP 
-                    holdCont={setHoldLogInCont} 
+                <GetLoginOTP
+                    holdCont={setHoldLogInCont}
                     userEmail={userEmail}
                     type="login"
                     userData={userData}
@@ -122,16 +123,16 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
             )}
 
             {HoldLogInCont === 'LogInDone' && (
-                <LogInDone holdCont={setHoldLogInCont}/>
+                <LogInDone holdCont={setHoldLogInCont} />
             )}
 
             {HoldLogInCont === 'ForgotPass' && (
-                <ForgotPass holdCont={setHoldLogInCont} setUserEmail={setUserEmail}/>
+                <ForgotPass holdCont={setHoldLogInCont} setUserEmail={setUserEmail} />
             )}
 
             {HoldLogInCont === 'OTPVerify_Forgot' && (
-                <GetLoginOTP 
-                    holdCont={setHoldLogInCont} 
+                <GetLoginOTP
+                    holdCont={setHoldLogInCont}
                     userEmail={userEmail}
                     type="forgot-password"
                 />
@@ -144,12 +145,12 @@ function LogInContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
     );
 }
 
-function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab, userData, setUserData}){
+function SignupContainer({ setHoldLogInCont, userEmail, HoldLogInCont, setUserEmail, setSwitchTab, userData, setUserData }) {
     return (
         <>
             {HoldLogInCont === 'OTPVerify' && (
-                <GetLoginOTP 
-                    holdCont={setHoldLogInCont} 
+                <GetLoginOTP
+                    holdCont={setHoldLogInCont}
                     userEmail={userEmail}
                     type="signup"
                     userData={userData}
@@ -157,11 +158,11 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
             )}
 
             {HoldLogInCont === 'SignUpDone' && (
-                <SignUpDone holdCont={setHoldLogInCont}/>
+                <SignUpDone holdCont={setHoldLogInCont} />
             )}
 
             {HoldLogInCont === 'Create_Acc' && (
-                <CreateAcc 
+                <CreateAcc
                     holdCont={setHoldLogInCont}
                     setUserEmail={setUserEmail}
                     setSwitchTab={setSwitchTab}
@@ -184,12 +185,12 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
     const [showPass, setShowPass] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const [showTermsAlert, setShowTermsAlert] = useState(false);   
-    const [errorMsg, setErrorMsg] = useState(""); 
+    const [showTermsAlert, setShowTermsAlert] = useState(false);
+    const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(false);
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
- 
+
     const handleLogin = async () => {
         console.log("LOGIN CLICKED");
 
@@ -214,7 +215,7 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email, password, type: "login" }),
-                cache: "no-store" // 🔥 important
+                cache: "no-store"
             });
 
             const data = await res.json();
@@ -256,9 +257,9 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
             </div>
 
             <div className="getpass">
-                <button className='forgotPass' onClick={() => {holdCont('ForgotPass')}}>Forgot password?</button>
+                <button className='forgotPass' onClick={() => { holdCont('ForgotPass') }}>Forgot password?</button>
                 <label>Password</label>
-                <div style={{ position: 'relative' }}>
+                <div>
                     <input
                         type={showPass ? "text" : "password"}
                         id="loginPass"
@@ -270,7 +271,6 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                     <button
                         type="button"
                         onClick={() => setShowPass(p => !p)}
-                        style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
                         tabIndex={-1}
                         aria-label={showPass ? 'Hide password' : 'Show password'}
                     >{showPass ? '🙈' : '👁️'}</button>
@@ -293,32 +293,32 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
 
             <div className="signup">
                 <p>Don't have an account?</p>
-                <button onClick={() => {holdCont('Create_Acc'); setSwitchTab('SignupContainer')}}>Sign up free</button>
+                <button onClick={() => { holdCont('Create_Acc'); setSwitchTab('SignupContainer') }}>Sign up free</button>
             </div>
         </section>
-  );
+    );
 }
 
 
 
 
-function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
+function GetLoginOTP({ holdCont, userEmail, type, userData = {} }) {
     const [time, setTime] = useState(30);
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    
+
     useEffect(() => {
         if (time <= 0) return;
-        
+
         const timer = setInterval(() => {
             setTime((prev) => prev - 1);
         }, 1000);
-        
+
         return () => clearInterval(timer);
     }, [time]);
-    
+
     const handleResend = async () => {
         if (time === 0) {
             setError("");
@@ -331,7 +331,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ email: userEmail, password: userData?.password, type }),
-                    cache: "no-store" 
+                    cache: "no-store"
                 });
 
                 const data = await res.json();
@@ -375,7 +375,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
                     password: userData.password,
                     type: type
                 }),
-                cache: "no-store" 
+                cache: "no-store"
             });
 
             const data = await res.json();
@@ -389,7 +389,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
 
                 if (type === "signup") {
                     navigate("/collect-info");
-                } 
+                }
                 else if (type === "forgot-password") {
                     localStorage.setItem("resetToken", data.resetToken);
                     holdCont("ResetPassword");
@@ -467,11 +467,11 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
                     )}
                 </div>
 
-               <button className='Ver_LogIn' onClick={handleVerify}>
+                <button className='Ver_LogIn' onClick={handleVerify}>
                     {loading ? <LoadingForAuth /> : (type === "signup" ? "Verify & Sign Up ✓" : "Verify & Login ✓")}
                 </button>
-                <button 
-                    className='back' 
+                <button
+                    className='back'
                     onClick={() => {
                         if (type === "signup") {
                             holdCont('Create_Acc');
@@ -483,13 +483,13 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }){
         </>
     )
 
-    
+
 }
 
 const OTPValidate_Jump = (e) => {
     const value = e.target.value.replace(/\D/g, "").slice(0, 1);
     e.target.value = value;
-    
+
     if (value && e.target.nextSibling) {
         e.target.nextSibling.focus();
     }
@@ -506,7 +506,7 @@ const BackJump = (e) => {
 
 
 
-function ForgotPass({holdCont, setUserEmail}){
+function ForgotPass({ holdCont, setUserEmail }) {
     const [email, setEmail] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(false);
@@ -542,7 +542,7 @@ function ForgotPass({holdCont, setUserEmail}){
 
     return (
         <>
-            <div id="ForgotPass" style={{display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto'}}>
+            <div id="ForgotPass" style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto' }}>
                 <h3>Reset your <em>password.</em></h3>
                 <p>Enter your email and we'll send a reset link.</p>
 
@@ -562,7 +562,7 @@ function ForgotPass({holdCont, setUserEmail}){
                 <button className='sendResetLink' onClick={handleSendOTP}>
                     {loading ? <LoadingForAuth /> : "Send Reset Code →"}
                 </button>
-                <button className='BackToLog' onClick={() => {holdCont('GetLoginInfo')}}>← Back To Log-In</button>
+                <button className='BackToLog' onClick={() => { holdCont('GetLoginInfo') }}>← Back To Log-In</button>
             </div>
         </>
     )
@@ -622,7 +622,7 @@ function ResetPassword({ holdCont }) {
     }
 
     return (
-        <div id="ResetPassword" style={{display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto'}}>
+        <div id="ResetPassword" style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '400px', margin: '0 auto' }}>
             <h3>Create new <em>password.</em></h3>
             <p>Please enter your new secure password.</p>
 
@@ -664,7 +664,7 @@ function ResetPassword({ holdCont }) {
 }
 
 
-function LogInDone({holdCont}){
+function LogInDone({ holdCont }) {
     const navigate = useNavigate();
 
     return (
@@ -681,7 +681,7 @@ function LogInDone({holdCont}){
     )
 }
 
-function AlertBox({AlertMsg}){
+function AlertBox({ AlertMsg }) {
     return (
         <>
             <div className='AlertBox'>
@@ -696,7 +696,7 @@ function AlertBox({AlertMsg}){
 
 // SignUp components:
 
-function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
+function CreateAcc({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -741,7 +741,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
 
             if (data.message === "OTP sent") {
                 setUserEmail(email);
-                setUserData({ name, password }); 
+                setUserData({ name, password });
                 holdCont('OTPVerify');
             } else {
                 setErrorMsg(data.message || "Failed to send OTP");
@@ -751,7 +751,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
             console.error(err);
             setErrorMsg("Server error. Try again.");
         } finally {
-           setLoading(false);
+            setLoading(false);
         }
     };
 
@@ -791,7 +791,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                 <div className="getpass">
                     <p className='instruct'>min. 8 characters</p>
                     <label>Password</label>
-                    <div style={{ position: 'relative' }}>
+                    <div>
                         <input
                             type={showPass ? "text" : "password"}
                             placeholder="Set Your Password"
@@ -802,7 +802,6 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                         <button
                             type="button"
                             onClick={() => setShowPass(p => !p)}
-                            style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
                             tabIndex={-1}
                             aria-label={showPass ? 'Hide password' : 'Show password'}
                         >{showPass ? '🙈' : '👁️'}</button>
@@ -830,7 +829,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                 </button>
 
                 <p className='logIn'>
-                    Already have an account? 
+                    Already have an account?
                     <button onClick={() => {
                         setSwitchTab('LogInContainer');
                         holdCont("GetLoginInfo");
@@ -844,7 +843,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
 }
 
 
-function UserType({holdCont}){
+function UserType({ holdCont }) {
     return (
         <>
             <div id="UserType">
@@ -885,7 +884,7 @@ function UserType({holdCont}){
     )
 }
 
-function SignUpDone({holdCont}){
+function SignUpDone({ holdCont }) {
     const navigate = useNavigate();
 
     return (
@@ -903,7 +902,7 @@ function SignUpDone({holdCont}){
 }
 
 
-function LoadingForAuth(){
+function LoadingForAuth() {
     return (
         <>
             <div id="loadAni">
@@ -919,13 +918,13 @@ function LoadingForAuth(){
 
 // Caption:
 
-function Caption(){
+function Caption() {
     return (
         <>
-           <section className="parent">
+            <section className="parent">
                 <div className="tag"><span>.</span><p>JOIN THE BUILDER</p></div>
 
-                <h1>Your portfolio is one step<br/><em>away.</em></h1>
+                <h1>Your portfolio is one step<br /><em>away.</em></h1>
 
                 <p className='para'>Sign up in under 2 minutes. No credit card, no setup complexity — just your story, beautifully presented.</p>
 
@@ -966,7 +965,7 @@ function Caption(){
                         <p>already have their portfolio live.</p>
                     </div>
                 </div>
-           </section>
+            </section>
         </>
     )
 }

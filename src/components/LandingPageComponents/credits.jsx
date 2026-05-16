@@ -1,8 +1,10 @@
 import MubashirImg from '../../assets/MubashirProPic.jpeg';
 import HammadImg from '../../assets/HammadProPic.jpeg';
 import AbrarImg from '../../assets/AbrarProPic.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 export default function Credits(){
+    const navigate = useNavigate();
     return (
         <>
             <section id="credits">
@@ -22,15 +24,15 @@ export default function Credits(){
                       <span></span>
                     </div>
                     <h2 className='name'>Mubashir</h2>
-                    <div className="role">Lead Developer</div>
-                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="role">Lead Developer & Supervisor</div>
+                    <p className="discrip">Responsible for front end, APIs, Structure, Stack, Supervisor, and Backend support.</p>
                     <div className="skills">
                       <span>React.js</span>
-                      <span>TypeScript</span>
-                      <span>SQL</span>
+                      <span>System Design</span>
+                      <span>APIs</span>
                     </div>
-                    <button>
-                      <span>View</span>
+                    <button onClick={() => navigate('/team/mubashir')}>
+                      <span>View Profile</span>
                     </button>
                 </div>
                 <div className="card">
@@ -39,15 +41,15 @@ export default function Credits(){
                       <span></span>
                     </div>
                     <h2 className='name'>Abrar</h2>
-                    <div className="role">DataBase</div>
-                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="role">Backend Engineer</div>
+                    <p className="discrip">Handles server-side logic, authentication flows, and ensuring robust backend communication.</p>
                     <div className="skills">
-                      <span>React.js</span>
-                      <span>TypeScript</span>
-                      <span>SQL</span>
+                      <span>Node.js</span>
+                      <span>Express</span>
+                      <span>Security</span>
                     </div>
-                    <button>
-                      <span>View</span>
+                    <button onClick={() => navigate('/team/abrar')}>
+                      <span>View Profile</span>
                     </button>
                 </div>
                 <div className="card">
@@ -56,15 +58,15 @@ export default function Credits(){
                       <span></span>
                     </div>
                     <h2 className='name'>Hammad</h2>
-                    <div className="role">DataBase</div>
-                    <p className="discrip">Architect of the Portfolio Builder platform. Handles full-stack development, system design, and the core template engine.</p>
+                    <div className="role">MongoDB Specialist</div>
+                    <p className="discrip">Expert in database schema design, data modeling, and performance optimization for MongoDB.</p>
                     <div className="skills">
-                      <span>React.js</span>
-                      <span>TypeScript</span>
-                      <span>SQL</span>
+                      <span>MongoDB</span>
+                      <span>NoSQL</span>
+                      <span>Data Modeling</span>
                     </div>
-                    <button>
-                      <span>View</span>
+                    <button onClick={() => navigate('/team/hammad')}>
+                      <span>View Profile</span>
                     </button>
                 </div>
               </div>

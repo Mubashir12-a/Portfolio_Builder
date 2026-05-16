@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Resources(){
+    const navigate = useNavigate();
     return (
         <>
             <section id="Resources">
@@ -13,7 +16,7 @@ export default function Resources(){
 
                 <div className="container">
 
-                  <div className='cardCont'>
+                  <div className='cardCont' onClick={() => navigate('/info/docs')} style={{cursor:'pointer'}}>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">📚</div>
@@ -23,7 +26,7 @@ export default function Resources(){
                     </div>
                   </div>
 
-                  <div className='cardCont'>
+                  <div className='cardCont' onClick={() => navigate('/templates')} style={{cursor:'pointer'}}>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">🎨</div>
@@ -33,7 +36,7 @@ export default function Resources(){
                     </div>
                   </div>
 
-                  <div className='cardCont'>
+                  <div className='cardCont' onClick={() => navigate('/info/tips')} style={{cursor:'pointer'}}>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">🎓</div>
@@ -43,7 +46,7 @@ export default function Resources(){
                     </div>
                   </div>
 
-                  <div className='cardCont'>
+                  <div className='cardCont' onClick={() => navigate('/info/tips')} style={{cursor:'pointer'}}>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">💼</div>
@@ -53,8 +56,8 @@ export default function Resources(){
                     </div>
                   </div>
 
-                  <div className='cardCont'>
-                    <div className="shade"></div>
+                  <div className='cardCont' onClick={() => navigate('/info/docs')} style={{cursor:'pointer'}}>
+                    <div className="shade de"></div>
                     <div className='card'>
                       <div className="icon">🔧</div>
                       <h4>Export & Hosting Guide</h4>
@@ -63,7 +66,7 @@ export default function Resources(){
                     </div>
                   </div>
 
-                  <div className='cardCont'>
+                  <div className='cardCont' onClick={() => navigate('/info/faq')} style={{cursor:'pointer'}}>
                     <div className="shade"></div>
                     <div className='card'>
                       <div className="icon">❓</div>

@@ -63,9 +63,11 @@
     0% {
         transform: scale(.8);
     }
+
     50% {
         transform: scale(1.2);
     }
+
     100% {
         transform: scale(.8);
     }
@@ -130,10 +132,12 @@
     background: var(--mint-dim);
     border-color: var(--mint);
 }
+
 .parent .tab2 span {
     background: var(--coral-dim);
     border-color: var(--coral);
 }
+
 .parent .tab3 span {
     background: var(--amber-dim);
     border-color: var(--amber);
@@ -158,7 +162,7 @@
     align-items: center;
     gap: 20px;
     padding: 15px;
-    border-radius: 20px;  
+    border-radius: 20px;
     background: var(--bg2);
     border: 1px solid var(--border);
 }
@@ -173,18 +177,21 @@
     border-color: var(--amber);
     z-index: 0;
 }
+
 .parent .MajorTab div:first-child span:nth-child(2) {
     background: var(--mint-dim);
     color: var(--mint);
     border-color: var(--mint);
     z-index: 0;
 }
+
 .parent .MajorTab div:first-child span:nth-child(3) {
     background: var(--coral-dim);
     color: var(--coral);
     border-color: var(--coral);
     z-index: 0;
 }
+
 .parent .MajorTab div:first-child span:nth-child(4) {
     background: var(--violet-dim);
     color: var(--violet);
@@ -260,7 +267,7 @@
     font-weight: 700;
     transition: var(--transition);
     cursor: pointer;
-}   
+}
 
 #LogSigncontainer .switchTab .activeBtn {
     background-color: var(--surface);
@@ -366,10 +373,20 @@
     box-sizing: border-box;
 }
 
-/* eye-toggle wrapper */
-#GetLoginInfo .getpass > div {
+#GetLoginInfo .getpass>div {
     position: relative;
     width: 100%;
+}
+
+#GetLoginInfo .getpass>div>button {
+    position: absolute;
+    right: -45px;
+    top: -20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    box-shadow: none;
+    background: none;
 }
 
 #GetLoginInfo .terms {
@@ -382,26 +399,26 @@
 }
 
 input[type="checkbox"] {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--violet);
-  border-radius: 6px;
-  background: var(--bg);
-  cursor: pointer;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--violet);
+    border-radius: 6px;
+    background: var(--bg);
+    cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
-  background: var(--violet);
-  border-color: var(--violet);
+    background: var(--violet);
+    border-color: var(--violet);
 }
 
 input[type="checkbox"]:checked::after {
-  content: "✔";
-  color: white;
-  font-size: 12px;
-  display: block;
-  text-align: center;
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    display: block;
+    text-align: center;
 }
 
 #GetLoginInfo .terms a {
@@ -446,6 +463,22 @@ input[type="checkbox"]:checked::after {
     cursor: pointer;
 }
 
+#CreateAcc .getpass>div {
+    position: relative;
+    width: 100%;
+}
+
+#CreateAcc .getpass>div>button {
+    position: absolute;
+    right: -45px;
+    top: -20px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    box-shadow: none;
+    background: none;
+}
+
 /*Alert box*/
 
 .AlertBox {
@@ -476,7 +509,7 @@ input[type="checkbox"]:checked::after {
 /*    \\    //   ||||||    |||||||     ||     ||||||      \\//     ||||||||   ||     ||        ||       |||||||/     */
 /*     \\  //    ||        ||  \\      ||     ||           ||                 ||     ||        ||       ||           */
 /*      \\//     ||||||||  ||   \\  ||||||||  ||           ||                 \|||||||/        ||       ||           */
-/*___________________________________________________________________________________________________________________*/    
+/*___________________________________________________________________________________________________________________*/
 
 #getLoginOTP {
     background-color: var(--bg2);
@@ -502,6 +535,7 @@ input[type="checkbox"]:checked::after {
 #getLoginOTP .line:nth-child(1) {
     background: linear-gradient(to left, var(--violet), violet);
 }
+
 #getLoginOTP .line:nth-child(2) {
     background: linear-gradient(to right, var(--violet), violet);
 }
@@ -625,7 +659,7 @@ input[type="checkbox"]:checked::after {
     transition: var(--transition);
 }
 
-#getLoginOTP .Ver_LogIn:hover, 
+#getLoginOTP .Ver_LogIn:hover,
 #getLoginOTP .Ver_LogIn:active {
     transform: scale(0.95);
     transition: var(--transition);
@@ -692,7 +726,7 @@ input[type="checkbox"]:checked::after {
     color: var(--mint);
 }
 
-#LogInDone h3, 
+#LogInDone h3,
 #SignUpDone h3 {
     font-size: 1.5rem;
     font-family: "Orbitron", sans-serif;
@@ -728,8 +762,8 @@ input[type="checkbox"]:checked::after {
     cursor: pointer;
 }
 
-#LogInDone button:hover, 
-#SignUpDone button:hover, 
+#LogInDone button:hover,
+#SignUpDone button:hover,
 #LogInDone button:active,
 #SignUpDone button:active {
     transform: scale(0.95);
@@ -813,7 +847,7 @@ input[type="checkbox"]:checked::after {
     margin: 20px 0 0 0;
     cursor: pointer;
     transition: var(--transition);
-} 
+}
 
 #ForgotPass .sendResetLink:hover,
 #ForgotPass .sendResetLink:active {
@@ -843,7 +877,7 @@ input[type="checkbox"]:checked::after {
     color: var(--coral);
 }
 
-/*SignUp and UserType*/ 
+/*SignUp and UserType*/
 
 #CreateAcc,
 #UserType {
@@ -958,7 +992,7 @@ input[type="checkbox"]:checked::after {
 }
 
 /* eye-toggle wrapper */
-#CreateAcc .getpass > div {
+#CreateAcc .getpass>div {
     position: relative;
     width: 100%;
 }
@@ -975,26 +1009,26 @@ input[type="checkbox"]:checked::after {
 }
 
 input[type="checkbox"] {
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 1px solid var(--violet);
-  border-radius: 6px;
-  background: var(--bg);
-  cursor: pointer;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--violet);
+    border-radius: 6px;
+    background: var(--bg);
+    cursor: pointer;
 }
 
 input[type="checkbox"]:checked {
-  background: var(--violet);
-  border-color: var(--violet);
+    background: var(--violet);
+    border-color: var(--violet);
 }
 
 input[type="checkbox"]:checked::after {
-  content: "✔";
-  color: white;
-  font-size: 12px;
-  display: block;
-  text-align: center;
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    display: block;
+    text-align: center;
 }
 
 #CreateAcc .terms a {
@@ -1074,84 +1108,194 @@ input[type="checkbox"]:checked::after {
 
 @media (max-width: 768px) {
 
-  /* ── Layout ── */
-  #auth {
-    flex-direction: column;
-    height: auto;
-    overflow: visible;
-    gap: 0;
-  }
+    /* ── Layout ── */
+    #auth {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+        gap: 0;
+    }
 
-  /* ── Left panel ── */
-  .parent {
-    flex: none;
-    padding: 28px 20px 20px;
-    overflow: hidden;
-  }
-  .parent::after { display: none; }   /* hide the decorative radial blob */
+    /* ── Left panel ── */
+    .parent {
+        flex: none;
+        padding: 28px 20px 20px;
+        overflow: hidden;
+    }
 
-  .parent .tag       { width: 170px; height: 26px; margin-bottom: 14px; }
-  .parent .tag p     { font-size: 0.7rem; }
-  .parent h1         { font-size: 1.6rem; }
-  .parent .para      { font-size: 0.85rem; padding-top: 12px; }
-  .parent .tabs      { margin-top: 20px; gap: 12px; }
-  .parent .tab       { padding: 12px; border-radius: 14px; gap: 12px; }
-  .parent .tab h4    { font-size: 0.95rem; }
-  .parent .tab p     { font-size: 0.72rem; }
-  .parent .MajorTab  { margin-top: 20px; padding: 12px; border-radius: 14px; }
-  .parent .MajorTab h3 { font-size: 1.1rem; }
+    .parent::after {
+        display: none;
+    }
 
-  /* ── Right panel / form container ── */
-  #LogSigncontainer {
-    flex: none;
-    padding: 16px 16px 32px;
-    gap: 14px;
-  }
+    /* hide the decorative radial blob */
 
-  #LogSigncontainer .switchTab {
-    width: 100%;
-    height: 44px;
-    border-radius: 10px;
-  }
-  #LogSigncontainer .switchTab button { font-size: 0.95rem; }
-  #LogSigncontainer .show            { width: 100%; }
+    .parent .tag {
+        width: 170px;
+        height: 26px;
+        margin-bottom: 14px;
+    }
 
-  /* ── Login form ── */
-  #LogSigncontainer #GetLoginInfo {
-    border-radius: 16px;
-    padding: 0 16px;
-  }
-  #GetLoginInfo .heading      { padding: 16px 0 10px; }
-  #GetLoginInfo .heading h3   { font-size: 2rem; }
-  #GetLoginInfo .heading p    { font-size: 0.85rem; }
-  #GetLoginInfo .getmail input,
-  #GetLoginInfo .getpass input { font-size: 1.1rem; }
-  #GetLoginInfo button         { font-size: 1.2rem; height: 44px; }
-  #GetLoginInfo .signup        { font-size: 0.85rem; }
+    .parent .tag p {
+        font-size: 0.7rem;
+    }
 
-  /* ── OTP screen ── */
-  #getLoginOTP              { border-radius: 16px; }
-  #getLoginOTP h3           { font-size: 1.6rem; }
-  #getLoginOTP .EnterOTP input { width: 42px; height: 52px; font-size: 1.6rem; }
-  #getLoginOTP .Ver_LogIn,
-  #getLoginOTP .back        { height: 44px; font-size: 1.1rem; }
+    .parent h1 {
+        font-size: 1.6rem;
+    }
 
-  /* ── Success screens ── */
-  #LogInDone, #SignUpDone    { border-radius: 16px; }
-  #LogInDone button,
-  #SignUpDone button         { height: 44px; font-size: 1.1rem; }
+    .parent .para {
+        font-size: 0.85rem;
+        padding-top: 12px;
+    }
 
-  /* ── Forgot password ── */
-  #ForgotPass               { border-radius: 16px; }
-  #ForgotPass h3            { font-size: 1.5rem; }
-  #ForgotPass .sendResetLink,
-  #ForgotPass .BackToLog    { height: 44px; font-size: 1rem; }
+    .parent .tabs {
+        margin-top: 20px;
+        gap: 12px;
+    }
 
-  /* ── Sign-up / user type ── */
-  #CreateAcc, #UserType     { border-radius: 16px; }
-  #CreateAcc h3             { font-size: 1.6rem; }
-  #CreateAcc .getname input,
-  #CreateAcc .getmail input,
-  #CreateAcc .getpass input { font-size: 1.1rem; }
-  #CreateAcc button         { font-size: 1.2rem; height: 44px; }
+    .parent .tab {
+        padding: 12px;
+        border-radius: 14px;
+        gap: 12px;
+    }
+
+    .parent .tab h4 {
+        font-size: 0.95rem;
+    }
+
+    .parent .tab p {
+        font-size: 0.72rem;
+    }
+
+    .parent .MajorTab {
+        margin-top: 20px;
+        padding: 12px;
+        border-radius: 14px;
+    }
+
+    .parent .MajorTab h3 {
+        font-size: 1.1rem;
+    }
+
+    /* ── Right panel / form container ── */
+    #LogSigncontainer {
+        flex: none;
+        padding: 16px 16px 32px;
+        gap: 14px;
+    }
+
+    #LogSigncontainer .switchTab {
+        width: 100%;
+        height: 44px;
+        border-radius: 10px;
+    }
+
+    #LogSigncontainer .switchTab button {
+        font-size: 0.95rem;
+    }
+
+    #LogSigncontainer .show {
+        width: 100%;
+    }
+
+    /* ── Login form ── */
+    #LogSigncontainer #GetLoginInfo {
+        border-radius: 16px;
+        padding: 0 16px;
+    }
+
+    #GetLoginInfo .heading {
+        padding: 16px 0 10px;
+    }
+
+    #GetLoginInfo .heading h3 {
+        font-size: 2rem;
+    }
+
+    #GetLoginInfo .heading p {
+        font-size: 0.85rem;
+    }
+
+    #GetLoginInfo .getmail input,
+    #GetLoginInfo .getpass input {
+        font-size: 1.1rem;
+    }
+
+    #GetLoginInfo button {
+        font-size: 1.2rem;
+        height: 44px;
+    }
+
+    #GetLoginInfo .signup {
+        font-size: 0.85rem;
+    }
+
+    /* ── OTP screen ── */
+    #getLoginOTP {
+        border-radius: 16px;
+    }
+
+    #getLoginOTP h3 {
+        font-size: 1.6rem;
+    }
+
+    #getLoginOTP .EnterOTP input {
+        width: 42px;
+        height: 52px;
+        font-size: 1.6rem;
+    }
+
+    #getLoginOTP .Ver_LogIn,
+    #getLoginOTP .back {
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    /* ── Success screens ── */
+    #LogInDone,
+    #SignUpDone {
+        border-radius: 16px;
+    }
+
+    #LogInDone button,
+    #SignUpDone button {
+        height: 44px;
+        font-size: 1.1rem;
+    }
+
+    /* ── Forgot password ── */
+    #ForgotPass {
+        border-radius: 16px;
+    }
+
+    #ForgotPass h3 {
+        font-size: 1.5rem;
+    }
+
+    #ForgotPass .sendResetLink,
+    #ForgotPass .BackToLog {
+        height: 44px;
+        font-size: 1rem;
+    }
+
+    /* ── Sign-up / user type ── */
+    #CreateAcc,
+    #UserType {
+        border-radius: 16px;
+    }
+
+    #CreateAcc h3 {
+        font-size: 1.6rem;
+    }
+
+    #CreateAcc .getname input,
+    #CreateAcc .getmail input,
+    #CreateAcc .getpass input {
+        font-size: 1.1rem;
+    }
+
+    #CreateAcc button {
+        font-size: 1.2rem;
+        height: 44px;
+    }
 }

@@ -1,0 +1,83 @@
+.info-page {
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  transition: background var(--transition), color var(--transition);
+}
+
+.info-main {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 140px 20px 80px;
+}
+
+.info-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 40px;
+}
+
+.info-hero h1 {
+  font-size: 3.5rem;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 15px;
+  color: var(--violet);
+}
+
+.info-hero p {
+  font-size: 1.2rem;
+  color: var(--text-2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.info-section {
+  margin-bottom: 50px;
+  background: var(--bg2);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+}
+
+.info-section:hover {
+  border-color: var(--violet);
+}
+
+.info-section h2 {
+  font-size: 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 20px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-section h2::before {
+  content: '✦';
+  color: var(--violet);
+  font-size: 1.2rem;
+}
+
+.info-section p {
+  line-height: 1.8;
+  color: var(--text-2);
+  font-size: 1.05rem;
+}
+
+@media (max-width: 768px) {
+  .info-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .info-main {
+    padding-top: 100px;
+  }
+
+  .info-section {
+    padding: 20px;
+  }
+}

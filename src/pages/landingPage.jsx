@@ -16,28 +16,29 @@ import Btn_Secondry from '../components/GeneralComponents/buttonSecondry.jsx';
 
 export default function LandingPage() {
 
-  return (
-    <>
-        <div className="PageLayout">
-            <Header comp={BtnsSet}/>
-            <Navbar/>
-            <Home/>
-            <About/>
-            <WAW/>
-            <Credits/>
-            <GetInTouch/>
-            <Resources/>
-            <Footer/>
-        </div>        
-    </>
-  )
-}
-
-function BtnsSet(){
     return (
         <>
-            <Btn_Primary title={"Login"} to={"/auth"}/>
-            <Btn_Secondry title={"Subscription"} to={"/subscription"}/>
+            <div className="PageLayout">
+                <Header comp={BtnsSet} />
+                <Navbar />
+                <Home />
+                <About />
+                <WAW />
+                <Credits />
+                <GetInTouch />
+                <Resources />
+                <Footer />
+            </div>
+        </>
+    )
+}
+
+function BtnsSet() {
+    return (
+        <>
+            <Btn_Secondry title={"Templates"} to={"/templates"} />
+            <Btn_Secondry title={"Subscription"} to={"/subscription"} />
+            <Btn_Primary title={"Login / Signup"} to={"/auth"} />
         </>
     )
 }

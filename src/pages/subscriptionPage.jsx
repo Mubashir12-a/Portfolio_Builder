@@ -2,36 +2,37 @@ import '../pagesStyles/subscriptionPage.css';
 import Header from "../components/LandingPageComponents/header";
 
 import waiting from '../assets/waiting.gif';
-import parrot  from '../assets/Parrot.gif';
-import secure  from '../assets/secure.png';
-import cancel  from '../assets/cancel.png';
-import cards   from '../assets/cards.png';
-import users   from '../assets/users.png';
-import rating  from '../assets/rating.png';
+import parrot from '../assets/Parrot.gif';
+import secure from '../assets/secure.png';
+import cancel from '../assets/cancel.png';
+import cards from '../assets/cards.png';
+import users from '../assets/users.png';
+import rating from '../assets/rating.png';
 import student from '../assets/student.png';
 
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary.jsx';
+import Btn_Secondry from '../components/GeneralComponents/buttonSecondry.jsx';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UPI_ID      = '7889825292@ptaxis';
+const UPI_ID = '7889825292@ptaxis';
 const MONTHLY_PRICE = 199;
 
 // ── Price helpers ──────────────────────────────────────────────
 function calcPrice(billingType) {
-  if (billingType === 'Monthly')  return Math.round(MONTHLY_PRICE * 1  * 0.95);
-  if (billingType === '6 Months') return Math.round(MONTHLY_PRICE * 6  * 0.80);
-  if (billingType === 'Yearly')   return Math.round(MONTHLY_PRICE * 12 * 0.70);
-  if (billingType === '3 Years')  return Math.round(MONTHLY_PRICE * 36 * 0.50);
+  if (billingType === 'Monthly') return Math.round(MONTHLY_PRICE * 1 * 0.95);
+  if (billingType === '6 Months') return Math.round(MONTHLY_PRICE * 6 * 0.80);
+  if (billingType === 'Yearly') return Math.round(MONTHLY_PRICE * 12 * 0.70);
+  if (billingType === '3 Years') return Math.round(MONTHLY_PRICE * 36 * 0.50);
   return MONTHLY_PRICE;
 }
 
 function calcOriginal(billingType) {
-  if (billingType === 'Monthly')  return MONTHLY_PRICE * 1;
+  if (billingType === 'Monthly') return MONTHLY_PRICE * 1;
   if (billingType === '6 Months') return MONTHLY_PRICE * 6;
-  if (billingType === 'Yearly')   return MONTHLY_PRICE * 12;
-  if (billingType === '3 Years')  return MONTHLY_PRICE * 36;
+  if (billingType === 'Yearly') return MONTHLY_PRICE * 12;
+  if (billingType === '3 Years') return MONTHLY_PRICE * 36;
   return MONTHLY_PRICE;
 }
 
@@ -53,9 +54,9 @@ export default function Subscription() {
       <Caption billingType={billingType} setBillingType={setBillingType} />
 
       <section id="cardContainer">
-        <CardLayout obj={PlanCard1} billingType={billingType} multi={0}   tagLine="Forever free. Always."  onSelect={openModal} />
-        <CardLayout obj={PlanCard2} billingType={billingType} multi={1}   tagLine="Worth-It Plan"          onSelect={openModal} />
-        <CardLayout obj={PlanCard3} billingType={billingType} multi={1.5} tagLine="Be Professional"        onSelect={openModal} />
+        <CardLayout obj={PlanCard1} billingType={billingType} multi={0} tagLine="Forever free. Always." onSelect={openModal} />
+        <CardLayout obj={PlanCard2} billingType={billingType} multi={1} tagLine="Worth-It Plan" onSelect={openModal} />
+        <CardLayout obj={PlanCard3} billingType={billingType} multi={1.5} tagLine="Be Professional" onSelect={openModal} />
       </section>
 
       <Tabs />
@@ -82,16 +83,16 @@ export default function Subscription() {
 
 // ── Payment Modal ──────────────────────────────────────────────
 function PaymentModal({ plan, onClose }) {
-  const [utr, setUtr]         = useState('');
-  const [error, setError]     = useState('');
+  const [utr, setUtr] = useState('');
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [done, setDone]       = useState(false);
-  const [copied, setCopied]   = useState(false);
+  const [done, setDone] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const API = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
 
   const upiLink = `upi://pay?pa=${UPI_ID}&pn=Portfolio%20Builder&am=${plan.amount}&cu=INR&tn=${encodeURIComponent(plan.planName + ' - ' + plan.billing)}`;
-  const qrUrl   = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiLink)}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiLink)}`;
 
   const copyUPI = () => {
     navigator.clipboard.writeText(UPI_ID);
@@ -107,10 +108,10 @@ function PaymentModal({ plan, onClose }) {
     const token = localStorage.getItem('token');
 
     try {
-      const res  = await fetch(`${API}/api/subscription/request`, {
-        method:  'POST',
+      const res = await fetch(`${API}/api/subscription/request`, {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body:    JSON.stringify({ plan: plan.planKey, billing: plan.billing, amount: plan.amount, utr: utr.trim() })
+        body: JSON.stringify({ plan: plan.planKey, billing: plan.billing, amount: plan.amount, utr: utr.trim() })
       });
       const data = await res.json();
       if (data.success) setDone(true);
@@ -200,7 +201,8 @@ function PaymentModal({ plan, onClose }) {
 function BtnsSet() {
   return (
     <>
-      <Btn_Primary title="Home"         to="/"     />
+      <Btn_Secondry title="Templates" to="/templates" />
+      <Btn_Primary title="Home" to="/" />
       <Btn_Primary title="Sign up free" to="/auth" />
     </>
   );
@@ -208,16 +210,16 @@ function BtnsSet() {
 
 function Caption({ billingType, setBillingType }) {
   const tabs = [
-    { key: 'Monthly',  label: 'Monthly',  disc: '-5%'  },
+    { key: 'Monthly', label: 'Monthly', disc: '-5%' },
     { key: '6 Months', label: '6 Months', disc: '-20%' },
-    { key: 'Yearly',   label: 'Yearly',   disc: '-30%' },
-    { key: '3 Years',  label: '3 Years',  disc: '-50%' },
+    { key: 'Yearly', label: 'Yearly', disc: '-30%' },
+    { key: '3 Years', label: '3 Years', disc: '-50%' },
   ];
   return (
     <section id="caption">
       <div className="shade" />
       <img src={waiting} alt="" />
-      <img src={parrot}  alt="" />
+      <img src={parrot} alt="" />
       <div className="tag">
         <div><span /><p>Save up to 50% on long-term plans</p></div>
         <h1>Simple, <em>transparent</em><br />pricing.</h1>
@@ -242,8 +244,8 @@ function Caption({ billingType, setBillingType }) {
 }
 
 function CardLayout({ obj: card, billingType, multi, tagLine, onSelect }) {
-  const discounted = multi === 0 ? 0 : Math.round(calcPrice(billingType)    * multi);
-  const original   = multi === 0 ? 0 : Math.round(calcOriginal(billingType) * multi);
+  const discounted = multi === 0 ? 0 : Math.round(calcPrice(billingType) * multi);
+  const original = multi === 0 ? 0 : Math.round(calcOriginal(billingType) * multi);
 
   return (
     <section id="planCards">
@@ -266,7 +268,7 @@ function CardLayout({ obj: card, billingType, multi, tagLine, onSelect }) {
         </button>
       </div>
       <ul>
-        {[1,2,3,4,5,6,7,8,9,10].map(n => <Li key={n} card={card} n={n} />)}
+        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => <Li key={n} card={card} n={n} />)}
       </ul>
     </section>
   );
@@ -276,16 +278,16 @@ function Tabs() {
   return (
     <section id="tabs">
       {[
-        { img: secure,  label: 'SSL Secured Payments',  side: 'left'  },
-        { img: cancel,  label: 'Cancel Anytime',         side: 'right' },
-        { img: cards,   label: 'All Major UPI Apps',     side: 'left'  },
-        { img: users,   label: '2,400+ Active Users',    side: 'right' },
-        { img: rating,  label: '4.9 / 5 Rating',         side: 'left'  },
-        { img: student, label: 'Student Friendly',       side: 'right' },
+        { img: secure, label: 'SSL Secured Payments', side: 'left' },
+        { img: cancel, label: 'Cancel Anytime', side: 'right' },
+        { img: cards, label: 'All Major UPI Apps', side: 'left' },
+        { img: users, label: '2,400+ Active Users', side: 'right' },
+        { img: rating, label: '4.9 / 5 Rating', side: 'left' },
+        { img: student, label: 'Student Friendly', side: 'right' },
       ].map((t, i) => (
         <div className="tab" key={i}>
           <div />
-          {t.side === 'left'  && <img src={t.img} alt="" />}
+          {t.side === 'left' && <img src={t.img} alt="" />}
           <p>{t.label}</p>
           {t.side === 'right' && <img src={t.img} alt="" />}
         </div>
@@ -314,16 +316,16 @@ function Table() {
       <p>Every feature, side by side across all three plans.</p>
       <table>
         <thead><tr><th /><th className="violet">🌱 Free</th><th className="violet">⚡ Studio</th><th className="gold">👑 Pro</th></tr></thead>
-        <Tabledata a1="Portfolios"       a2="1"            a2_Color="violet" a3="5"            a3_Color="violet" a4="Unlimited"       a4_Color="gold" />
-        <Tabledata a1="Templates"        a2="3 Free"       a2_Color="violet" a3="All 12"       a3_Color="violet" a4="All + Early"     a4_Color="gold" />
-        <Tabledata a1="HTML/CSS export"  a2="✓"            a2_Color="mint"   a3="✓"            a3_Color="mint"   a4="✓"               a4_Color="mint" />
-        <Tabledata a1="React/JSX export" a2="-"                              a3="✓"            a3_Color="mint"   a4="✓"               a4_Color="mint" />
-        <Tabledata a1="PDF export"       a2="-"                              a3="✓"            a3_Color="mint"   a4="✓"               a4_Color="mint" />
-        <Tabledata a1="Custom domain"    a2="-"                              a3="✓"            a3_Color="mint"   a4="✓"               a4_Color="mint" />
-        <Tabledata a1="Remove branding"  a2="-"                              a3="✓"            a3_Color="mint"   a4="✓"               a4_Color="mint" />
-        <Tabledata a1="Analytics"        a2="-"                              a3="Basic"        a3_Color="violet" a4="Advanced + UTM"  a4_Color="gold" />
-        <Tabledata a1="Team collab"      a2="-"                              a3="-"                              a4="Up to 10 seats"  a4_Color="gold" />
-        <Tabledata a1="Support"          a2="Community"    a2_Color="violet" a3="Email (48h)"  a3_Color="violet" a4="Priority (4h)"   a4_Color="gold" />
+        <Tabledata a1="Portfolios" a2="1" a2_Color="violet" a3="5" a3_Color="violet" a4="Unlimited" a4_Color="gold" />
+        <Tabledata a1="Templates" a2="3 Free" a2_Color="violet" a3="All 12" a3_Color="violet" a4="All + Early" a4_Color="gold" />
+        <Tabledata a1="HTML/CSS export" a2="✓" a2_Color="mint" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="React/JSX export" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="PDF export" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="Custom domain" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="Remove branding" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="Analytics" a2="-" a3="Basic" a3_Color="violet" a4="Advanced + UTM" a4_Color="gold" />
+        <Tabledata a1="Team collab" a2="-" a3="-" a4="Up to 10 seats" a4_Color="gold" />
+        <Tabledata a1="Support" a2="Community" a2_Color="violet" a3="Email (48h)" a3_Color="violet" a4="Priority (4h)" a4_Color="gold" />
       </table>
     </section>
   );
@@ -347,46 +349,46 @@ const PlanCard1 = {
   planKey: 'free', islandTab: 'Basic', icon: '🌱', planType: 'Free',
   planDiscrip: 'For students just getting started. No credit card required, ever.',
   btntext: 'Get Started Free →',
-  li_1:  { li_1_icon:  '✓', li_1_caption:  '1 Portfolio'             },
-  li_2:  { li_2_icon:  '✓', li_2_caption:  '3 free templates'        },
-  li_3:  { li_3_icon:  '✓', li_3_caption:  'PNG screenshot export'   },
-  li_4:  { li_4_icon:  '✓', li_4_caption:  'Community support'       },
-  li_5:  { li_5_icon:  'X', li_5_caption:  'HTML + CSS export'       },
-  li_6:  { li_6_icon:  'X', li_6_caption:  'Custom domain'           },
-  li_7:  { li_7_icon:  'X', li_7_caption:  'React / JSX export'      },
-  li_8:  { li_8_icon:  'X', li_8_caption:  'PDF export'              },
-  li_9:  { li_9_icon:  'X', li_9_caption:  'Remove branding'         },
-  li_10: { li_10_icon: 'X', li_10_caption: 'Analytics'               },
+  li_1: { li_1_icon: '✓', li_1_caption: '1 Portfolio' },
+  li_2: { li_2_icon: '✓', li_2_caption: '3 free templates' },
+  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'Community support' },
+  li_5: { li_5_icon: 'X', li_5_caption: 'HTML + CSS export' },
+  li_6: { li_6_icon: 'X', li_6_caption: 'Custom domain' },
+  li_7: { li_7_icon: 'X', li_7_caption: 'React / JSX export' },
+  li_8: { li_8_icon: 'X', li_8_caption: 'PDF export' },
+  li_9: { li_9_icon: 'X', li_9_caption: 'Remove branding' },
+  li_10: { li_10_icon: 'X', li_10_caption: 'Analytics' },
 };
 
 const PlanCard2 = {
   planKey: 'studio', islandTab: 'Recommended', icon: '⚡', planType: 'Studio',
   planDiscrip: 'For job seekers and freelancers who need to stand out.',
   btntext: 'Start Studio Plan →',
-  li_1:  { li_1_icon:  '✓', li_1_caption:  '5 Portfolios'            },
-  li_2:  { li_2_icon:  '✓', li_2_caption:  'All 12 templates'        },
-  li_3:  { li_3_icon:  '✓', li_3_caption:  'PNG screenshot export'   },
-  li_4:  { li_4_icon:  '✓', li_4_caption:  'Email support (48h)'     },
-  li_5:  { li_5_icon:  '✓', li_5_caption:  'HTML + CSS export'       },
-  li_6:  { li_6_icon:  'X', li_6_caption:  'Custom domain'           },
-  li_7:  { li_7_icon:  'X', li_7_caption:  'React / JSX export'      },
-  li_8:  { li_8_icon:  '✓', li_8_caption:  'PDF export'              },
-  li_9:  { li_9_icon:  'X', li_9_caption:  'Remove branding'         },
-  li_10: { li_10_icon: '✓', li_10_caption: 'Basic analytics'         },
+  li_1: { li_1_icon: '✓', li_1_caption: '5 Portfolios' },
+  li_2: { li_2_icon: '✓', li_2_caption: 'All 12 templates' },
+  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'Email support (48h)' },
+  li_5: { li_5_icon: '✓', li_5_caption: 'HTML + CSS export' },
+  li_6: { li_6_icon: 'X', li_6_caption: 'Custom domain' },
+  li_7: { li_7_icon: 'X', li_7_caption: 'React / JSX export' },
+  li_8: { li_8_icon: '✓', li_8_caption: 'PDF export' },
+  li_9: { li_9_icon: 'X', li_9_caption: 'Remove branding' },
+  li_10: { li_10_icon: '✓', li_10_caption: 'Basic analytics' },
 };
 
 const PlanCard3 = {
   planKey: 'pro', islandTab: 'Premium', icon: '👑', planType: 'Pro',
   planDiscrip: 'For agencies and power users managing multiple portfolios.',
   btntext: 'Upgrade To Pro →',
-  li_1:  { li_1_icon:  '✓', li_1_caption:  'Unlimited portfolios'    },
-  li_2:  { li_2_icon:  '✓', li_2_caption:  'All templates + early'   },
-  li_3:  { li_3_icon:  '✓', li_3_caption:  'PNG screenshot export'   },
-  li_4:  { li_4_icon:  '✓', li_4_caption:  'Priority support (4h)'   },
-  li_5:  { li_5_icon:  '✓', li_5_caption:  'HTML + CSS export'       },
-  li_6:  { li_6_icon:  '✓', li_6_caption:  'Custom domain'           },
-  li_7:  { li_7_icon:  '✓', li_7_caption:  'React / JSX export'      },
-  li_8:  { li_8_icon:  '✓', li_8_caption:  'PDF export'              },
-  li_9:  { li_9_icon:  '✓', li_9_caption:  'Remove branding'         },
-  li_10: { li_10_icon: '✓', li_10_caption: 'Advanced + UTM analytics'},
+  li_1: { li_1_icon: '✓', li_1_caption: 'Unlimited portfolios' },
+  li_2: { li_2_icon: '✓', li_2_caption: 'All templates + early' },
+  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'Priority support (4h)' },
+  li_5: { li_5_icon: '✓', li_5_caption: 'HTML + CSS export' },
+  li_6: { li_6_icon: '✓', li_6_caption: 'Custom domain' },
+  li_7: { li_7_icon: '✓', li_7_caption: 'React / JSX export' },
+  li_8: { li_8_icon: '✓', li_8_caption: 'PDF export' },
+  li_9: { li_9_icon: '✓', li_9_caption: 'Remove branding' },
+  li_10: { li_10_icon: '✓', li_10_caption: 'Advanced + UTM analytics' },
 };

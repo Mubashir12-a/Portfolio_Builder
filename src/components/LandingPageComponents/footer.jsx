@@ -23,9 +23,9 @@ export default function Footer(){
                 <div className="Products footercard">
                   <h2>Product</h2>
                   <ul>
-                    <li onClick={() => navigate('/subscription')} style={{cursor:'pointer'}}>Templates</li>
-                    <li style={{cursor:'default',opacity:.5}}>Style Editor</li>
-                    <li style={{cursor:'default',opacity:.5}}>Export Code</li>
+                    <li onClick={() => navigate('/templates')} style={{cursor:'pointer'}}>Templates</li>
+                    <li onClick={() => navigate('/info/stack')} style={{cursor:'pointer'}}>Tech Stack</li>
+                    <li onClick={() => navigate('/info/docs')} style={{cursor:'pointer'}}>Export Code</li>
                     <li onClick={() => navigate('/subscription')} style={{cursor:'pointer'}}>Pricing</li>
                   </ul>
                 </div>
@@ -33,19 +33,19 @@ export default function Footer(){
                 <div className="Company footercard">
                   <h2>Company</h2>
                   <ul>
-                    <li onClick={() => navigate('/#About')} style={{cursor:'pointer'}}>About</li>
-                    <li style={{cursor:'default',opacity:.5}}>Team</li>
-                    <li onClick={() => navigate('/#GetInTouch')} style={{cursor:'pointer'}}>Contact</li>
-                    <li style={{cursor:'default',opacity:.5}}>Blog</li>
+                    <li onClick={() => navigate('/')} style={{cursor:'pointer'}}>About</li>
+                    <li onClick={() => navigate('/team/mubashir')} style={{cursor:'pointer'}}>Team</li>
+                    <li onClick={() => navigate('/')} style={{cursor:'pointer'}}>Contact</li>
+                    <li onClick={() => navigate('/blog')} style={{cursor:'pointer'}}>Blog</li>
                   </ul>
                 </div>
 
                 <div className="Legal footercard">
                   <h2>Legal</h2>
                   <ul>
-                    <li style={{cursor:'default',opacity:.5}}>Privacy Policy</li>
-                    <li style={{cursor:'default',opacity:.5}}>Terms Of Use</li>
-                    <li style={{cursor:'default',opacity:.5}}>Cookie Policy</li>
+                    <li onClick={() => navigate('/info/privacy')} style={{cursor:'pointer'}}>Privacy Policy</li>
+                    <li onClick={() => navigate('/info/terms')} style={{cursor:'pointer'}}>Terms Of Use</li>
+                    <li onClick={() => navigate('/info/faq')} style={{cursor:'pointer'}}>Cookie Policy</li>
                   </ul>
                 </div>
               </section>

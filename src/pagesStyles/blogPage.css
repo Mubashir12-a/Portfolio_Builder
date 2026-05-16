@@ -1,0 +1,148 @@
+.blog-page {
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  transition: background var(--transition), color var(--transition);
+}
+
+.blog-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 140px 20px 80px;
+}
+
+.blog-hero {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.blog-hero .tag {
+  color: var(--violet);
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+.blog-hero h1 {
+  font-size: 4rem;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.blog-hero h1 em {
+  font-style: normal;
+  color: var(--violet);
+}
+
+.blog-hero p {
+  font-size: 1.3rem;
+  color: var(--text-2);
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+}
+
+.blog-card {
+  background: var(--bg2);
+  padding: 35px;
+  border-radius: 28px;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.blog-card:hover {
+  border-color: var(--violet);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.blog-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.blog-cat {
+  color: var(--violet);
+  background: var(--violet-dim);
+  padding: 5px 14px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border: 1px solid var(--border2);
+}
+
+.blog-read {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-weight: bold;
+}
+
+.blog-card h2 {
+  font-size: 1.4rem;
+  font-family: 'Orbitron', sans-serif;
+  margin-bottom: 18px;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.blog-card p {
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 30px;
+  font-size: 1rem;
+}
+
+.blog-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.blog-date {
+  font-size: 0.8rem;
+  color: var(--text-3);
+}
+
+.read-more {
+  background: transparent;
+  border: none;
+  color: var(--violet);
+  font-weight: bold;
+  font-family: 'Syne', sans-serif;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: gap 0.3s;
+}
+
+.read-more:hover {
+  color: var(--violet-light);
+}
+
+@media (max-width: 768px) {
+  .blog-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .blog-main {
+    padding-top: 100px;
+  }
+
+  .blog-card {
+    padding: 25px;
+  }
+}

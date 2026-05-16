@@ -37,21 +37,21 @@ header .logoContainer img {
 
 header .logoName {
     font-family: 'DM Serif Display', serif;
-    font-size: 2em;    
+    font-size: 2em;
     color: var(--text);
     transition: color var(--transition);
     font-weight: bold;
-    padding-left: 10px; 
+    padding-left: 10px;
 }
 
-header .logoName em { 
-    font-style: italic; 
+header .logoName em {
+    font-style: italic;
     color: var(--violet-light);
 }
 
 header .Buttons {
-    display: flex; 
-    align-items: flex-end; 
+    display: flex;
+    align-items: flex-end;
     align-items: center;
     gap: 10px;
     height: 80%;
@@ -186,21 +186,25 @@ nav a:hover {
     position: inherit;
     align-content: center;
     animation: moveVersionInfo 2s linear infinite;
-}   
+}
 
 @keyframes moveVersionInfo {
     0% {
         transform: translateY(0%);
     }
+
     25% {
         transform: translateY(10%);
     }
+
     50% {
         transform: translateY(0%);
     }
+
     75% {
         transform: translateY(-10%);
     }
+
     100% {
         transform: translateY(0%);
     }
@@ -377,13 +381,15 @@ nav a:hover {
     border-radius: 50%;
 }
 
-.AttractBlock .URLHead .dots span:nth-child(1){
+.AttractBlock .URLHead .dots span:nth-child(1) {
     background: var(--coral);
 }
-.AttractBlock .URLHead .dots span:nth-child(2){
+
+.AttractBlock .URLHead .dots span:nth-child(2) {
     background: var(--amber);
 }
-.AttractBlock .URLHead .dots span:nth-child(3){
+
+.AttractBlock .URLHead .dots span:nth-child(3) {
     background: var(--mint);
 }
 
@@ -433,6 +439,7 @@ nav a:hover {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
 .AttractBlock .Container .AttractProfile div p:nth-child(2) {
     font-size: 1.2rem;
 }
@@ -451,17 +458,19 @@ nav a:hover {
     padding: 5px 10px;
 }
 
-.AttractBlock .Container .AttractSkill span:nth-child(1){
+.AttractBlock .Container .AttractSkill span:nth-child(1) {
     border: 1px solid var(--violet);
     color: var(--violet);
     background-color: #7a5ef844;
 }
-.AttractBlock .Container .AttractSkill span:nth-child(2){
+
+.AttractBlock .Container .AttractSkill span:nth-child(2) {
     border: 1px solid var(--sky);
     color: var(--sky);
     background-color: #38c7ff3c;
 }
-.AttractBlock .Container .AttractSkill span:nth-child(3){
+
+.AttractBlock .Container .AttractSkill span:nth-child(3) {
     border: 1px solid var(--mint);
     color: var(--mint);
     background-color: #2edfa445;
@@ -487,13 +496,15 @@ nav a:hover {
     color: var(--text);
 }
 
-.AttractBlock .Container .AttractProject div:nth-child(1){
+.AttractBlock .Container .AttractProject div:nth-child(1) {
     background: linear-gradient(to bottom right, var(--violet), var(--orchid));
 }
-.AttractBlock .Container .AttractProject div:nth-child(2){
+
+.AttractBlock .Container .AttractProject div:nth-child(2) {
     background: linear-gradient(to bottom right, var(--sky), var(--orchid));
 }
-.AttractBlock .Container .AttractProject div:nth-child(3){
+
+.AttractBlock .Container .AttractProject div:nth-child(3) {
     background: linear-gradient(to bottom right, var(--mint), var(--sky));
 }
 
@@ -748,11 +759,13 @@ nav a:hover {
     transform: translateY(-10px);
     transition: var(--transition);
 }
+
 #About .container .Left .cards .card2:hover {
     border: 1px solid var(--coral);
     transform: translateY(-10px);
     transition: var(--transition);
 }
+
 #About .container .Left .cards .card3:hover {
     border: 1px solid var(--mint);
     transform: translateY(-10px);
@@ -774,10 +787,12 @@ nav a:hover {
     background: var(--violet-dim);
     border: 1px solid var(--violet);
 }
+
 #About .container .Left .cards div:nth-child(2) span {
     background: var(--coral-dim);
     border: 1px solid var(--coral);
 }
+
 #About .container .Left .cards div:nth-child(3) span {
     background: var(--mint-dim);
     border: 1px solid var(--mint);
@@ -1073,7 +1088,7 @@ nav a:hover {
 }
 
 #WAW .container {
-    width: 100%;    
+    width: 100%;
     flex: 3;
     display: flex;
     gap: 20px;
@@ -1109,9 +1124,11 @@ nav a:hover {
 #WAW .container .card_1 {
     border-top: 3px solid var(--violet);
 }
+
 #WAW .container .card_2 {
     border-top: 3px solid var(--mint);
 }
+
 #WAW .container .card_3 {
     border-top: 3px solid var(--coral);
 }
@@ -1124,9 +1141,11 @@ nav a:hover {
 #WAW .container .card_1:hover {
     box-shadow: 0 0 5px var(--violet);
 }
+
 #WAW .container .card_2:hover {
     box-shadow: 0 0 5px var(--mint);
 }
+
 #WAW .container .card_3:hover {
     box-shadow: 0 0 5px var(--coral);
 }
@@ -1135,7 +1154,7 @@ nav a:hover {
     margin-top: 50px;
 }
 
-#WAW .title_2 p:nth-child(2){
+#WAW .title_2 p:nth-child(2) {
     color: var(--text-2);
     font-size: 1.5rem;
     font-family: "Dosis", sans-serif;
@@ -1175,12 +1194,15 @@ nav a:hover {
 #WAW .tags .tagcard:nth-child(1) div:nth-child(1) {
     background-color: var(--violet-dim);
 }
+
 #WAW .tags .tagcard:nth-child(2) div:nth-child(1) {
     background-color: var(--mint-dim);
 }
+
 #WAW .tags .tagcard:nth-child(3) div:nth-child(1) {
     background-color: var(--amber-dim);
 }
+
 #WAW .tags .tagcard:nth-child(4) div:nth-child(1) {
     background-color: var(--coral-dim);
 }
@@ -1369,7 +1391,7 @@ nav a:hover {
     top: -100%;
     height: 100%;
     width: 100%;
-    background: radial-gradient(circle,var(--mint-dim) 50%, transparent 70%);
+    background: radial-gradient(circle, var(--mint-dim) 50%, transparent 70%);
     opacity: 0.8;
     z-index: 1;
     transition: var(--transition);
@@ -1424,9 +1446,11 @@ nav a:hover {
     0% {
         transform: rotate(0deg);
     }
+
     50% {
         transform: rotate(360deg);
     }
+
     100% {
         transform: rotate(0deg);
     }
@@ -1570,6 +1594,7 @@ nav a:hover {
     transition: var(--transition);
     opacity: 0;
 }
+
 #credits .DevCards .card button::before {
     content: "";
     position: absolute;
@@ -1584,11 +1609,12 @@ nav a:hover {
     opacity: 0;
 }
 
-#credits .DevCards .card button:hover::before{
+#credits .DevCards .card button:hover::before {
     right: -10%;
     opacity: 1;
     transition: var(--transition);
 }
+
 #credits .DevCards .card button:hover::after {
     left: -10%;
     opacity: 1;
@@ -1761,6 +1787,7 @@ nav a:hover {
     border-right: none;
     border-radius: 6px 0 0 6px;
 }
+
 #GetInTouch .ToggleContainer button:nth-child(2) {
     border-left: none;
     border-radius: 0 6px 6px 0;
@@ -1786,54 +1813,7 @@ nav a:hover {
     z-index: 1;
 }
 
-#GetInTouch .container .effect {
-    position: absolute;
-    height: 300px;
-    width: 300px;
-    background: radial-gradient(circle, var(--sky-dim) 40%, transparent 80%);
-    border-radius: 50%;
-    top: -10%;
-    right: -2%;
-    border: 1px solid var(--sky);
-    animation: moveEffect 5s linear infinite;
-    z-index: -1;
-}
 
-#GetInTouch .container .effect::after,
-#GetInTouch .container .effect::before {
-    content: "";
-    position: absolute;
-    height: 300px;
-    width: 300px;
-    background: radial-gradient(circle, var(--sky-dim) 40%, transparent 80%);
-    border-radius: 50%;
-    border: 1px solid var(--sky);
-    animation: moveEffect 6s infinite ease-in-out;
-    z-index: -1;
-}
-
-#GetInTouch .container .effect::after {
-    left: -150%;
-    bottom: -180%;
-    animation-duration: 7s;
-}
-
-#GetInTouch .container .effect::before {
-    right: 200%;
-    top: -20%;
-    animation-duration: 6.5s;
-}
-
-@keyframes moveEffect {
-    0%   { transform: translate(0, 0); }
-    17%  { transform: translate(12px, -8px); }
-    29%  { transform: translate(-10px, 6px); }
-    41%  { transform: translate(8px, 12px); }
-    58%  { transform: translate(-12px, -10px); }
-    73%  { transform: translate(6px, -14px); }
-    89%  { transform: translate(-8px, 10px); }
-    100% { transform: translate(0, 0); }
-}
 
 /*////////////////////////////////////////////////////*/
 /*////////////////////////////////////////////////////*/
@@ -1926,12 +1906,14 @@ nav a:hover {
     z-index: 1;
 }
 
-#Contact .name, .mail {
+#Contact .name,
+.mail {
     display: flex;
     flex-direction: column;
 }
 
-#Contact .name label, .mail label {
+#Contact .name label,
+.mail label {
     position: relative;
     font-family: "Dosis", sans-serif;
     font-size: 1.5rem;
@@ -1939,7 +1921,9 @@ nav a:hover {
     letter-spacing: 2px;
     z-index: -1;
 }
-#Contact .name input, .mail input {
+
+#Contact .name input,
+.mail input {
     font-family: "Dosis", sans-serif;
     font-size: 1.5rem;
     padding: 5px 10px;
@@ -1973,6 +1957,7 @@ nav a:hover {
     height: 50px;
     gap: 20px;
 }
+
 #Contact .buttons button {
     flex: 1;
     border-radius: 10px;
@@ -1985,7 +1970,7 @@ nav a:hover {
     cursor: pointer;
 }
 
-#Contact ~ .refLinks {
+#Contact~.refLinks {
     height: 100%;
     width: 50%;
     display: flex;
@@ -1994,7 +1979,7 @@ nav a:hover {
     padding: 5%;
 }
 
-#Contact ~ .refLinks a {
+#Contact~.refLinks a {
     display: block;
     text-decoration: none;
     width: 100%;
@@ -2009,26 +1994,26 @@ nav a:hover {
     transition: var(--transition);
 }
 
-#Contact ~ .refLinks a:hover {
+#Contact~.refLinks a:hover {
     transform: translateY(-5px);
     transition: var(--transition);
 }
 
-#Contact ~ .refLinks a div:nth-child(1) {
+#Contact~.refLinks a div:nth-child(1) {
     font-size: 2.2rem;
 }
 
-#Contact ~ .refLinks a div:nth-child(2) h6 {
+#Contact~.refLinks a div:nth-child(2) h6 {
     font-size: 1.5rem;
     font-family: "Orbitron", sans-serif;
     color: var(--text);
-} 
+}
 
-#Contact ~ .refLinks a div:nth-child(2) p {
+#Contact~.refLinks a div:nth-child(2) p {
     font-size: 1.2rem;
     font-family: "syne", sans-serif;
     color: var(--text-2);
-} 
+}
 
 /*////////////////////////////////////////////////////*/
 /*////////////////////////////////////////////////////*/
@@ -2077,27 +2062,27 @@ nav a:hover {
         letter-spacing: 1px;
     }
 
-    #Contact ~ .refLinks {
+    #Contact~.refLinks {
         width: 100%;
         height: auto;
         gap: 14px;
         padding: 5% 0;
     }
 
-    #Contact ~ .refLinks a {
+    #Contact~.refLinks a {
         padding: 12px 16px;
         gap: 14px;
     }
 
-    #Contact ~ .refLinks a div:nth-child(1) {
+    #Contact~.refLinks a div:nth-child(1) {
         font-size: 1.6rem;
     }
 
-    #Contact ~ .refLinks a div:nth-child(2) h6 {
+    #Contact~.refLinks a div:nth-child(2) h6 {
         font-size: 1.1rem;
     }
 
-    #Contact ~ .refLinks a div:nth-child(2) p {
+    #Contact~.refLinks a div:nth-child(2) p {
         font-size: 0.95rem;
     }
 }
@@ -2114,7 +2099,7 @@ nav a:hover {
 #Feedback {
     background-color: rgba(255, 255, 255, 0.031);
     backdrop-filter: blur(5px);
-    height: 100%;
+    height: 110%;
     width: 100%;
     border-radius: 10px;
     padding: 20px;
@@ -2123,7 +2108,7 @@ nav a:hover {
     gap: 20px;
 }
 
-#Feedback p { 
+#Feedback p {
     font-size: 1.1rem;
     font-family: "syne", sans-serif;
     padding: 5px 0;
@@ -2406,15 +2391,18 @@ nav a:hover {
 #Resources .container .card .icon {
     font-size: 2rem;
 }
+
 #Resources .container .card h4 {
     font-size: 1.8rem;
     font-family: "Orbitron", sans-serif;
     color: var(--violet);
 }
+
 #Resources .container .card p {
     font-size: 1rem;
     font-family: "Syne", sans-serif;
 }
+
 #Resources .container .card span {
     font-size: 2rem;
 }
@@ -2591,6 +2579,7 @@ footer .footerBottom div a {
 footer .footerBottom div a:nth-child(2) {
     border-radius: 50%;
 }
+
 footer .footerBottom div a:nth-child(3) {
     border-radius: 12px;
 }
