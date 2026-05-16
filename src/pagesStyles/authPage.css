@@ -362,6 +362,14 @@
     background: var(--bg);
     color: var(--text-2);
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* eye-toggle wrapper */
+#GetLoginInfo .getpass > div {
+    position: relative;
+    width: 100%;
 }
 
 #GetLoginInfo .terms {
@@ -945,7 +953,17 @@ input[type="checkbox"]:checked::after {
     background: var(--bg);
     color: var(--text-2);
     outline: none;
+    width: 100%;
+    box-sizing: border-box;
 }
+
+/* eye-toggle wrapper */
+#CreateAcc .getpass > div {
+    position: relative;
+    width: 100%;
+}
+
+
 
 #CreateAcc .terms {
     font-family: "syne", sans-serif;
