@@ -8,6 +8,7 @@ function AdminLogin() {
     const [step, setStep]       = useState('credentials');
     const [email, setEmail]     = useState('');
     const [password, setPass]   = useState('');
+    const [showPass, setShowPass] = useState(false);
     const [otp, setOtp]         = useState('');
     const [error, setError]     = useState('');
     const [loading, setLoading] = useState(false);
@@ -78,13 +79,23 @@ function AdminLogin() {
                         </div>
                         <div className="admin-field">
                             <label>Password</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={e => setPass(e.target.value)}
-                                onKeyDown={e => handleKey(e, handleCredentials)}
-                                placeholder="••••••••"
-                            />
+                            <div style={{ position: 'relative' }}>
+                                <input
+                                    type={showPass ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={e => setPass(e.target.value)}
+                                    onKeyDown={e => handleKey(e, handleCredentials)}
+                                    placeholder="••••••••"
+                                    style={{ paddingRight: '42px', width: '100%' }}
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPass(p => !p)}
+                                    style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1, color: '#555577' }}
+                                    tabIndex={-1}
+                                    aria-label={showPass ? 'Hide password' : 'Show password'}
+                                >{showPass ? '🙈' : '👁️'}</button>
+                            </div>
                         </div>
                         {error && <div className="admin-error">⚠ {error}</div>}
                         <button className="admin-btn" onClick={handleCredentials} disabled={loading}>

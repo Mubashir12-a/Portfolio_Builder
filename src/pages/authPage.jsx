@@ -181,6 +181,7 @@ function SignupContainer({setHoldLogInCont, userEmail, HoldLogInCont, setUserEma
 function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [showTermsAlert, setShowTermsAlert] = useState(false);   
@@ -257,13 +258,23 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
             <div className="getpass">
                 <button className='forgotPass' onClick={() => {holdCont('ForgotPass')}}>Forgot password?</button>
                 <label>Password</label>
-                <input
-                    type="password"
-                    id="loginPass"
-                    placeholder="Enter Your Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <div style={{ position: 'relative' }}>
+                    <input
+                        type={showPass ? "text" : "password"}
+                        id="loginPass"
+                        placeholder="Enter Your Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ paddingRight: '42px', width: '100%' }}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPass(p => !p)}
+                        style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
+                        tabIndex={-1}
+                        aria-label={showPass ? 'Hide password' : 'Show password'}
+                    >{showPass ? '🙈' : '👁️'}</button>
+                </div>
             </div>
 
             <div className="terms">
@@ -559,6 +570,7 @@ function ForgotPass({holdCont, setUserEmail}){
 
 function ResetPassword({ holdCont }) {
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [successMsg, setSuccessMsg] = useState("");
     const [loading, setLoading] = useState(false);
@@ -619,12 +631,22 @@ function ResetPassword({ holdCont }) {
             <div className="getpass">
                 <p className='instruct'>min. 8 characters</p>
                 <label>New Password</label>
-                <input
-                    type="password"
-                    placeholder="Set Your New Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <div style={{ position: 'relative' }}>
+                    <input
+                        type={showPass ? "text" : "password"}
+                        placeholder="Set Your New Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={{ paddingRight: '42px', width: '100%' }}
+                    />
+                    <button
+                        type="button"
+                        onClick={() => setShowPass(p => !p)}
+                        style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
+                        tabIndex={-1}
+                        aria-label={showPass ? 'Hide password' : 'Show password'}
+                    >{showPass ? '🙈' : '👁️'}</button>
+                </div>
             </div>
 
             <div className="passwordStrongBar">
@@ -678,6 +700,7 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(false);
@@ -768,12 +791,22 @@ function CreateAcc({holdCont, setUserEmail, setSwitchTab, setUserData}){
                 <div className="getpass">
                     <p className='instruct'>min. 8 characters</p>
                     <label>Password</label>
-                    <input
-                        type="password"
-                        placeholder="Set Your Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                    <div style={{ position: 'relative' }}>
+                        <input
+                            type={showPass ? "text" : "password"}
+                            placeholder="Set Your Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            style={{ paddingRight: '42px', width: '100%' }}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPass(p => !p)}
+                            style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
+                            tabIndex={-1}
+                            aria-label={showPass ? 'Hide password' : 'Show password'}
+                        >{showPass ? '🙈' : '👁️'}</button>
+                    </div>
                 </div>
 
                 <div className="passwordStrongBar">
