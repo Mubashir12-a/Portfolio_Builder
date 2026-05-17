@@ -610,8 +610,9 @@
 /* Skills Section */
 #skillsDetails {
   grid-column: 3/5;
-  grid-row: 16/20;
+  grid-row: 16/21;
   padding: 24px;
+  overflow: auto;
 }
 
 #skillsDetails:hover {
@@ -628,7 +629,7 @@
   flex-direction: column;
   gap: 16px;
   list-style: none;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #skillsDetails ul li {
@@ -663,7 +664,7 @@
 /* Liked Templates Container */
 #likedTemplates {
   grid-column: 1/5;
-  grid-row: 20/26;
+  grid-row: 21/27;
   padding: 24px;
 }
 
