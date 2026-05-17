@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pagesStyles/collectDashInfo.css';
+import { useSkillsList } from '../hooks/useSkillsList';
 
 function CollectDashInfo() {
     const [step, setStep] = useState(1);
@@ -32,13 +33,7 @@ function CollectDashInfo() {
             { company: '', description: '', certificate: '' },
             { company: '', description: '', certificate: '' }
         ],
-        skills: [
-            { name: '', icon: '💻', progress: 50 },
-            { name: '', icon: '🚀', progress: 50 },
-            { name: '', icon: '🎨', progress: 50 },
-            { name: '', icon: '⚙️', progress: 50 },
-            { name: '', icon: '📈', progress: 50 }
-        ]
+        skills: []
     });
 
     useEffect(() => {
@@ -124,7 +119,7 @@ function CollectDashInfo() {
                 {step === 4 && <GetEducation setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
                 {step === 5 && <GetProjects setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
                 {step === 6 && <GetExperience setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
-                {step === 7 && <GetSkills setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} handleSubmit={handleSubmit} />}
+                {step === 7 && <GetSkills setStep={setStep} formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />}
             </div>
         </section>
     )
@@ -465,64 +460,109 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
     )
 }
 
-function GetSkills({ setStep, formData, handleArrayChange, handleSubmit }) {
-    const handleImageUpload = async (e, idx) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        if (file.size > 1024 * 1024) {
-            alert("File is too large (max 1MB).");
-            return;
-        }
+function GetSkills({ setStep, formData, setFormData, handleSubmit }) {
+    const { skillsList } = useSkillsList();
+    const [searchQuery, setSearchQuery] = useState('');
 
-        const data = new FormData();
-        data.append("image", file);
+    const filteredPresetSkills = skillsList.filter(skill =>
+        skill.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-        try {
-            const token = localStorage.getItem('token');
-            const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-            const res = await fetch(`${apiUrl}/api/user/upload-image`, {
-                method: "POST",
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: data
-            });
-            const result = await res.json();
-            if (result.success) {
-                handleArrayChange('skills', idx, 'icon', result.url);
-            } else {
-                alert(result.message || "Upload failed");
-            }
-        } catch (err) {
-            console.error(err);
-            alert("Upload failed");
+    const handleToggleSkill = (skill) => {
+        const isAlreadySelected = formData.skills.some(s => s.name === skill.name);
+        
+        if (isAlreadySelected) {
+            setFormData(prev => ({
+                ...prev,
+                skills: prev.skills.filter(s => s.name !== skill.name)
+            }));
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                skills: [...prev.skills, { name: skill.name, icon: skill.icon, progress: 80 }]
+            }));
         }
+    };
+
+    const handleSliderChange = (index, val) => {
+        setFormData(prev => {
+            const updatedSkills = [...prev.skills];
+            updatedSkills[index] = { ...updatedSkills[index], progress: val };
+            return { ...prev, skills: updatedSkills };
+        });
     };
 
     return (
         <section id="GetSkills" className="dynamic-section">
-            <h1>Step 7/7: Skills</h1>
             <div className="step-header">
                 <span className="step-badge">Step 7 of 7 · Final</span>
-                <h2>Your <em>skills.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Upload icons and rate each skill out of 100.</p>
+                <h2>Select your <em>skills.</em></h2>
+                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Choose from 60 major developer skills and adjust your proficiency levels.</p>
             </div>
-            {formData.skills.map((skill, idx) => (
-                <div key={idx} className="dynamic-item-horizontal">
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
-                        {skill.icon && skill.icon.startsWith('http') ? (
-                            <img src={skill.icon} alt="icon" style={{ width: '30px', height: '30px', objectFit: 'contain' }} />
-                        ) : (
-                            <span style={{ fontSize: '24px' }}>{skill.icon || '💻'}</span>
-                        )}
-                        <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} style={{ width: '80px', fontSize: '10px' }} title="Upload Skill Icon" />
+
+            <input
+                type="text"
+                placeholder="Search skills (e.g., React, Python, Figma)..."
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                className="skills-search-input"
+            />
+
+            <div className="preset-skills-grid">
+                {filteredPresetSkills.map(skill => {
+                    const isSelected = formData.skills.some(s => s.name === skill.name);
+                    return (
+                        <div
+                            key={skill.name}
+                            className={`preset-skill-card ${isSelected ? 'selected' : ''}`}
+                            onClick={() => handleToggleSkill(skill)}
+                        >
+                            <img src={skill.icon} alt={skill.name} className="preset-skill-icon" />
+                            <span className="preset-skill-name">{skill.name}</span>
+                            {isSelected && <span className="preset-skill-check">✓</span>}
+                        </div>
+                    );
+                })}
+            </div>
+
+            <div className="selected-skills-section">
+                <h3>✦ Adjust Skill Levels ({formData.skills.length} Selected)</h3>
+                {formData.skills.length === 0 ? (
+                    <p className="no-skills-msg">Click skills in the grid above to select them!</p>
+                ) : (
+                    <div className="selected-skills-list">
+                        {formData.skills.map((skill, idx) => (
+                            <div key={skill.name} className="selected-skill-row">
+                                <img src={skill.icon} alt={skill.name} className="selected-skill-icon-small" />
+                                <span className="selected-skill-name-label">{skill.name}</span>
+                                <div className="slider-container">
+                                    <input
+                                        type="range"
+                                        min="0"
+                                        max="100"
+                                        value={skill.progress || 50}
+                                        onChange={e => handleSliderChange(idx, parseInt(e.target.value))}
+                                        className="skill-progress-slider"
+                                    />
+                                    <span className="progress-badge">{skill.progress || 50}%</span>
+                                </div>
+                                <button
+                                    className="remove-skill-btn"
+                                    onClick={() => handleToggleSkill({ name: skill.name, icon: skill.icon })}
+                                    title="Remove Skill"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
                     </div>
-                    <input type="text" placeholder="Skill Name" value={skill.name} onChange={(e) => handleArrayChange('skills', idx, 'name', e.target.value)} style={{ flex: 1 }} />
-                    <input type="number" placeholder="%" value={skill.progress} onChange={(e) => handleArrayChange('skills', idx, 'progress', parseInt(e.target.value))} style={{ width: '80px', flex: 'none' }} min="0" max="100" />
-                </div>
-            ))}
+                )}
+            </div>
+
             <div className="btns" style={{marginTop: '20px'}}>
                 <button onClick={() => setStep(6)}>Back</button>
                 <button onClick={handleSubmit} style={{ background: 'var(--violet)', color: '#fff', border: 'none' }}>Complete!</button>
             </div>
         </section>
-    )
+    );
 }

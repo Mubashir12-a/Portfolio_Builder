@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Neo-Brutalist Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+  <!-- Navigation Bar -->
+  <nav class="navbar neo-border">
+    <div class="logo" id="logo-text">MA🎨</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Hi!</a></li>
+      <li id="nav-about"><a href="#about">Story</a></li>
+      <li id="nav-education"><a href="#education">Academy</a></li>
+      <li id="nav-projects"><a href="#projects">Creations</a></li>
+      <li id="nav-experience"><a href="#experience">Jobs</a></li>
+      <li id="nav-skills"><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Say Hello</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn neo-border" aria-label="Toggle Neo Theme">🌓</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-content neo-border">
+        <div class="hero-tag neo-border">⚡ Creative Module Active</div>
+        <h1 class="hero-title">I'm <span class="accent-text" id="user-name">Mubashir Ahmad</span></h1>
+        <p class="hero-subtitle" id="user-role">Full-Stack Architect & Product Engineer</p>
+        <p class="hero-bio" id="user-bio">I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-black neo-border">Browse Creations</a>
+          <a href="#contact" class="btn btn-white neo-border">Start Talk</a>
+        </div>
+      </div>
+      <div class="hero-avatar-block neo-border">
+        <img id="user-image" class="profile-image" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400" alt="Mubashir Ahmad">
+      </div>
+    </div>
+  </section>
+
+  <!-- Story About Section -->
+  <section id="about" class="about-section">
+    <div class="section-header">
+      <span class="sub-heading">Biography</span>
+      <h2 class="section-title">My Story</h2>
+    </div>
+    <div class="about-grid">
+      <div class="neo-card main-story neo-border">
+        <h3>Primary Protocol</h3>
+        <p id="about-detailed">I am a passionate software designer specializing in advanced React development, system architecture, and UI/UX engineering. Over the past 5 years, I've designed proprietary template engines, payment architectures, and fast CDNs that power modern web portfolios.</p>
+        
+        <div class="contact-card-grid">
+          <div class="contact-item neo-border" id="meta-location-container">
+            <span class="icon">📍</span>
+            <div class="contact-details">
+              <label>HQ</label>
+              <span id="user-location">London, United Kingdom</span>
+            </div>
+          </div>
+          <div class="contact-item neo-border" id="meta-phone-container">
+            <span class="icon">📞</span>
+            <div class="contact-details">
+              <label>Dial</label>
+              <a href="" id="user-phone">+44 7911 123456</a>
+            </div>
+          </div>
+          <div class="contact-item neo-border" id="meta-email-container">
+            <span class="icon">✉️</span>
+            <div class="contact-details">
+              <label>Write</label>
+              <a href="" id="user-email">mubashir.ahmad@example.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="neo-card socials-card neo-border" id="about-socials-block">
+        <h3>Connect Matrix</h3>
+        <p>Establish coordinates on external social network structures.</p>
+        <div class="social-links-grid" id="socials-container">
+          <!-- Dynamic Social Anchors -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academy Section -->
+  <section id="education" class="education-section">
+    <div class="section-header">
+      <span class="sub-heading">Academics</span>
+      <h2 class="section-title">Education Logs</h2>
+    </div>
+    <div class="timeline" id="education-container">
+      <!-- Dynamic Education Cards -->
+    </div>
+  </section>
+
+  <!-- Creations Section -->
+  <section id="projects" class="projects-section">
+    <div class="section-header">
+      <span class="sub-heading">Creations</span>
+      <h2 class="section-title">Selected Projects</h2>
+    </div>
+    <div class="projects-grid" id="projects-container">
+      <!-- Dynamic Project Cards -->
+    </div>
+  </section>
+
+  <!-- Experience Jobs Section -->
+  <section id="experience" class="experience-section">
+    <div class="section-header">
+      <span class="sub-heading">Timeline</span>
+      <h2 class="section-title">Job Experiences</h2>
+    </div>
+    <div class="timeline" id="experience-container">
+      <!-- Dynamic Experience Cards -->
+    </div>
+  </section>
+
+  <!-- Skills Capabilities Section -->
+  <section id="skills" class="skills-section">
+    <div class="section-header">
+      <span class="sub-heading">Tech Stats</span>
+      <h2 class="section-title">My Capabilities</h2>
+    </div>
+    <div class="skills-grid" id="skills-container">
+      <!-- Dynamic Skill Bars -->
+    </div>
+  </section>
+
+  <!-- Contact Forms Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-header">
+      <span class="sub-heading">Contact</span>
+      <h2 class="section-title">Start A Conversation</h2>
+    </div>
+    <div class="neo-card contact-box neo-border">
+      <form class="neo-form" onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Name</label>
+            <input class="neo-border" type="text" placeholder="Your Name" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input class="neo-border" type="email" placeholder="Your Email Address" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Payload</label>
+          <textarea class="neo-border" rows="5" placeholder="Write details about your project..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-black neo-border">Transmit Query 🚀</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container neo-border">
+      <span class="logo">MA🎨</span>
+      <p class="copyright">© ARCHIVES <span id="footer-year">2026</span> // AUTHORIZED BY <span id="footer-name">Mubashir Ahmad</span></p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

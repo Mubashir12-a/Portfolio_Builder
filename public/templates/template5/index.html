@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corporate Professional Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+  <!-- Top Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="logo" id="logo-text">MUBASHIR AHMAD</a>
+      <ul class="nav-links">
+        <li><a href="#hero">Overview</a></li>
+        <li id="nav-about"><a href="#about">Profile</a></li>
+        <li id="nav-education"><a href="#education">Education</a></li>
+        <li id="nav-projects"><a href="#projects">Portfolio</a></li>
+        <li id="nav-experience"><a href="#experience">History</a></li>
+        <li id="nav-skills"><a href="#skills">Competence</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Formal Theme">🌓</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-avatar-wrapper">
+        <img id="user-image" class="profile-image" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300" alt="Mubashir Ahmad">
+      </div>
+      <div class="hero-content">
+        <h1 class="hero-name" id="user-name">Mubashir Ahmad</h1>
+        <p class="hero-title-text" id="user-role">Full-Stack Architect & Product Engineer</p>
+        <p class="hero-bio" id="user-bio">I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.</p>
+        
+        <div class="corporate-meta-row">
+          <div class="meta-item" id="meta-location-container">
+            <span class="icon">📍</span>
+            <span id="user-location">London, United Kingdom</span>
+          </div>
+          <div class="meta-item" id="meta-phone-container">
+            <span class="icon">📞</span>
+            <a href="" id="user-phone">+44 7911 123456</a>
+          </div>
+          <div class="meta-item" id="meta-email-container">
+            <span class="icon">✉️</span>
+            <a href="" id="user-email">mubashir.ahmad@example.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Body Grid Container -->
+  <main class="main-layout">
+    <div class="layout-grid">
+      <!-- Left Column: Biography & Capabilities -->
+      <div class="layout-left-col">
+        <!-- Biography -->
+        <section id="about" class="about-card formal-card">
+          <h2 class="section-title">Executive Profile</h2>
+          <p id="about-detailed">I am a passionate software designer specializing in advanced React development, system architecture, and UI/UX engineering. Over the past 5 years, I've designed proprietary template engines, payment architectures, and fast CDNs that power modern web portfolios.</p>
+          
+          <div class="social-channels" id="about-socials-block">
+            <h3>External Connections</h3>
+            <div class="social-links-list" id="socials-container">
+              <!-- Dynamic Social Channels -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Competence Skills -->
+        <section id="skills" class="skills-card formal-card">
+          <h2 class="section-title">Core Competencies</h2>
+          <div class="skills-list" id="skills-container">
+            <!-- Dynamic Skills Columns -->
+          </div>
+        </section>
+      </div>
+
+      <!-- Right Column: Timeline & Inventions -->
+      <div class="layout-right-col">
+        <!-- Career History -->
+        <section id="experience" class="experience-card formal-card">
+          <h2 class="section-title">Professional History</h2>
+          <div class="timeline" id="experience-container">
+            <!-- Dynamic Job Experiences -->
+          </div>
+        </section>
+
+        <!-- Academy Credentials -->
+        <section id="education" class="education-card formal-card">
+          <h2 class="section-title">Academic Credentials</h2>
+          <div class="timeline" id="education-container">
+            <!-- Dynamic Education Entries -->
+          </div>
+        </section>
+
+        <!-- Portfolio Releases -->
+        <section id="projects" class="projects-card formal-card">
+          <h2 class="section-title">Case Studies & Releases</h2>
+          <div class="projects-list" id="projects-container">
+            <!-- Dynamic Projects Case Studies -->
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Contact Forms Section -->
+  <section id="contact" class="contact-section">
+    <div class="contact-card formal-card">
+      <h2 class="section-title">Corporate Inquiries</h2>
+      <p class="contact-subtext">Submit details to request standard consulting specs or outline enterprise opportunities.</p>
+      <form class="corporate-form" onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" placeholder="e.g. John Doe" required>
+          </div>
+          <div class="form-group">
+            <label>Corporate Email</label>
+            <input type="email" placeholder="e.g. john@company.com" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Query Summary</label>
+          <textarea rows="4" placeholder="Brief outline of your request..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Submit Request</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      <span class="logo">MUBASHIR AHMAD</span>
+      <p class="copyright">© <span id="footer-year">2026</span> <span id="footer-name">Mubashir Ahmad</span>. All Rights Reserved. Confidential Portfolio.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

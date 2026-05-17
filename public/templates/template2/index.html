@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minimal Elegant Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+  <!-- Minimal Header -->
+  <nav class="navbar">
+    <div class="logo" id="logo-text">Mubashir.</div>
+    <ul class="nav-links">
+      <li><a href="#hero">Intro</a></li>
+      <li id="nav-about"><a href="#about">Story</a></li>
+      <li id="nav-education"><a href="#education">Academics</a></li>
+      <li id="nav-projects"><a href="#projects">Work</a></li>
+      <li id="nav-experience"><a href="#experience">Journal</a></li>
+      <li id="nav-skills"><a href="#skills">Expertise</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Minimalist Theme">🌓</button>
+    </div>
+  </nav>
+
+  <!-- Hero Intro Section -->
+  <section id="hero" class="hero-section">
+    <div class="hero-container">
+      <div class="hero-text-block">
+        <p class="hero-label">Designer & Developer</p>
+        <h1 class="hero-title">Creating <em>digital</em> experiences that <em>matter.</em></h1>
+        <p class="hero-bio" id="user-bio">I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-outline">Explore Selected Work</a>
+        </div>
+      </div>
+      <div class="hero-image-block">
+        <img id="user-image" class="profile-image" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400" alt="Mubashir Ahmad">
+      </div>
+    </div>
+  </section>
+
+  <!-- Bio Story Section -->
+  <section id="about" class="about-section">
+    <div class="about-grid">
+      <div class="about-heading-col">
+        <span class="sub-heading">Biography</span>
+        <h2 class="section-title" id="user-name">Mubashir Ahmad</h2>
+        <p class="role-text" id="user-role">Full-Stack Architect & Product Engineer</p>
+      </div>
+      <div class="about-content-col">
+        <p id="about-detailed">I am a passionate software designer specializing in advanced React development, system architecture, and UI/UX engineering. Over the past 5 years, I've designed proprietary template engines, payment architectures, and fast CDNs that power modern web portfolios.</p>
+        
+        <div class="meta-list">
+          <div class="meta-row" id="meta-location-container">
+            <span class="meta-label">Based in</span>
+            <span class="meta-value" id="user-location">London, United Kingdom</span>
+          </div>
+          <div class="meta-row" id="meta-phone-container">
+            <span class="meta-label">Phone</span>
+            <span class="meta-value"><a href="" id="user-phone">+44 7911 123456</a></span>
+          </div>
+          <div class="meta-row" id="meta-email-container">
+            <span class="meta-label">Email</span>
+            <span class="meta-value"><a href="" id="user-email">mubashir.ahmad@example.com</a></span>
+          </div>
+        </div>
+
+        <div class="socials-wrapper" id="about-socials-block">
+          <h4>Connect</h4>
+          <div class="social-links" id="socials-container">
+            <!-- Dynamic Social Elements -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education Section -->
+  <section id="education" class="education-section">
+    <div class="section-divider"></div>
+    <div class="timeline-grid">
+      <div class="section-title-col">
+        <span class="sub-heading">Academics</span>
+        <h2 class="section-title">Education</h2>
+      </div>
+      <div class="section-content-col" id="education-container">
+        <!-- Dynamic Education Entries -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="section-divider"></div>
+    <div class="projects-header">
+      <span class="sub-heading">Work Showcase</span>
+      <h2 class="section-title">Selected Projects</h2>
+    </div>
+    <div class="projects-list" id="projects-container">
+      <!-- Dynamic Project Cards -->
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="experience-section">
+    <div class="section-divider"></div>
+    <div class="timeline-grid">
+      <div class="section-title-col">
+        <span class="sub-heading">Career Path</span>
+        <h2 class="section-title">Experience</h2>
+      </div>
+      <div class="section-content-col" id="experience-container">
+        <!-- Dynamic Experience Entries -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="section-divider"></div>
+    <div class="skills-grid">
+      <div class="section-title-col">
+        <span class="sub-heading">Capabilities</span>
+        <h2 class="section-title">Expertise</h2>
+      </div>
+      <div class="section-content-col">
+        <div class="minimal-skills-container" id="skills-container">
+          <!-- Dynamic Skill Elements -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact-section">
+    <div class="section-divider"></div>
+    <div class="contact-grid">
+      <div class="contact-title-col">
+        <span class="sub-heading">Inquiries</span>
+        <h2 class="section-title">Let's work together.</h2>
+        <p>Drop a line if you want to collaborate, share a design idea, or speak about technology.</p>
+      </div>
+      <div class="contact-content-col">
+        <form class="minimal-form" onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();">
+          <div class="form-field">
+            <input type="text" placeholder="Your Name" required>
+          </div>
+          <div class="form-field">
+            <input type="email" placeholder="Your Email Address" required>
+          </div>
+          <div class="form-field">
+            <textarea rows="4" placeholder="Your Message" required></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-divider"></div>
+    <div class="footer-flex">
+      <span class="logo">Mubashir.</span>
+      <p class="copyright">© <span id="footer-year">2026</span> <span id="footer-name">Mubashir Ahmad</span>. Design in simplicity.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cyberpunk Neon Hacker Terminal</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+  <!-- Interactive Matrix Rain Canvas -->
+  <canvas id="matrix-canvas"></canvas>
+
+  <!-- Cyber Navigation -->
+  <nav class="navbar cyber-border">
+    <div class="logo" id="logo-text">ROOT@MA:~$</div>
+    <ul class="nav-links">
+      <li><a href="#hero">// init</a></li>
+      <li id="nav-about"><a href="#about">// specs</a></li>
+      <li id="nav-education"><a href="#education">// academy</a></li>
+      <li id="nav-projects"><a href="#projects">// repositories</a></li>
+      <li id="nav-experience"><a href="#experience">// log</a></li>
+      <li id="nav-skills"><a href="#skills">// cores</a></li>
+      <li><a href="#contact">// signal</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button id="theme-toggle" class="theme-toggle-btn cyber-border" aria-label="Toggle Bios Theme">🌓</button>
+    </div>
+  </nav>
+
+  <!-- Terminal Hero Section -->
+  <section id="hero" class="hero-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <div class="terminal-title">system_info.sh - Active Session</div>
+      </div>
+      <div class="terminal-content">
+        <div class="terminal-intro">
+          <p class="console-prompt">>>> LOADING INJECTOR PROFILES...</p>
+          <p class="console-success">[SUCCESS] SECURE PORTFOLIO ENGINE ACTIVE.</p>
+        </div>
+        
+        <div class="hero-grid">
+          <div class="hero-text-block">
+            <h1 class="hero-name">IDENTITY: <span class="neon-highlight" id="user-name">Mubashir Ahmad</span></h1>
+            <p class="hero-role-text">ROLE: <span id="user-role">Full-Stack Architect & Product Engineer</span></p>
+            <p class="hero-bio" id="user-bio">I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.</p>
+            
+            <div class="hero-terminal-actions">
+              <a href="#projects" class="cyber-btn btn-neon">// EXECUTE WORK_SHOWCASE</a>
+              <a href="#contact" class="cyber-btn btn-outline">// RUN SEND_PING</a>
+            </div>
+          </div>
+          <div class="hero-avatar-block cyber-border">
+            <img id="user-image" class="profile-image" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300" alt="Mubashir Ahmad">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specs Terminal Page -->
+  <section id="about" class="about-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <div class="terminal-title">hacker_bio.conf</div>
+      </div>
+      <div class="terminal-content">
+        <div class="about-grid">
+          <div class="bio-block">
+            <h3>[0x01] Biography Profile</h3>
+            <p id="about-detailed">I am a passionate software designer specializing in advanced React development, system architecture, and UI/UX engineering. Over the past 5 years, I've designed proprietary template engines, payment architectures, and fast CDNs that power modern web portfolios.</p>
+            
+            <div class="terminal-meta-list">
+              <div class="meta-row" id="meta-location-container">
+                <span class="meta-label">COORDS:</span>
+                <span class="meta-value" id="user-location">London, United Kingdom</span>
+              </div>
+              <div class="meta-row" id="meta-phone-container">
+                <span class="meta-label">PHONE:</span>
+                <span class="meta-value"><a href="" id="user-phone">+44 7911 123456</a></span>
+              </div>
+              <div class="meta-row" id="meta-email-container">
+                <span class="meta-label">MAIL:</span>
+                <span class="meta-value"><a href="" id="user-email">mubashir.ahmad@example.com</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="socials-block" id="about-socials-block">
+            <h3>[0x02] Digital Relays</h3>
+            <p>Establish high-frequency links through global network nodes.</p>
+            <div class="socials-grid" id="socials-container">
+              <!-- Dynamic Relays Grid -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Academy Credentials Terminal -->
+  <section id="education" class="education-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="terminal-title">academic_credentials.db</div>
+      </div>
+      <div class="terminal-content">
+        <div class="timeline-grid" id="education-container">
+          <!-- Dynamic Education Cells -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Repositories Projects Section -->
+  <section id="projects" class="projects-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="terminal-title">active_repositories.json</div>
+      </div>
+      <div class="terminal-content">
+        <div class="projects-grid" id="projects-container">
+          <!-- Dynamic Project Cards -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Log Experience Section -->
+  <section id="experience" class="experience-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="terminal-title">career_history_log.txt</div>
+      </div>
+      <div class="terminal-content">
+        <div class="timeline-grid" id="experience-container">
+          <!-- Dynamic Experience Rows -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cores Skills Section -->
+  <section id="skills" class="skills-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="terminal-title">core_competencies.sys</div>
+      </div>
+      <div class="terminal-content">
+        <div class="skills-grid" id="skills-container">
+          <!-- Dynamic Skills Grid -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signal Contact Terminal Section -->
+  <section id="contact" class="contact-section">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-bar">
+        <div class="terminal-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+        <div class="terminal-title">send_ping.sh</div>
+      </div>
+      <div class="terminal-content">
+        <p class="console-prompt">>>> INITIATING ENCRYPTED DIALOG CHANNEL...</p>
+        <form class="cyber-form" onsubmit="event.preventDefault(); alert('Packet successfully transmitted!'); this.reset();">
+          <div class="form-row">
+            <div class="form-group">
+              <label>CALLSIGN [NAME]</label>
+              <input class="cyber-border" type="text" placeholder="guest_user" required>
+            </div>
+            <div class="form-group">
+              <label>RETURN ADDRESS [EMAIL]</label>
+              <input class="cyber-border" type="email" placeholder="user@remote.host" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>PING PAYLOAD [MESSAGE]</label>
+            <textarea class="cyber-border" rows="5" placeholder="Transmit packet contents here..." required></textarea>
+          </div>
+          <button type="submit" class="cyber-btn btn-neon">// TRANSMIT PACKET</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="terminal-window cyber-border">
+      <div class="terminal-content footer-flex">
+        <span class="logo">ROOT@MA:~$ SHUTDOWN -H NOW</span>
+        <p class="copyright">© TERMINAL LOG <span id="footer-year">2026</span> // SYSTEM SECURED BY <span id="footer-name">Mubashir Ahmad</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

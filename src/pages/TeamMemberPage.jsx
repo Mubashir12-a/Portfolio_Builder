@@ -29,7 +29,10 @@ const TEAM_DATA = {
       'Led the transition from static layouts to the current dynamic, multi-step builder.'
     ],
     skills: ['React.js', 'Node.js', 'System Architecture', 'UI/UX Design', 'Cloud Infrastructure', 'Next.js'],
-    social: { github: '#', linkedin: '#', twitter: '#' }
+    social: { 
+      github: 'https://github.com/mubashir12-a', 
+      linkedin: 'https://linkedin.com/in/mubashir-ahmad-pb' 
+    }
   },
   abrar: {
     name: 'Abrar',
@@ -50,7 +53,10 @@ const TEAM_DATA = {
       'Optimized the server response times by over 40% through intelligent caching.'
     ],
     skills: ['Node.js', 'Express', 'JWT Auth', 'RESTful APIs', 'Security Auditing', 'Redis'],
-    social: { github: '#', linkedin: '#', twitter: '#' }
+    social: { 
+      github: 'https://github.com/abrar-backdev', 
+      linkedin: 'https://linkedin.com/in/abrar-senior-eng' 
+    }
   },
   hammad: {
     name: 'Hammad',
@@ -71,7 +77,10 @@ const TEAM_DATA = {
       'Successfully migrated thousands of assets to a cloud-based CDN for faster loading.'
     ],
     skills: ['MongoDB', 'NoSQL', 'Mongoose', 'Cloudinary', 'Data Science', 'AWS'],
-    social: { github: '#', linkedin: '#', twitter: '#' }
+    social: { 
+      github: 'https://github.com/hammad-cloudspecialist', 
+      linkedin: 'https://linkedin.com/in/hammad-database-cloud' 
+    }
   }
 };
 
@@ -101,12 +110,13 @@ export default function TeamMemberPage() {
               <p className="bio">{member.bio}</p>
               
               <div className="social-links">
-                 <button onClick={() => window.open(member.social.github)}>GitHub</button>
-                 <button onClick={() => window.open(member.social.linkedin)}>LinkedIn</button>
+                 <button onClick={() => window.open(member.social.github, '_blank', 'noopener,noreferrer')}>GitHub</button>
+                 <button onClick={() => window.open(member.social.linkedin, '_blank', 'noopener,noreferrer')}>LinkedIn</button>
               </div>
             </div>
           </div>
         </section>
+
 
         <section className="profile-details">
           <div className="detailed-bio-section">
