@@ -592,7 +592,7 @@ section {
 }
 
 /* Responsive elements */
-@media (max-width: 968px) {
+@media (max-width: 768px) {
   .hero-container {
     grid-template-columns: 1fr;
     text-align: center;

@@ -76,12 +76,25 @@
       portfolio: { label: 'Website', emoji: '🌐' },
       extra: { label: 'Link', emoji: '🔗' }
     },
-    renderSocialItem: (key, link, meta) => `
-      <a class="social-btn" href="${link}" target="_blank">
-        <span class="social-icon-box">${meta.emoji}</span>
-        <span>${meta.label}</span>
-      </a>
-    `,
+    renderSocialItem: (key, link, meta) => {
+      const iconMap = {
+        github: 'Github.png',
+        linkedin: 'LinkedIn.png',
+        instagram: 'Instagram.png',
+        facebook: 'facebook.png',
+        portfolio: 'Portfolio.png',
+        extra: 'Link.png'
+      };
+      const iconFile = iconMap[key] || 'Link.png';
+      return `
+        <a class="social-btn" href="${link}" target="_blank">
+          <span class="social-icon-box">
+            <img src="../core/dashLinkIcons/${iconFile}" alt="${meta.label}" style="width: 20px; height: 20px; object-fit: contain;" />
+          </span>
+          <span>${meta.label}</span>
+        </a>
+      `;
+    },
     postSocialRender: (linkCount) => {
       const aboutSocialsBlock = document.querySelector('.socials-card');
       const mainAbout = document.querySelector('.main-about');

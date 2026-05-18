@@ -17,9 +17,23 @@
       portfolio: { label: 'Portfolio' },
       extra: { label: 'Link' }
     },
-    renderSocialItem: (key, link, meta) => `
-      <a href="${link}" target="_blank">${meta.label}</a>
-    `,
+    renderSocialItem: (key, link, meta) => {
+      const iconMap = {
+        github: 'Github.png',
+        linkedin: 'LinkedIn.png',
+        instagram: 'Instagram.png',
+        facebook: 'facebook.png',
+        portfolio: 'Portfolio.png',
+        extra: 'Link.png'
+      };
+      const iconFile = iconMap[key] || 'Link.png';
+      return `
+        <a href="${link}" target="_blank" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none;">
+          <img src="../core/dashLinkIcons/${iconFile}" alt="${meta.label}" style="width: 16px; height: 16px; object-fit: contain;" />
+          <span>${meta.label}</span>
+        </a>
+      `;
+    },
     postSocialRender: (linkCount) => {
       const aboutSocialsBlock = document.getElementById('about-socials-block');
       const mainCol = document.querySelector('.about-content-col');

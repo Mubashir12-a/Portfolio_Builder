@@ -593,7 +593,7 @@ section {
 }
 
 /* Mobile responsive screens */
-@media (max-width: 968px) {
+@media (max-width: 768px) {
   .hero-grid {
     grid-template-columns: 1fr;
   }

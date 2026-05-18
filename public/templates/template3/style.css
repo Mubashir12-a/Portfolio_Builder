@@ -690,7 +690,7 @@ section {
 }
 
 /* Responsive grid modifications */
-@media (max-width: 968px) {
+@media (max-width: 768px) {
   .navbar {
     padding: 12px 25px;
   }

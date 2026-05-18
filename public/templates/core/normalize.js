@@ -7,9 +7,9 @@ const STOCK_DATA = {
   name: "Mubashir Ahmad",
   profileImage: "../core/DemoProfileImg.png",
   about: "I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.",
-  phone: "+44 7911 123456",
-  email: "mubashir.ahmad@example.com",
-  location: "London, United Kingdom",
+  phone: "+91 78898 25292",
+  email: "ma2625645@gmail.com",
+  location: "Srinagar, Kashmir",
   socialLinks: {
     github: "https://github.com",
     linkedin: "https://linkedin.com",
@@ -19,17 +19,17 @@ const STOCK_DATA = {
     extra: "https://google.com"
   },
   education: [
-    { level: "Master of Science", name: "Oxford University", address: "Oxford, UK", status: "First Class Honors" },
-    { level: "Bachelor of Engineering", name: "Imperial College London", address: "London, UK", status: "Distinction" }
+    { level: "Diploma In Computer Science", name: "ICMS", address: "Hawal, Srinagar", status: "Completed Under Fastrack Neilet" },
+    { level: "Bachelor of Computer Application", name: "ICSC", address: "Hawal, Srinagar", status: "Ongoing" }
   ],
   projects: [
-    { title: "AI Portfolio Builder", description: "Next-gen responsive developer workspace with modular template compilers.", link: "https://github.com", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" },
-    { title: "DeFi Liquidity Engine", description: "High-throughput algorithmic transaction ledger running on Solidity.", link: "https://github.com", image: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=600" },
-    { title: "SaaS Design System", description: "A gorgeous, cohesive HSL-styled micro-component design token architecture.", link: "https://github.com", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600" }
+    { title: "AI Resume Builder", description: "Next-gen responsive developer workspace with modular template compilers.", link: "https://github.com/Mubashir12-a", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600" },
+    { title: "Portfolio Builder", description: "High-throughput algorithmic transaction ledger running on Solidity.", link: "https://github.com/Mubashir12-a", image: "https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=600" },
+    { title: "JS Based Library", description: "A gorgeous, cohesive HSL-styled micro-component design token architecture.", link: "https://github.com/Mubashir12-a", image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600" }
   ],
   experience: [
-    { company: "Google Deepmind", description: "Spearheaded premium frontend components, layout optimization, and high-end AI rendering systems.", certificate: "Senior Frontend Architect" },
-    { company: "Stripe Payments", description: "Developed highly extensible dashboard components and custom client SDK configurations.", certificate: "Lead Product Engineer" }
+    { company: "UptoSkills", description: "Spearheaded premium frontend components, layout optimization, and high-end AI rendering systems.", certificate: "Senior Frontend Architect" },
+    { company: "Neilet", description: "Developed highly extensible dashboard components and custom client SDK configurations.", certificate: "Lead Product Engineer" }
   ],
   skills: [
     { name: "React.js", progress: 95 },
@@ -46,10 +46,10 @@ const STOCK_DATA = {
 function isImageUrl(url) {
   if (!url || typeof url !== 'string') return false;
   const clean = url.trim().toLowerCase();
-  return clean.startsWith('http://') || 
-         clean.startsWith('https://') || 
-         clean.includes('cloudinary.com') ||
-         /\.(jpeg|jpg|gif|png|webp|svg)/i.test(clean);
+  return clean.startsWith('http://') ||
+    clean.startsWith('https://') ||
+    clean.includes('cloudinary.com') ||
+    /\.(jpeg|jpg|gif|png|webp|svg)/i.test(clean);
 }
 
 /**
@@ -61,7 +61,7 @@ function normalizePortfolioData(rawData) {
   // Handle checking name
   let rawName = rawData.fullName || rawData.name || "";
   if (rawName === "Developer Guest") {
-    rawName = ""; // Empty out guest name so it handles fallback cleanly
+    rawName = "";
   }
 
   return {
@@ -79,54 +79,54 @@ function normalizePortfolioData(rawData) {
       portfolio: rawData.socialLinks?.portfolio || rawData.portfolio || "",
       extra: rawData.socialLinks?.extra || rawData.extra || ""
     },
-    education: Array.isArray(rawData.education) 
+    education: Array.isArray(rawData.education)
       ? rawData.education
-          .map(e => ({
-            level: e.level || "",
-            name: e.name || "",
-            address: e.address || "",
-            status: e.status || ""
-          }))
-          .filter(e => e.name && e.name.trim() !== "") 
+        .map(e => ({
+          level: e.level || "",
+          name: e.name || "",
+          address: e.address || "",
+          status: e.status || ""
+        }))
+        .filter(e => e.name && e.name.trim() !== "")
       : [],
-    projects: Array.isArray(rawData.projects) 
+    projects: Array.isArray(rawData.projects)
       ? rawData.projects
-          .map(p => ({
-            title: p.title || "",
-            description: p.description || "",
-            link: p.link || "",
-            image: p.image || ""
-          }))
-          .filter(p => p.title && p.title.trim() !== "") 
+        .map(p => ({
+          title: p.title || "",
+          description: p.description || "",
+          link: p.link || "",
+          image: p.image || ""
+        }))
+        .filter(p => p.title && p.title.trim() !== "")
       : [],
-    experience: Array.isArray(rawData.experience) 
+    experience: Array.isArray(rawData.experience)
       ? rawData.experience
-          .map(e => {
-            const rawCert = e.certificate || "";
-            const rawImage = e.image || e.companyImage || "";
-            const certIsImage = isImageUrl(rawCert);
-            
-            const resolvedImage = rawImage || (certIsImage ? rawCert : "");
-            const resolvedRole = e.role || e.position || (!certIsImage ? rawCert : "") || "";
-            const resolvedCertText = !certIsImage ? rawCert : "";
+        .map(e => {
+          const rawCert = e.certificate || "";
+          const rawImage = e.image || e.companyImage || "";
+          const certIsImage = isImageUrl(rawCert);
 
-            return {
-              company: e.company || "",
-              role: resolvedRole,
-              description: e.description || "",
-              image: resolvedImage, // Map dynamic Cloudinary image
-              certificate: resolvedCertText
-            };
-          })
-          .filter(e => e.company && e.company.trim() !== "") 
+          const resolvedImage = rawImage || (certIsImage ? rawCert : "");
+          const resolvedRole = e.role || e.position || (!certIsImage ? rawCert : "") || "";
+          const resolvedCertText = !certIsImage ? rawCert : "";
+
+          return {
+            company: e.company || "",
+            role: resolvedRole,
+            description: e.description || "",
+            image: resolvedImage, // Map dynamic Cloudinary image
+            certificate: resolvedCertText
+          };
+        })
+        .filter(e => e.company && e.company.trim() !== "")
       : [],
-    skills: Array.isArray(rawData.skills) 
+    skills: Array.isArray(rawData.skills)
       ? rawData.skills
-          .map(s => ({
-            name: s.name || "",
-            progress: parseInt(s.progress) || 90
-          }))
-          .filter(s => s.name && s.name.trim() !== "") 
+        .map(s => ({
+          name: s.name || "",
+          progress: parseInt(s.progress) || 90
+        }))
+        .filter(s => s.name && s.name.trim() !== "")
       : []
   };
 }
@@ -141,7 +141,7 @@ if (typeof window !== 'undefined') {
     const pathMatch = window.location.pathname.match(/template(\d+)/);
     const templateIdStr = pathMatch ? `template${pathMatch[1]}` : 'template1';
     const rawData = window.portfolioData || null;
-    
+
     window.__PORTFOLIO_CONTEXT__ = {
       mode: rawData ? "profile" : "stock",
       data: normalizePortfolioData(rawData),

@@ -276,12 +276,12 @@ function GetContact({ setStep, formData, setFormData }) {
 
 function GetSocial({ setStep, formData, handleSocialChange }) {
     const socialFields = [
-        { name: 'instagram', label: 'Instagram', icon: '📸', placeholder: 'https://instagram.com/yourhandle' },
-        { name: 'facebook',  label: 'Facebook',  icon: '📘', placeholder: 'https://facebook.com/yourpage' },
-        { name: 'github',    label: 'GitHub',    icon: '🐙', placeholder: 'https://github.com/yourusername' },
-        { name: 'linkedin',  label: 'LinkedIn',  icon: '💼', placeholder: 'https://linkedin.com/in/yourprofile' },
-        { name: 'portfolio', label: 'Portfolio', icon: '🌐', placeholder: 'https://yourportfolio.com' },
-        { name: 'extra',     label: 'Extra Link',icon: '🔗', placeholder: 'Any other link' },
+        { name: 'instagram', label: 'Instagram', icon: '/templates/core/dashLinkIcons/Instagram.png', placeholder: 'https://instagram.com/yourhandle' },
+        { name: 'facebook',  label: 'Facebook',  icon: '/templates/core/dashLinkIcons/facebook.png', placeholder: 'https://facebook.com/yourpage' },
+        { name: 'github',    label: 'GitHub',    icon: '/templates/core/dashLinkIcons/Github.png', placeholder: 'https://github.com/yourusername' },
+        { name: 'linkedin',  label: 'LinkedIn',  icon: '/templates/core/dashLinkIcons/LinkedIn.png', placeholder: 'https://linkedin.com/in/yourprofile' },
+        { name: 'portfolio', label: 'Portfolio', icon: '/templates/core/dashLinkIcons/Portfolio.png', placeholder: 'https://yourportfolio.com' },
+        { name: 'extra',     label: 'Extra Link',icon: '/templates/core/dashLinkIcons/Link.png', placeholder: 'Any other link' },
     ];
 
     return (
@@ -295,7 +295,7 @@ function GetSocial({ setStep, formData, handleSocialChange }) {
                 {socialFields.map(field => (
                     <div key={field.name} className="social-input-row">
                         <div className="social-input-icon">
-                            <span>{field.icon}</span>
+                            <img src={field.icon} alt={field.label} style={{ width: '24px', height: '24px', objectFit: 'contain', marginBottom: '4px' }} />
                             <label>{field.label}</label>
                         </div>
                         <input

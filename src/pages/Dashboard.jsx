@@ -640,6 +640,22 @@ function LikedTemplates({ likedIds, userData, handleUnlike }) {
                 console.error("Failed to bundle static profile image", err);
             }
 
+            // Fetch and bundle the social link icons for complete offline rendering
+            try {
+                const socialIcons = ['Github.png', 'Instagram.png', 'LinkedIn.png', 'facebook.png', 'Portfolio.png', 'Link.png'];
+                await Promise.all(
+                    socialIcons.map(async (icon) => {
+                        const iconRes = await fetch(`/templates/core/dashLinkIcons/${icon}`);
+                        if (iconRes.ok) {
+                            const iconBlob = await iconRes.blob();
+                            zip.file(`core/dashLinkIcons/${icon}`, iconBlob);
+                        }
+                    })
+                );
+            } catch (err) {
+                console.error("Failed to bundle social link icons", err);
+            }
+
             // Update base HTML scripts to point locally rather than referencing external parents
             htmlText = htmlText.replaceAll('../core/', 'core/');
 

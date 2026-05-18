@@ -17,12 +17,23 @@
       portfolio: { label: 'Personal Website', emoji: '🌐' },
       extra: { label: 'External Resource', emoji: '🔗' }
     },
-    renderSocialItem: (key, link, meta) => `
-      <a class="social-link-row" href="${link}" target="_blank">
-        <span class="emoji">${meta.emoji}</span>
-        <span>${meta.label}</span>
-      </a>
-    `,
+    renderSocialItem: (key, link, meta) => {
+      const iconMap = {
+        github: 'Github.png',
+        linkedin: 'LinkedIn.png',
+        instagram: 'Instagram.png',
+        facebook: 'facebook.png',
+        portfolio: 'Portfolio.png',
+        extra: 'Link.png'
+      };
+      const iconFile = iconMap[key] || 'Link.png';
+      return `
+        <a class="social-link-row" href="${link}" target="_blank" style="display: flex; align-items: center; gap: 10px;">
+          <img src="../core/dashLinkIcons/${iconFile}" alt="${meta.label}" style="width: 20px; height: 20px; object-fit: contain;" />
+          <span>${meta.label}</span>
+        </a>
+      `;
+    },
     postSocialRender: (linkCount) => {
       const aboutSocialsBlock = document.getElementById('about-socials-block');
       if (aboutSocialsBlock) {
