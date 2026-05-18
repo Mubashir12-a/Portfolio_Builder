@@ -242,10 +242,10 @@ export default function TemplatesPage() {
 
       // Fetch and bundle the static profile pic binary file for complete offline stock rendering
       try {
-        const picRes = await fetch('/templates/core/MubashirProPic.jpeg');
+        const picRes = await fetch('/templates/core/DemoProfileImg.png');
         if (picRes.ok) {
           const picBlob = await picRes.blob();
-          zip.file('core/MubashirProPic.jpeg', picBlob);
+          zip.file('core/DemoProfileImg.png', picBlob);
         }
       } catch (err) {
         console.error("Failed to bundle static profile image", err);

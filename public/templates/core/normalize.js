@@ -5,7 +5,7 @@
  */
 const STOCK_DATA = {
   name: "Mubashir Ahmad",
-  profileImage: "../core/MubashirProPic.jpeg",
+  profileImage: "../core/DemoProfileImg.png",
   about: "I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.",
   phone: "+44 7911 123456",
   email: "mubashir.ahmad@example.com",
