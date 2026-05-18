@@ -245,7 +245,13 @@ export default function TemplatesPage() {
 
       // If downloading real dynamic profile data, pre-hydrate it as a persistent global payload script
       if (injectEnabled && userData) {
-        const dataSnippet = `<script>window.portfolioData = ${JSON.stringify(userData)};</script>\n`;
+        const context = {
+          mode: 'profile',
+          data: userData,
+          templateId: `template${id}`,
+          previewState: false
+        };
+        const dataSnippet = `<script>window.__PORTFOLIO_CONTEXT__ = ${JSON.stringify(context)};</script>\n`;
         htmlText = htmlText.replace("</head>", `${dataSnippet}</head>`);
       }
 

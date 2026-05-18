@@ -77,7 +77,12 @@ export default function TemplatePreviewPage() {
   // 2. Fetch original template template index HTML structure
   const fetchTemplateHtml = async () => {
     try {
-      const res = await fetch(`/templates/${templateId}/index.html`);
+      const res = await fetch(`/templates/${templateId}/index.html?t=${Date.now()}`, {
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
+        }
+      });
       if (!res.ok) throw new Error("Index HTML not found.");
       const text = await res.text();
       setTemplateHtml(text);
@@ -127,8 +132,21 @@ export default function TemplatePreviewPage() {
     const baseTag = `<base href="${window.location.origin}/templates/${templateId}/">`;
     html = html.replace("<head>", `<head>${baseTag}`);
 
-    // Inject user data object directly before core script bootstrap runs
-    const dataSnippet = `<script>window.portfolioData = ${userData ? JSON.stringify(userData) : 'null'};</script>`;
+    // Inject unified runtime context directly before core script bootstrap runs
+    const context = {
+      mode: isProfileMode ? 'profile' : 'stock',
+      data: userData ? userData : null,
+      templateId: templateId,
+      previewState: true
+    };
+    const dataSnippet = `
+<script>
+  window.__PORTFOLIO_CONTEXT__ = ${JSON.stringify(context)};
+</script>
+<style id="preview-cloak">
+  body { opacity: 0 !important; transition: opacity 0.2s ease; }
+</style>
+`;
     html = html.replace("</head>", `${dataSnippet}</head>`);
 
     return html;

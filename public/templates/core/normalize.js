@@ -91,7 +91,9 @@ function normalizePortfolioData(rawData) {
       ? rawData.experience
           .map(e => ({
             company: e.company || "",
+            role: e.role || e.position || e.certificate || "", // Map to role with text fallback
             description: e.description || "",
+            image: e.image || e.companyImage || "", // Map dynamic Cloudinary image
             certificate: e.certificate || ""
           }))
           .filter(e => e.company && e.company.trim() !== "") 
@@ -111,6 +113,27 @@ function normalizePortfolioData(rawData) {
 if (typeof window !== 'undefined') {
   window.STOCK_DATA = STOCK_DATA;
   window.normalizePortfolioData = normalizePortfolioData;
+
+  // Initialize unified PORTFOLIO_CONTEXT if not injected by parent shell
+  if (!window.__PORTFOLIO_CONTEXT__) {
+    const pathMatch = window.location.pathname.match(/template(\d+)/);
+    const templateIdStr = pathMatch ? `template${pathMatch[1]}` : 'template1';
+    const rawData = window.portfolioData || null;
+    
+    window.__PORTFOLIO_CONTEXT__ = {
+      mode: rawData ? "profile" : "stock",
+      data: normalizePortfolioData(rawData),
+      templateId: templateIdStr,
+      previewState: false
+    };
+  } else {
+    // If the context exists, make sure data is fully normalized
+    if (window.__PORTFOLIO_CONTEXT__.mode === 'profile' && window.__PORTFOLIO_CONTEXT__.data) {
+      window.__PORTFOLIO_CONTEXT__.data = normalizePortfolioData(window.__PORTFOLIO_CONTEXT__.data);
+    } else {
+      window.__PORTFOLIO_CONTEXT__.data = STOCK_DATA;
+    }
+  }
 }
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { STOCK_DATA, normalizePortfolioData };

@@ -83,8 +83,11 @@
     renderExpItem: (e) => `
       <div class="glass-card timeline-card">
         <div class="timeline-header">
-          <h3>${e.company}</h3>
-          <span class="timeline-badge">${e.certificate || 'Lead Role'}</span>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            ${e.image ? `<img src="${e.image}" class="experience-image" style="width: 32px; height: 32px; object-fit: cover; border-radius: 8px; border: 1px solid rgba(255,255,255,0.15);" />` : ""}
+            <h3>${e.company}</h3>
+          </div>
+          <span class="timeline-badge">${e.role || 'Lead Role'}</span>
         </div>
         <div class="timeline-body">${e.description || ''}</div>
       </div>

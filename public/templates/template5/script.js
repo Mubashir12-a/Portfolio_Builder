@@ -51,8 +51,11 @@
     renderExpItem: (e) => `
       <div class="timeline-row">
         <div class="timeline-row-header">
-          <h3>${e.company}</h3>
-          <span class="timeline-date">${e.certificate || 'Lead Role'}</span>
+          <div style="display: flex; align-items: center; gap: 12px;">
+            ${e.image ? `<img src="${e.image}" class="experience-image" style="width: 32px; height: 32px; object-fit: cover; border-radius: 4px;" />` : ""}
+            <h3>${e.company}</h3>
+          </div>
+          <span class="timeline-date">${e.role || 'Lead Role'}</span>
         </div>
         <div class="timeline-body">${e.description || ''}</div>
       </div>

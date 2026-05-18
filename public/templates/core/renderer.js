@@ -5,9 +5,9 @@
  * @param {Object} config - Template-specific rendering config and lifecycle hooks
  */
 function renderPortfolio(config) {
-  const isProfileMode = !!window.portfolioData;
-  // Get normalized data - resolves to stock fallback if no window.portfolioData exists
-  const data = normalizePortfolioData(isProfileMode ? window.portfolioData : null);
+  const ctx = window.__PORTFOLIO_CONTEXT__;
+  const isProfileMode = ctx?.mode === 'profile';
+  const data = ctx?.data || STOCK_DATA;
 
   console.log(`[Core Engine] Bootstrapping ${config.id} in ${isProfileMode ? 'PROFILE' : 'STOCK'} mode.`);
 
@@ -152,6 +152,29 @@ function renderPortfolio(config) {
   const yearEl = document.querySelector('#footer-year');
   if (yearEl) {
     yearEl.textContent = new Date().getFullYear();
+  }
+
+  // Intercept anchor hash link clicks to prevent absolute <base href> redirections from reload/history pollution
+  document.addEventListener('click', (e) => {
+    const anchor = e.target.closest('a[href^="#"]');
+    if (anchor) {
+      const href = anchor.getAttribute('href');
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetEl = document.querySelector(href);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          window.history.replaceState(null, '', href);
+        }
+      }
+    }
+  });
+
+  // Remove the visual preview cloak to reveal the fully hydrated profile instantly
+  const cloak = document.getElementById('preview-cloak');
+  if (cloak) {
+    cloak.remove();
+    document.body.style.opacity = '1';
   }
 
   console.log(`[Core Engine] ${config.id} hydration complete.`);
