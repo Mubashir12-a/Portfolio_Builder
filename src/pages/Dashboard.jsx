@@ -629,6 +629,17 @@ function LikedTemplates({ likedIds, userData, handleUnlike }) {
                 zip.file(`core/${file}`, coreTexts[idx]);
             });
 
+            // Fetch and bundle the static profile pic binary file for complete offline stock rendering
+            try {
+                const picRes = await fetch('/templates/core/MubashirProPic.jpeg');
+                if (picRes.ok) {
+                    const picBlob = await picRes.blob();
+                    zip.file('core/MubashirProPic.jpeg', picBlob);
+                }
+            } catch (err) {
+                console.error("Failed to bundle static profile image", err);
+            }
+
             // Update base HTML scripts to point locally rather than referencing external parents
             htmlText = htmlText.replaceAll('../core/', 'core/');
 
