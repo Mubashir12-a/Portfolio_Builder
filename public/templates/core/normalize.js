@@ -41,6 +41,18 @@ const STOCK_DATA = {
 };
 
 /**
+ * Helper to identify if a field contains an image URL (e.g. from Cloudinary)
+ */
+function isImageUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  const clean = url.trim().toLowerCase();
+  return clean.startsWith('http://') || 
+         clean.startsWith('https://') || 
+         clean.includes('cloudinary.com') ||
+         /\.(jpeg|jpg|gif|png|webp|svg)/i.test(clean);
+}
+
+/**
  * Normalizes raw dashboard data or handles mock data fallback
  */
 function normalizePortfolioData(rawData) {
@@ -89,13 +101,23 @@ function normalizePortfolioData(rawData) {
       : [],
     experience: Array.isArray(rawData.experience) 
       ? rawData.experience
-          .map(e => ({
-            company: e.company || "",
-            role: e.role || e.position || e.certificate || "", // Map to role with text fallback
-            description: e.description || "",
-            image: e.image || e.companyImage || "", // Map dynamic Cloudinary image
-            certificate: e.certificate || ""
-          }))
+          .map(e => {
+            const rawCert = e.certificate || "";
+            const rawImage = e.image || e.companyImage || "";
+            const certIsImage = isImageUrl(rawCert);
+            
+            const resolvedImage = rawImage || (certIsImage ? rawCert : "");
+            const resolvedRole = e.role || e.position || (!certIsImage ? rawCert : "") || "";
+            const resolvedCertText = !certIsImage ? rawCert : "";
+
+            return {
+              company: e.company || "",
+              role: resolvedRole,
+              description: e.description || "",
+              image: resolvedImage, // Map dynamic Cloudinary image
+              certificate: resolvedCertText
+            };
+          })
           .filter(e => e.company && e.company.trim() !== "") 
       : [],
     skills: Array.isArray(rawData.skills) 
