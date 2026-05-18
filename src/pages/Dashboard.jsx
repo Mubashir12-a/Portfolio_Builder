@@ -4,12 +4,12 @@ import JSZip from 'jszip';
 import "../pagesStyles/dashboard.css";
 
 const TEMPLATES = [
-  { id: 1, name: 'Modern Dark', category: 'Tech', plan: 'pro', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600', previewUrl: 'https://portfolio-modern-dark.netlify.app' },
-  { id: 2, name: 'Minimal White', category: 'Minimal', plan: 'free', image: 'https://images.unsplash.com/photo-1517292987719-0369a794ec0f?w=600', previewUrl: 'https://portfolio-minimal-white.netlify.app' },
-  { id: 3, name: 'Glassmorphism', category: 'Modern', plan: 'studio', image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600', previewUrl: 'https://portfolio-glassmorphism.netlify.app' },
-  { id: 4, name: 'Creative Studio', category: 'Design', plan: 'free', image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600', previewUrl: 'https://portfolio-creative.netlify.app' },
-  { id: 5, name: 'Executive Suite', category: 'Professional', plan: 'pro', image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600', previewUrl: 'https://portfolio-executive.netlify.app' },
-  { id: 6, name: 'Cyberpunk Terminal', category: 'Tech', plan: 'studio', image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?w=600', previewUrl: 'https://portfolio-neobrutalist.netlify.app' },
+  { id: 1, name: 'Modern Dark', category: 'Tech', plan: 'pro', image: '/templates/core/TemModernDark.png', previewUrl: 'https://portfolio-modern-dark.netlify.app' },
+  { id: 2, name: 'Minimal White', category: 'Minimal', plan: 'free', image: '/templates/core/TemMinimalWhite.png', previewUrl: 'https://portfolio-minimal-white.netlify.app' },
+  { id: 3, name: 'Glassmorphism', category: 'Modern', plan: 'studio', image: '/templates/core/TemGlassmorphism.png', previewUrl: 'https://portfolio-glassmorphism.netlify.app' },
+  { id: 4, name: 'Creative Studio', category: 'Design', plan: 'free', image: '/templates/core/TemCreativeStudio.png', previewUrl: 'https://portfolio-creative.netlify.app' },
+  { id: 5, name: 'Executive Suite', category: 'Professional', plan: 'pro', image: '/templates/core/TemExecutiveSuite.png', previewUrl: 'https://portfolio-executive.netlify.app' },
+  { id: 6, name: 'Cyberpunk Terminal', category: 'Tech', plan: 'studio', image: '/templates/core/TemCyberpunkTerminal.png', previewUrl: 'https://portfolio-neobrutalist.netlify.app' },
 ];
 
 
