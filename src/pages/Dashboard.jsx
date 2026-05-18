@@ -584,317 +584,12 @@ function LikedTemplates({ likedIds, userData, handleUnlike }) {
         return tPlan === 'free';
     };
 
-    const handlePreview = async (id) => {
-        try {
-            const htmlRes = await fetch(`/templates/template${id}/index.html`);
-            if (!htmlRes.ok) throw new Error("Failed to load template.");
-            let htmlText = await htmlRes.text();
-
-            // Inject stock fallback data (Mubashir Ahmad & beautiful demo images)
-            htmlText = injectUserData(htmlText, true);
-
-            // Inject base tag so relative files resolve correctly
-            const baseTag = `<base href="${window.location.origin}/templates/template${id}/">`;
-            htmlText = htmlText.replace("<head>", `<head>${baseTag}`);
-
-            // Create a Blob URL and open it in a new window
-            const blob = new Blob([htmlText], { type: "text/html" });
-            const url = URL.createObjectURL(blob);
-            window.open(url, "_blank");
-        } catch (err) {
-            console.error(err);
-            window.open(`/templates/template${id}/index.html`, '_blank');
-        }
+    const handlePreview = (id) => {
+        navigate(`/templates/template${id}/demo`);
     };
 
-    const handlePreviewProfile = async (id, name) => {
-        try {
-            const htmlRes = await fetch(`/templates/template${id}/index.html`);
-            if (!htmlRes.ok) throw new Error("Failed to load template.");
-            let htmlText = await htmlRes.text();
-
-            // Inject real user dashboard data or fallback gracefully to the default Mubashir Ahmad profile
-            htmlText = injectUserData(htmlText, false);
-
-            // Inject base tag so relative files resolve correctly
-            const baseTag = `<base href="${window.location.origin}/templates/template${id}/">`;
-            htmlText = htmlText.replace("<head>", `<head>${baseTag}`);
-
-            // Create a Blob URL and open it in a new window
-            const blob = new Blob([htmlText], { type: "text/html" });
-            const url = URL.createObjectURL(blob);
-            window.open(url, "_blank");
-        } catch (err) {
-            console.error(err);
-            alert("Failed to generate profile preview. Please try again.");
-        }
-    };
-
-    const injectUserData = (htmlText, forceStock = false) => {
-        let injected = htmlText;
-
-        const activeUserData = (userData && !forceStock) ? userData : {
-            name: 'Mubashir Ahmad',
-            address: 'London, United Kingdom',
-            profileImage: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300',
-            about: 'I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.',
-            phone: '+44 7911 123456',
-            email: 'mubashir.ahmad@example.com',
-            socialLinks: {
-                github: 'https://github.com',
-                linkedin: 'https://linkedin.com',
-                instagram: 'https://instagram.com'
-            },
-            education: [],
-            projects: [],
-            experience: [],
-            skills: []
-        };
-
-        // Construct the payload structure from dashboard inputs, defaulting to 'Mubashir Ahmad' and beautiful demo images
-        const payload = {
-            name: (!activeUserData.name || activeUserData.name === 'Developer Guest') ? 'Mubashir Ahmad' : activeUserData.name,
-            address: activeUserData.address || 'London, United Kingdom',
-            profileImage: (!activeUserData.profileImage || activeUserData.profileImage.includes('profileImg')) ? 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=300' : activeUserData.profileImage,
-            about: activeUserData.about || 'I craft high-performance, pixel-perfect web experiences with modern architecture and cutting-edge aesthetics.',
-            phone: activeUserData.phone || '+44 7911 123456',
-            email: activeUserData.email || 'mubashir.ahmad@example.com',
-            socialLinks: activeUserData.socialLinks || {
-                github: 'https://github.com',
-                linkedin: 'https://linkedin.com',
-                instagram: 'https://instagram.com'
-            },
-            education: (activeUserData.education && activeUserData.education.length > 0) ? activeUserData.education.filter(e => e.name && e.name.trim()).slice(0, 4) : [
-                { level: 'Master of Science', name: 'Oxford University', address: 'Oxford, UK', status: 'First Class Honors' },
-                { level: 'Bachelor of Engineering', name: 'Imperial College London', address: 'London, UK', status: 'Distinction' }
-            ],
-            projects: (activeUserData.projects && activeUserData.projects.length > 0) ? activeUserData.projects.filter(p => p.title && p.title.trim()).slice(0, 3) : [
-                { title: 'AI Portfolio Builder', description: 'Next-gen responsive developer workspace with modular template compilers.', link: 'https://github.com', image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600' },
-                { title: 'DeFi Liquidity Engine', description: 'High-throughput algorithmic transaction ledger running on Solidity.', link: 'https://github.com', image: 'https://images.unsplash.com/photo-1621761191319-c6fb62004040?w=600' },
-                { title: 'SaaS Design System', description: 'A gorgeous, cohesive HSL-styled micro-component design token architecture.', link: 'https://github.com', image: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600' }
-            ],
-            experience: (activeUserData.experience && activeUserData.experience.length > 0) ? activeUserData.experience.filter(e => e.company && e.company.trim()).slice(0, 3) : [
-                { company: 'Google Deepmind', description: 'Spearheaded premium frontend components, layout optimization, and high-end AI rendering systems.', certificate: 'Senior Frontend Architect' },
-                { company: 'Stripe Payments', description: 'Developed highly extensible dashboard components and custom client SDK configurations.', certificate: 'Lead Product Engineer' }
-            ],
-            skills: (activeUserData.skills && activeUserData.skills.length > 0) ? activeUserData.skills.filter(s => s.name && s.name.trim()) : [
-                { name: 'React.js', progress: 95 },
-                { name: 'TypeScript', progress: 90 },
-                { name: 'Tailwind CSS', progress: 85 },
-                { name: 'Node.js', progress: 88 },
-                { name: 'System Design', progress: 92 }
-            ]
-        };
-
-        // 1. Inject isolated theme styles into <head>
-        const themeStyles = `
-<style id="isolated-theme-styles">
-  body.light-mode {
-    filter: invert(0.9) hue-rotate(180deg) !important;
-    background-color: #f7f7f7 !important;
-  }
-  body.light-mode img, 
-  body.light-mode canvas, 
-  body.light-mode iframe,
-  body.light-mode #theme-toggle,
-  body.light-mode .project-img,
-  body.light-mode .work-img,
-  body.light-mode .card-image,
-  body.light-mode .hero-visual,
-  body.light-mode [style*="background"] {
-    filter: invert(0.9) hue-rotate(180deg) !important;
-  }
-</style>
-`;
-        injected = injected.replace("</head>", `${themeStyles}</head>`);
-
-        // 2. Inject payload script at the bottom of the body
-        const engineScript = `
-<!-- Dynamic User Data Payload -->
-<script id="dashboard-customizer-payload">
-window.portfolioData = ${JSON.stringify(payload)};
-</script>
-
-<!-- Floating Dual Theme Toggle Button -->
-<button id="theme-toggle" aria-label="Toggle Theme" style="position: fixed; bottom: 24px; right: 24px; z-index: 99999; background: #000; color: #fff; border: 2px solid #fff; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; font-size: 1.5rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); transition: all 0.3s ease;">🌓</button>
-<script>
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    document.body.classList.toggle('light-mode');
-    localStorage.setItem('local-theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-  });
-  if (localStorage.getItem('local-theme') === 'light') {
-    document.body.classList.add('light-mode');
-  }
-</script>
-
-<!-- Universal Rendering Engine for Dashboard Items -->
-<script id="dashboard-customizer-engine">
-(function() {
-  const data = window.portfolioData;
-  if (!data) return;
-
-  // Update text elements recursively
-  function walk(node) {
-    if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-      let txt = node.textContent;
-      if (txt.includes("John Developer") || txt.includes("Alex") || txt.includes("John")) {
-        txt = txt.replace(/John\\s+Developer|Alex|John/g, data.name || "Developer");
-      }
-      if (txt.includes("hello@example.com") || txt.includes("hello@studio.com")) {
-        txt = txt.replace(/hello@example\\.com|hello@studio\\.com/g, data.email || "hello@example.com");
-      }
-      if (txt.includes("San Francisco, CA")) {
-        txt = txt.replace("San Francisco, CA", data.address || "Global Citizen");
-      }
-      if (node.textContent !== txt) node.textContent = txt;
-    } else {
-      for (let i = 0; i < node.childNodes.length; i++) {
-        walk(node.childNodes[i]);
-      }
-    }
-  }
-  walk(document.body);
-
-  // Update profile image
-  if (data.profileImage) {
-    document.querySelectorAll(".hero img, .hero-visual img, .about-img, .profile-img, .hero-image-placeholder").forEach(el => {
-      if (el.tagName === 'IMG') {
-        el.src = data.profileImage;
-      } else {
-        el.style.backgroundImage = 'url(' + data.profileImage + ')';
-        el.style.backgroundSize = 'cover';
-        el.style.backgroundPosition = 'center';
-      }
-    });
-  }
-
-  // Render Education (Max 4)
-  const validEdu = data.education || [];
-  const eduContainer = document.querySelector(".milestones-timeline, .education-grid, .about-details, .about-info");
-  if (eduContainer && validEdu.length > 0) {
-    if (eduContainer.classList.contains("milestones-timeline")) {
-      eduContainer.innerHTML = validEdu.map(e => \`
-        <div class="timeline-item">
-          <div class="timeline-date">\${e.status || 'Completed'}</div>
-          <div class="timeline-content">
-            <h3>\${e.level || 'Degree'}</h3>
-            <h4>\${e.name}</h4>
-            <p>\${e.address || ''}</p>
-          </div>
-        </div>
-      \`).join('');
-    } else if (eduContainer.classList.contains("about-details") || eduContainer.classList.contains("about-info")) {
-      eduContainer.innerHTML = validEdu.map(e => \`
-        <div><span>\${e.level || 'Education'}</span><strong>\${e.name} (\${e.status})</strong></div>
-      \`).join('');
-    }
-  } else if (validEdu.length === 0) {
-    document.querySelectorAll("#education, .education, #experience").forEach(el => {
-      if (el.textContent.toLowerCase().includes("milestone") || el.textContent.toLowerCase().includes("education")) {
-        el.style.display = 'none';
-      }
-    });
-  }
-
-  // Render Projects (Max 3)
-  const validProj = data.projects || [];
-  const projContainer = document.querySelector(".projects-grid, .work-grid, .project-list, .jobs-list");
-  if (projContainer && validProj.length > 0) {
-    if (projContainer.classList.contains("project-list")) {
-      projContainer.innerHTML = validProj.map((p, idx) => \`
-        <div class="project-row" data-color="#6366f1" onclick="if('\${p.link}') window.open('\${p.link}', '_blank')">
-          <span class="project-num">0\${idx+1}</span>
-          <h3>\${p.title}</h3>
-          <span class="project-cat">\${p.description || 'Featured Project'}</span>
-        </div>
-      \`).join('');
-    } else if (projContainer.classList.contains("jobs-list")) {
-      projContainer.innerHTML = validProj.map((p, idx) => \`
-        <div class="job-item cyan-bg" onclick="if('\${p.link}') window.open('\${p.link}', '_blank')" style="cursor: pointer;">
-          <div class="job-num">0\${idx+1}</div>
-          <div class="job-meta">
-            <h3>\${p.title}</h3>
-            <p>\${p.description || ''}</p>
-          </div>
-          <a href="#" class="job-arrow">→</a>
-        </div>
-      \`).join('');
-    } else {
-      projContainer.innerHTML = validProj.map(p => \`
-        <div class="project-card work-item card-image-holder" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 20px; overflow: hidden; display: flex; flex-direction: column;">
-          <div class="project-img work-img card-image" style="background: \${p.image ? 'url(' + p.image + ') center/cover no-repeat' : 'linear-gradient(135deg, #667eea, #764ba2)'}; height: 200px; width: 100%;"></div>
-          <div class="project-info card-content" style="padding: 20px;">
-            <h3 style="font-size: 1.25rem; font-weight: bold; margin-bottom: 8px;">\${p.title}</h3>
-            <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 12px;">\${p.description || ''}</p>
-            \${p.link ? \`<a href="\${p.link}" target="_blank" style="color: var(--violet, #7b5ef8); font-weight: bold; text-decoration: none;">View Live →</a>\` : ''}
-          </div>
-        </div>
-      \`).join('');
-    }
-  } else if (validProj.length === 0) {
-    document.querySelectorAll("#projects, .projects, #work, .work").forEach(el => el.style.display = 'none');
-  }
-
-  // Render Experience (Max 3)
-  const validExp = data.experience || [];
-  const expContainer = document.querySelector(".milestones-timeline, .experience-grid, .manifesto-grid, .about-cards");
-  if (expContainer && validExp.length > 0) {
-    if (expContainer.classList.contains("manifesto-grid")) {
-      expContainer.innerHTML = validExp.map((e, idx) => \`
-        <div class="manifesto-card white-bg" style="padding: 24px; border: 2px solid #000; border-radius: 8px; margin-bottom: 16px;">
-          <h3>0\${idx+1} / \${e.company.toUpperCase()}</h3>
-          <p>\${e.description || 'Professional operations strategy.'}</p>
-        </div>
-      \`).join('');
-    } else if (expContainer.classList.contains("milestones-timeline")) {
-      expContainer.innerHTML = validExp.map(e => \`
-        <div class="timeline-item">
-          <div class="timeline-date">EXPERIENCE</div>
-          <div class="timeline-content">
-            <h3>\${e.company}</h3>
-            <p>\${e.description || ''}</p>
-          </div>
-        </div>
-      \`).join('');
-    } else {
-      expContainer.innerHTML = validExp.map(e => \`
-        <div class="info-card glass-card" style="padding: 20px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);">
-          <span class="card-icon card-emoji">💼</span>
-          <h3>\${e.company}</h3>
-          <p>\${e.description || ''}</p>
-        </div>
-      \`).join('');
-    }
-  } else if (validExp.length === 0) {
-    document.querySelectorAll("#experience, .experience, .milestones-timeline").forEach(el => {
-      if (!el.querySelector('.timeline-date') || el.textContent.toLowerCase().includes("milestone")) {
-         el.style.display = 'none';
-      }
-    });
-  }
-
-  // Render Skills
-  const validSkills = data.skills || [];
-  const skillsContainer = document.querySelector(".skills-grid, .skills-list, .services-grid");
-  if (skillsContainer && validSkills.length > 0) {
-    skillsContainer.innerHTML = validSkills.map((s, idx) => \`
-      <div class="skill-item service-card" style="padding: 16px; border-radius: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin-bottom: 12px;">
-        <div class="skill-icon">⚡</div>
-        <span>\${s.name}</span>
-        <div class="skill-bar" style="margin-top: 10px; background: rgba(255,255,255,0.1); height: 6px; border-radius: 3px; overflow: hidden;">
-          <div class="skill-fill" style="width: \${s.progress || 90}%; height: 100%; background: var(--violet, #7b5ef8);"></div>
-        </div>
-      </div>
-    \`).join('');
-  } else if (validSkills.length === 0) {
-    document.querySelectorAll("#skills, .skills, #services, .services").forEach(el => el.style.display = 'none');
-  }
-})();
-</script>
-`;
-        injected = injected.replace("</body>", `${engineScript}</body>`);
-
-        return injected;
+    const handlePreviewProfile = (id) => {
+        navigate(`/templates/template${id}/preview`);
     };
 
     const handleDownloadZIP = async (id, name, templatePlan, injectEnabled) => {
@@ -923,9 +618,24 @@ window.portfolioData = ${JSON.stringify(payload)};
             const cssText = await cssRes.text();
             const jsText = await jsRes.text();
 
-            // Inject real user dashboard data if requested
-            if (injectEnabled) {
-                htmlText = injectUserData(htmlText);
+            // Fetch and bundle the centralized core script libraries for standard offline execution
+            const coreFiles = ['normalize.js', 'theme.js', 'visibility.js', 'helpers.js', 'registry.js', 'renderer.js'];
+            const coreTexts = await Promise.all(
+                coreFiles.map(file => fetch(`/templates/core/${file}`).then(res => res.text()))
+            );
+
+            // Add all core files to a dedicated local directory inside the compiled ZIP archive
+            coreFiles.forEach((file, idx) => {
+                zip.file(`core/${file}`, coreTexts[idx]);
+            });
+
+            // Update base HTML scripts to point locally rather than referencing external parents
+            htmlText = htmlText.replaceAll('../core/', 'core/');
+
+            // If downloading real dynamic profile data, pre-hydrate it as a persistent global payload script
+            if (injectEnabled && userData) {
+                const dataSnippet = `<script>window.portfolioData = ${JSON.stringify(userData)};</script>\n`;
+                htmlText = htmlText.replace("</head>", `${dataSnippet}</head>`);
             }
 
             zip.file("index.html", htmlText);

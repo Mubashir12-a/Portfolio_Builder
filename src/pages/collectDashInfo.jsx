@@ -71,6 +71,12 @@ function CollectDashInfo() {
         fetchUserData();
     }, []);
 
+    // Reactively update local storage to trigger the live preview iframe storage bus
+    useEffect(() => {
+        localStorage.setItem('portfolioUserData', JSON.stringify(formData));
+        window.dispatchEvent(new Event('storage'));
+    }, [formData]);
+
     const handleSocialChange = (e) => {
         setFormData({
             ...formData,

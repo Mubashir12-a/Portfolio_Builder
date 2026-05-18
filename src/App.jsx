@@ -16,6 +16,7 @@ import TeamMemberPage from './pages/TeamMemberPage.jsx';
 import InfoPage from './pages/InfoPage.jsx';
 import BlogPage from './pages/BlogPage.jsx';
 import TechStackPage from './pages/TechStackPage.jsx';
+import TemplatePreviewPage from './pages/TemplatePreviewPage.jsx';
 
 import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 
@@ -29,6 +30,15 @@ function App() {
         <Route path='/subscription' element={<Subscription />} />
         <Route path='/auth' element={<AuthPage />} />
         <Route path='/templates' element={<TemplatesPage />} />
+        <Route path='/templates/:templateId/demo' element={<TemplatePreviewPage />} />
+        <Route
+          path='/templates/:templateId/preview'
+          element={
+            <ProtectedRoute>
+              <TemplatePreviewPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path='/team/:memberId' element={<TeamMemberPage />} />
         <Route path='/blog' element={<BlogPage />} />
         <Route path='/info/stack' element={<TechStackPage />} />
