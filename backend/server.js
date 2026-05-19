@@ -573,6 +573,18 @@ app.get('/api/admin/users', authenticateAdmin, async (req, res) => {
   }
 });
 
+// ================= DELETE USER (admin) =================
+app.delete('/api/admin/user/:id', authenticateAdmin, async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    return res.json({ success: true, message: "User deleted successfully" });
+  } catch (err) {
+    console.error("Delete user error:", err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+
 
 // ================= CONTACT FORM =================
 app.post('/api/contact', async (req, res) => {

@@ -759,16 +759,67 @@
   gap: 8px;
 }
 
+.btn-delete-user {
+  all: initial;
+  background: rgba(255, 68, 102, .08);
+  border: 1px solid rgba(255, 68, 102, .25);
+  color: #ff4466;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-family: 'Courier New', monospace;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+
+.btn-delete-user:hover {
+  background: rgba(255, 68, 102, .22);
+  border-color: rgba(255, 68, 102, .55);
+  transform: translateY(-1px);
+}
+
+.btn-delete-user:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
 /* ── Mobile additions ── */
 @media (max-width: 768px) {
+  .admin-topbar {
+    height: auto !important;
+    padding: 12px 14px !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: stretch !important;
+  }
+
+  .admin-topbar-right {
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+  }
+
+  .admin-topbar-right button {
+    padding: 6px 10px !important;
+    font-size: 0.75rem !important;
+  }
+
   .admin-tabs-nav {
     padding: 8px 14px 0;
     gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .admin-tabs-nav::-webkit-scrollbar {
+    display: none;
   }
 
   .admin-tab-btn {
     padding: 8px 12px;
     font-size: 0.75rem;
+    flex-shrink: 0;
   }
 
   .admin-feedback-head {
@@ -776,7 +827,21 @@
     align-items: flex-start;
   }
 
+  .admin-user-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
   .admin-user-card-left {
     flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .btn-delete-user {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
   }
 }

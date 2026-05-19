@@ -794,6 +794,12 @@
   box-shadow: 0 5px 15px var(--violet-dim);
 }
 
+.mobile-logo,
+.mobile-theme-toggle,
+.mobile-sidebar-header {
+  display: none;
+}
+
 /* ═══════════════════════════════════════════
    RESPONSIVE DESIGN (MOBILE & TABLET)
    ═══════════════════════════════════════════ */
@@ -810,21 +816,83 @@
     overflow: visible;
   }
 
+  /* Hide global header inside dashboard on mobile */
+  #MainCont .Header header {
+    display: none !important;
+  }
+
   #MainCont .Header {
-    height: 60px;
+    height: 70px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 
   #MainCont .Header .headerDetailed {
+    height: 100%;
     padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Show mobile header branding & toggle */
+  .mobile-logo {
+    display: block;
+  }
+  
+  .mobile-logo .logoName {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  .mobile-logo .logoName em {
+    font-style: italic;
+    color: var(--violet-light);
+  }
+
+  .mobile-theme-toggle {
+    display: block;
+    margin-right: 12px;
+  }
+
+  .mobile-theme-toggle #toggle {
+    border: 1px solid var(--border);
+    background-color: var(--surface2);
+    border-radius: 10px;
+    height: 40px;
+    font-size: 1.1rem;
+    padding: 2px 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-theme-toggle #toggle:hover {
+    border-color: var(--violet);
+    background: var(--surface3);
   }
 
   #MainCont .Header .introTag {
     gap: 8px;
+    height: 100%;
+    align-items: center;
+  }
+
+  #MainCont .Header .introTag h3 {
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    #MainCont .Header .introTag h3 {
+      display: none;
+    }
   }
 
   #MainCont .Header .introTag .icon {
-    height: 36px;
-    width: 36px;
+    height: 38px;
+    width: 38px;
     font-size: 0.95rem;
   }
 
@@ -834,39 +902,100 @@
     overflow: visible;
   }
 
-  /* Sidebar strip on mobile */
+  /* Premium Full Screen Sidebar Drawer Overlay */
   #MainCont .Container .Sidebar {
-    flex: none;
-    width: 100%;
-    height: auto;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    padding: 12px;
-    gap: 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw !important;
+    height: 100vh !important;
+    flex: none !important;
+    z-index: 2000;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateX(-100%);
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    padding: 24px 20px !important;
+    gap: 16px;
     border-right: none;
-    border-bottom: 1px solid var(--border);
+    border-bottom: none;
+    overflow-y: auto;
   }
 
-  #MainCont .Container .Sidebar::-webkit-scrollbar {
-    display: none;
+  #MainCont .Container .Sidebar:not(.collapsed) {
+    transform: translateX(0) !important;
+  }
+
+  #MainCont .Container .Sidebar.collapsed {
+    transform: translateX(-100%) !important;
+    pointer-events: none;
+  }
+
+  .mobile-sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 8px;
+  }
+
+  .mobile-sidebar-header .logoName {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--text);
+  }
+
+  .mobile-sidebar-header .logoName em {
+    font-style: italic;
+    color: var(--violet-light);
+  }
+
+  .mobile-sidebar-header .close-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-sidebar-header .close-btn:hover {
+    background: var(--surface3);
+    color: var(--coral);
+    border-color: var(--coral);
+    transform: rotate(90deg);
   }
 
   #SideTab {
-    min-width: 130px;
-    flex-shrink: 0;
-    height: 40px;
+    width: 100% !important;
+    min-width: unset !important;
+    height: 48px !important;
   }
 
   #SideTab button {
-    font-size: 0.85rem;
-    border-radius: 8px;
-    justify-content: center;
-    padding: 0 12px;
+    height: 100% !important;
+    width: 100% !important;
+    font-size: 1.05rem !important;
+    justify-content: flex-start !important;
+    padding: 0 16px !important;
+    border-radius: 12px !important;
   }
 
-  /* Column stack on mobile */
+  #SideTab button .text {
+    display: inline !important;
+  }
+
+  /* Grid layout stack on mobile */
   #MainCont .Container .Grid {
     flex: none;
     width: 100%;
@@ -906,12 +1035,13 @@
   }
 
   #SocialMedia ul {
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
+    gap: 12px;
   }
 
   #SocialMedia ul li {
-    flex: 1 1 calc(50% - 5px);
+    width: 100%;
+    flex: none;
   }
 
   #educationDetails {

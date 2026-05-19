@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import JSZip from 'jszip';
 import "../pagesStyles/dashboard.css";
+import ToggleThemeBtn from '../components/GeneralComponents/toggleThemeBtn.jsx';
+
 
 const TEMPLATES = [
   { id: 1, name: 'Modern Dark', category: 'Tech', plan: 'pro', image: '/templates/core/TemModernDark.png', previewUrl: 'https://portfolio-modern-dark.netlify.app' },
@@ -123,7 +125,14 @@ function Dashboard() {
                             <span className="lines"></span>
                         </div>
 
+                        <div className="mobile-logo" onClick={() => navigate("/")} style={{ cursor: 'pointer' }}>
+                            <span className="logoName">Portfolio<em>Builder</em></span>
+                        </div>
+
                         <div className="introTag">
+                            <div className="mobile-theme-toggle">
+                                <ToggleThemeBtn />
+                            </div>
                             <h3>{userData.name}</h3>
                             {userData.profileImage ? (
                                 <img src={userData.profileImage} alt="Profile" className="icon" style={{ objectFit: 'cover', padding: 0 }} />
@@ -138,6 +147,12 @@ function Dashboard() {
 
                 <section className="Container">
                     <section className={`Sidebar ${isSidebarOpen ? '' : 'collapsed'}`}>
+                        {/* Mobile sidebar header with close button */}
+                        <div className="mobile-sidebar-header">
+                            <span className="logoName">Portfolio<em>Builder</em></span>
+                            <button className="close-btn" onClick={() => setIsSidebarOpen(false)}>✕</button>
+                        </div>
+
                         {/* Plan badge */}
                         {isSidebarOpen && (
                             <div style={{

@@ -46,7 +46,7 @@ function CollectDashInfo() {
                 const res = await fetch(`${apiUrl}/api/user/profile`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
+
                 const data = await res.json();
                 if (data.success && data.user.profileCompleted) {
                     const u = data.user;
@@ -175,9 +175,9 @@ function GetAbout({ setStep, formData, setFormData }) {
             <div className="step-header">
                 <span className="step-badge">Step 1 of 7</span>
                 <h2>Tell us about <em>yourself.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Upload a photo and fill in your basic details.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Upload a photo and fill in your basic details.</p>
             </div>
-            
+
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px' }}>
                 <div style={{ width: '100px', height: '100px', borderRadius: '50%', backgroundColor: 'var(--bg2)', overflow: 'hidden', border: '2px solid var(--border)', position: 'relative' }}>
                     {formData.profileImage ? (
@@ -196,7 +196,7 @@ function GetAbout({ setStep, formData, setFormData }) {
                 <input type="text" placeholder="Address (e.g. New York, USA)" value={formData.address || ''} onChange={(e) => setFormData({ ...formData, address: e.target.value })} style={{ width: '100%', padding: '15px', background: 'var(--bg2)', color: 'var(--text-2)', border: '1px solid var(--border)', borderRadius: '10px' }} />
                 <textarea placeholder="About You (Max-50 words)" value={formData.about || ''} onChange={(e) => setFormData({ ...formData, about: e.target.value })} style={{ width: '100%', padding: '15px', background: 'var(--bg2)', color: 'var(--text-2)', border: '1px solid var(--border)', borderRadius: '10px', height: '150px', resize: 'none' }}></textarea>
             </div>
-            
+
             <div className="btns" style={{ marginTop: '20px' }}>
                 <button disabled>Back</button>
                 <button onClick={() => setStep(2)}>NEXT</button>
@@ -221,7 +221,7 @@ function GetContact({ setStep, formData, setFormData }) {
         { code: '+81', flag: '🇯🇵', label: 'JP' },
         { code: '+86', flag: '🇨🇳', label: 'CN' },
         { code: '+55', flag: '🇧🇷', label: 'BR' },
-        { code: '+7',  flag: '🇷🇺', label: 'RU' },
+        { code: '+7', flag: '🇷🇺', label: 'RU' },
         { code: '+27', flag: '🇿🇦', label: 'ZA' },
         { code: '+20', flag: '🇪🇬', label: 'EG' },
     ];
@@ -243,7 +243,7 @@ function GetContact({ setStep, formData, setFormData }) {
             <div className="step-header">
                 <span className="step-badge">Step 2 of 7</span>
                 <h2>Your <em>contact number.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Select your country code and enter your number.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Select your country code and enter your number.</p>
             </div>
             <div className="inputs">
                 <div className="phone-input-group">
@@ -277,11 +277,11 @@ function GetContact({ setStep, formData, setFormData }) {
 function GetSocial({ setStep, formData, handleSocialChange }) {
     const socialFields = [
         { name: 'instagram', label: 'Instagram', icon: '/templates/core/dashLinkIcons/Instagram.png', placeholder: 'https://instagram.com/yourhandle' },
-        { name: 'facebook',  label: 'Facebook',  icon: '/templates/core/dashLinkIcons/facebook.png', placeholder: 'https://facebook.com/yourpage' },
-        { name: 'github',    label: 'GitHub',    icon: '/templates/core/dashLinkIcons/Github.png', placeholder: 'https://github.com/yourusername' },
-        { name: 'linkedin',  label: 'LinkedIn',  icon: '/templates/core/dashLinkIcons/LinkedIn.png', placeholder: 'https://linkedin.com/in/yourprofile' },
+        { name: 'facebook', label: 'Facebook', icon: '/templates/core/dashLinkIcons/facebook.png', placeholder: 'https://facebook.com/yourpage' },
+        { name: 'github', label: 'GitHub', icon: '/templates/core/dashLinkIcons/Github.png', placeholder: 'https://github.com/yourusername' },
+        { name: 'linkedin', label: 'LinkedIn', icon: '/templates/core/dashLinkIcons/LinkedIn.png', placeholder: 'https://linkedin.com/in/yourprofile' },
         { name: 'portfolio', label: 'Portfolio', icon: '/templates/core/dashLinkIcons/Portfolio.png', placeholder: 'https://yourportfolio.com' },
-        { name: 'extra',     label: 'Extra Link',icon: '/templates/core/dashLinkIcons/Link.png', placeholder: 'Any other link' },
+        { name: 'extra', label: 'Extra Link', icon: '/templates/core/dashLinkIcons/Link.png', placeholder: 'Any other link' },
     ];
 
     return (
@@ -289,7 +289,7 @@ function GetSocial({ setStep, formData, handleSocialChange }) {
             <div className="step-header">
                 <span className="step-badge">Step 3 of 7</span>
                 <h2>Social <em>links.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Paste your public profile URLs below.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Paste your public profile URLs below.</p>
             </div>
             <div className="social-inputs">
                 {socialFields.map(field => (
@@ -323,7 +323,7 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
             <div className="step-header">
                 <span className="step-badge">Step 4 of 7</span>
                 <h2>Your <em>education.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Fill in your academic qualifications below.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Fill in your academic qualifications below.</p>
             </div>
             {formData.education.map((edu, idx) => (
                 <div key={idx} className="dynamic-item">
@@ -383,7 +383,7 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
             <div className="step-header">
                 <span className="step-badge">Step 5 of 7</span>
                 <h2>Your <em>projects.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Showcase your best work with links and images.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Showcase your best work with links and images.</p>
             </div>
             {formData.projects.map((proj, idx) => (
                 <div key={idx} className="dynamic-item">
@@ -394,7 +394,7 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', fontSize: '12px' }}>
                         {proj.image && <img src={proj.image} alt="Project" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '5px' }} />}
                         <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} />
-                        <span>Project Image</span>
+                        <span style={{ color: 'var(--text-2)' }}>Project Image</span>
                     </div>
                 </div>
             ))}
@@ -444,7 +444,7 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
             <div className="step-header">
                 <span className="step-badge">Step 6 of 7</span>
                 <h2>Your <em>experience.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Add companies and roles you've worked with.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Add companies and roles you've worked with.</p>
             </div>
             {formData.experience.map((exp, idx) => (
                 <div key={idx} className="dynamic-item">
@@ -454,7 +454,7 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px', fontSize: '12px' }}>
                         {exp.certificate && <img src={exp.certificate} alt="Certificate" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '5px' }} />}
                         <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, idx)} />
-                        <span>Experience Certificate</span>
+                        <span style={{ color: 'var(--text-2)' }}>Experience Certificate</span>
                     </div>
                 </div>
             ))}
@@ -476,7 +476,7 @@ function GetSkills({ setStep, formData, setFormData, handleSubmit }) {
 
     const handleToggleSkill = (skill) => {
         const isAlreadySelected = formData.skills.some(s => s.name === skill.name);
-        
+
         if (isAlreadySelected) {
             setFormData(prev => ({
                 ...prev,
@@ -503,7 +503,7 @@ function GetSkills({ setStep, formData, setFormData, handleSubmit }) {
             <div className="step-header">
                 <span className="step-badge">Step 7 of 7 · Final</span>
                 <h2>Select your <em>skills.</em></h2>
-                <p style={{color:'var(--text-2)', fontSize:'0.95rem'}}>Choose from 60 major developer skills and adjust your proficiency levels.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Choose from 60 major developer skills and adjust your proficiency levels.</p>
             </div>
 
             <input
@@ -565,7 +565,7 @@ function GetSkills({ setStep, formData, setFormData, handleSubmit }) {
                 )}
             </div>
 
-            <div className="btns" style={{marginTop: '20px'}}>
+            <div className="btns" style={{ marginTop: '20px' }}>
                 <button onClick={() => setStep(6)}>Back</button>
                 <button onClick={handleSubmit} style={{ background: 'var(--violet)', color: '#fff', border: 'none' }}>Complete!</button>
             </div>

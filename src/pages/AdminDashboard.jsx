@@ -101,6 +101,22 @@ export default function AdminDashboard() {
         finally { setActionId(null); }
     };
 
+    /* ── User delete ── */
+    const handleDeleteUser = async (id, name) => {
+        if (!window.confirm(`Are you absolutely sure you want to delete user ${name || 'this user'}? This will remove all their profile data and projects permanently.`)) return;
+        setActionId(id);
+        try {
+            const res = await fetch(`${API}/api/admin/user/${id}`, { method: 'DELETE', headers: authHeaders });
+            const data = await res.json();
+            if (data.success) {
+                showToast(`🗑 User ${name || ''} deleted`);
+                setUsers(u => u.filter(user => user._id !== id));
+            }
+            else showToast(data.message || 'Failed to delete user', 'error');
+        } catch { showToast('Server error', 'error'); }
+        finally { setActionId(null); }
+    };
+
     const handleLogout = () => { sessionStorage.removeItem('adminToken'); navigate('/admin', { replace: true }); };
 
     /* ── render ── */
@@ -263,14 +279,23 @@ export default function AdminDashboard() {
                                         })
                                         .map(u => (
                                             <div className="admin-user-card" key={u._id}>
-                                                <div className="admin-user-card-left">
-                                                    <div className="admin-user-avatar" style={{ width: 48, height: 48, fontSize: '1rem' }}>
-                                                        {u.name?.substring(0, 2).toUpperCase() || 'U'}
+                                                <div className="admin-user-card-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', flexWrap: 'wrap', gap: '12px' }}>
+                                                    <div className="admin-user-card-left">
+                                                        <div className="admin-user-avatar" style={{ width: 48, height: 48, fontSize: '1rem' }}>
+                                                            {u.name?.substring(0, 2).toUpperCase() || 'U'}
+                                                        </div>
+                                                        <div>
+                                                            <div className="admin-user-name">{u.name || '—'}</div>
+                                                            <div className="admin-user-email">{u.email}</div>
+                                                        </div>
                                                     </div>
-                                                    <div>
-                                                        <div className="admin-user-name">{u.name || '—'}</div>
-                                                        <div className="admin-user-email">{u.email}</div>
-                                                    </div>
+                                                    <button
+                                                        className="btn-delete-user"
+                                                        onClick={() => handleDeleteUser(u._id, u.name)}
+                                                        disabled={actionId === u._id}
+                                                    >
+                                                        {actionId === u._id ? '...' : '🗑 Remove'}
+                                                    </button>
                                                 </div>
                                                 <div className="admin-user-meta">
                                                     <span className={`admin-chip ${PLAN_CHIP[u.plan] || 'chip-plan-free'}`}>{PLAN_ICON[u.plan]} {u.plan?.toUpperCase() || 'FREE'}</span>
