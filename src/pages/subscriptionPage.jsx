@@ -17,23 +17,34 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const UPI_ID = '7889825292@ptaxis';
-const MONTHLY_PRICE = 199;
+const MONTHLY_PRICE_STUDIO = 199;
+const MONTHLY_PRICE_PRO = 299;
 
 // ── Price helpers ──────────────────────────────────────────────
-function calcPrice(billingType) {
-  if (billingType === 'Monthly') return Math.round(MONTHLY_PRICE * 1 * 0.95);
-  if (billingType === '6 Months') return Math.round(MONTHLY_PRICE * 6 * 0.80);
-  if (billingType === 'Yearly') return Math.round(MONTHLY_PRICE * 12 * 0.70);
-  if (billingType === '3 Years') return Math.round(MONTHLY_PRICE * 36 * 0.50);
-  return MONTHLY_PRICE;
+function getMonths(billingType) {
+  if (billingType === '6 Months') return 6;
+  if (billingType === 'Yearly') return 12;
+  if (billingType === '3 Years') return 36;
+  return 1;
 }
 
-function calcOriginal(billingType) {
-  if (billingType === 'Monthly') return MONTHLY_PRICE * 1;
-  if (billingType === '6 Months') return MONTHLY_PRICE * 6;
-  if (billingType === 'Yearly') return MONTHLY_PRICE * 12;
-  if (billingType === '3 Years') return MONTHLY_PRICE * 36;
-  return MONTHLY_PRICE;
+function getDiscountRate(billingType) {
+  if (billingType === 'Monthly') return 0.05;
+  if (billingType === '6 Months') return 0.20;
+  if (billingType === 'Yearly') return 0.30;
+  if (billingType === '3 Years') return 0.50;
+  return 0;
+}
+
+function calcPrice(billingType, basePrice) {
+  const months = getMonths(billingType);
+  const discount = getDiscountRate(billingType);
+  return Math.round(basePrice * months * (1 - discount));
+}
+
+function calcOriginal(billingType, basePrice) {
+  const months = getMonths(billingType);
+  return basePrice * months;
 }
 
 // ── Main Export ────────────────────────────────────────────────
@@ -44,7 +55,8 @@ export default function Subscription() {
 
   const openModal = (planKey, planName, multi) => {
     if (multi === 0) { navigate('/auth'); return; } // Free plan → go sign up
-    const amount = Math.round(calcPrice(billingType) * multi);
+    const basePrice = planKey === 'studio' ? MONTHLY_PRICE_STUDIO : MONTHLY_PRICE_PRO;
+    const amount = calcPrice(billingType, basePrice);
     setSelectedPlan({ planKey, planName, amount, billing: billingType });
   };
 
@@ -244,8 +256,9 @@ function Caption({ billingType, setBillingType }) {
 }
 
 function CardLayout({ obj: card, billingType, multi, tagLine, onSelect }) {
-  const discounted = multi === 0 ? 0 : Math.round(calcPrice(billingType) * multi);
-  const original = multi === 0 ? 0 : Math.round(calcOriginal(billingType) * multi);
+  const basePrice = card.planKey === 'studio' ? MONTHLY_PRICE_STUDIO : MONTHLY_PRICE_PRO;
+  const discounted = multi === 0 ? 0 : calcPrice(billingType, basePrice);
+  const original = multi === 0 ? 0 : calcOriginal(billingType, basePrice);
 
   return (
     <section id="planCards">

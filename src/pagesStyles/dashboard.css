@@ -1028,20 +1028,55 @@
 
   #profileDetails {
     order: 1;
+    padding: 20px 16px;
+  }
+
+  #profileDetails ul {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+  }
+
+  #profileDetails ul li {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 10px 14px;
+  }
+
+  #profileDetails ul li p {
+    word-break: break-all;
   }
 
   #SocialMedia {
     order: 2;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px 16px;
   }
 
   #SocialMedia ul {
-    flex-direction: column;
+    flex-direction: row;
     gap: 12px;
+    width: 100%;
+    padding: 0;
   }
 
   #SocialMedia ul li {
-    width: 100%;
-    flex: none;
+    width: calc(50% - 6px);
+    flex: unset;
+    padding: 10px 14px;
+  }
+
+  @media (max-width: 576px) {
+    #SocialMedia ul {
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #SocialMedia ul li {
+      width: 100%;
+    }
   }
 
   #educationDetails {
