@@ -10,7 +10,7 @@ export default function Home() {
         <div className='IntroSec'>
           <div className='versionInfo'>
             <div>
-              Version 2.22.14 Public Beta
+              Version 4.0.0 Public Beta
             </div>
           </div>
 
@@ -32,11 +32,11 @@ export default function Home() {
 
           <div className='feedCard'>
             <div>
-              <span>2<strong>K+</strong></span>
+              <span>100<strong>+</strong></span>
               <p>Portfolios built</p>
             </div>
             <div>
-              <span>12<strong>+</strong></span>
+              <span>6<strong>+</strong></span>
               <p>Templates</p>
             </div>
             <div>

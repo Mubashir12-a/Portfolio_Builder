@@ -932,7 +932,7 @@ function Caption() {
                     <div className="tab tab1">
                         <span>🎨</span>
                         <div>
-                            <h4>12+ Professional Templates</h4>
+                            <h4>6+ Professional Templates</h4>
                             <p>Designed for developers, designers & creators</p>
                         </div>
                     </div>
@@ -957,11 +957,11 @@ function Caption() {
                         <span>M</span>
                         <span>A</span>
                         <span>H</span>
-                        <span>+2k</span>
+                        <span>MA</span>
                     </div>
 
                     <div>
-                        <h3>2,000+ students & developers</h3>
+                        <h3>100+ students & developers</h3>
                         <p>already have their portfolio live.</p>
                     </div>
                 </div>
