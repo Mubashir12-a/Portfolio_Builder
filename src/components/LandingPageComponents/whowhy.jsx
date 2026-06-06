@@ -1,3 +1,7 @@
+import StudentsIcon from '../../assets/LandingPageIcons/Students.gif';
+import JobSeekersIcon from '../../assets/LandingPageIcons/JobSneekers.gif';
+import FreelancerIcon from '../../assets/LandingPageIcons/Freelancer.gif';
+
 export default function WAW(){
     return (
         <>
@@ -12,17 +16,23 @@ export default function WAW(){
 
               <div className="container">
                 <div className="card card_1">
-                  <span>🎓</span>
+                  <span>
+                    <img src={StudentsIcon} alt="Students" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+                  </span>
                   <h6>Students</h6>
                   <p>Just graduated or still studying? Stand out from the crowd with a portfolio that shows your projects and potential before you even have work experience.</p>
                 </div>
                 <div className="card card_2">
-                  <span>💼</span>
+                  <span>
+                    <img src={JobSeekersIcon} alt="Freshers & Job Seekers" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+                  </span>
                   <h6>Freshers & Job Seekers</h6>
                   <p>Recruiters Google you. Make what they find count. A polished portfolio link on your resume or LinkedIn drastically improves callback rates.</p>
                 </div>
                 <div className="card card_3">
-                  <span>🎨</span>
+                  <span>
+                    <img src={FreelancerIcon} alt="Creators & Freelancers" style={{ width: '60px', height: '60px', objectFit: 'contain' }} />
+                  </span>
                   <h6>Creators & Freelancers</h6>
                   <p>Designers, writers, photographers, developers — if your work deserves to be seen, you need a place to put it. Portfolio Builder makes it instant.</p>
                 </div>

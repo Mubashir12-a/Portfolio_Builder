@@ -11,17 +11,17 @@ import Btn_Secondry from '../components/GeneralComponents/buttonSecondry';
 import { useState, useEffect } from 'react';
 
 import { useNavigate } from "react-router-dom";
-
-import { getValidToken } from "../utils/auth";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function AuthPage() {
     const navigate = useNavigate();
+    const { isAuthenticated } = useAuth();
 
     useEffect(() => {
-        if (getValidToken()) {
+        if (isAuthenticated) {
             navigate("/dash", { replace: true });
         }
-    }, []);
+    }, [isAuthenticated, navigate]);
 
     return (
         <>
@@ -217,7 +217,8 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email, password, type: "login" }),
-                cache: "no-store"
+                cache: "no-store",
+                credentials: "include"
             });
 
             const data = await res.json();
@@ -313,6 +314,7 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }) {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     useEffect(() => {
         if (time <= 0) return;
@@ -336,7 +338,8 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }) {
                         "Content-Type": "application/json",
                     },
                     body: JSON.stringify({ email: userEmail, password: userData?.password, type }),
-                    cache: "no-store"
+                    cache: "no-store",
+                    credentials: "include"
                 });
 
                 const data = await res.json();
@@ -380,7 +383,8 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }) {
                     password: userData.password,
                     type: type
                 }),
-                cache: "no-store"
+                cache: "no-store",
+                credentials: "include"
             });
 
             const data = await res.json();
@@ -388,7 +392,9 @@ function GetLoginOTP({ holdCont, userEmail, type, userData = {} }) {
 
             if (data.success) {
 
-                localStorage.setItem("token", data.token);
+                if (type !== "forgot-password") {
+                    login(data.user);
+                }
 
                 setOtp(["", "", "", "", "", ""]);
 
@@ -527,7 +533,8 @@ function ForgotPass({ holdCont, setUserEmail }) {
             const res = await fetch(`${apiUrl}/send-otp`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, type: "forgot-password" })
+                body: JSON.stringify({ email, type: "forgot-password" }),
+                credentials: "include"
             });
 
             const data = await res.json();
@@ -597,7 +604,8 @@ function ResetPassword({ holdCont }) {
             const res = await fetch(`${apiUrl}/reset-password`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ resetToken, newPassword: password })
+                body: JSON.stringify({ resetToken, newPassword: password }),
+                credentials: "include"
             });
 
             const data = await res.json();
@@ -741,7 +749,8 @@ function CreateAcc({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ email, type: "signup" }),
-                cache: "no-store"
+                cache: "no-store",
+                credentials: "include"
             });
 
             const data = await res.json();

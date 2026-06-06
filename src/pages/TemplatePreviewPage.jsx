@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 
 /**
  * Responsive Live Portfolio Template Preview Workspace
@@ -17,6 +18,7 @@ export default function TemplatePreviewPage() {
   const [loading, setLoading] = useState(true);
   const [templateHtml, setTemplateHtml] = useState('');
   const [error, setError] = useState(null);
+  const { user, isAuthenticated } = useAuth();
 
   // Retrieve current template details
   const getTemplateName = () => {
@@ -38,39 +40,25 @@ export default function TemplatePreviewPage() {
       return;
     }
 
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError("Authentication required. Please log in first.");
-        setLoading(false);
-        setTimeout(() => navigate('/auth'), 2000);
-        return;
-      }
+    if (!isAuthenticated) {
+      setError("Authentication required. Please log in first.");
+      setLoading(false);
+      setTimeout(() => navigate('/auth'), 2000);
+      return;
+    }
 
-      // Check if there is local uncommitted onboarding data first for instant reactive reflection
-      const localOnboarding = localStorage.getItem('portfolioUserData');
-      if (localOnboarding) {
-        setUserData(JSON.parse(localOnboarding));
-        return;
-      }
+    // Check if there is local uncommitted onboarding data first for instant reactive reflection
+    const localOnboarding = localStorage.getItem('portfolioUserData');
+    if (localOnboarding) {
+      setUserData(JSON.parse(localOnboarding));
+      return;
+    }
 
-      // Fallback: Fetch latest profile from DB
-      const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-      const res = await fetch(`${apiUrl}/api/user/profile`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      const data = await res.json();
-      
-      if (data.success && data.user) {
-        setUserData(data.user);
-        // Persist locally for next checks
-        localStorage.setItem('portfolioUserData', JSON.stringify(data.user));
-      } else {
-        setError("Failed to fetch profile settings.");
-      }
-    } catch (err) {
-      console.error(err);
-      setError("Network error loading preview session.");
+    // Fallback: Use verified user from AuthContext
+    if (user) {
+      setUserData(user);
+    } else {
+      setError("Failed to fetch profile settings.");
     }
   };
 

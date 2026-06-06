@@ -1063,3 +1063,29 @@
     text-align: center;
   }
 }
+
+/* Custom Icon Styles */
+.admin-brand-icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.admin-tab-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.admin-empty-icon {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 12px;
+}
+
+.admin-fb-type-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}

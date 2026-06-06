@@ -1794,6 +1794,12 @@ nav a:hover {
     transition: var(--transition);
 }
 
+#GetInTouch .ToggleContainer button.active {
+    background-color: var(--violet-dim);
+    color: var(--violet);
+    border: 1px solid var(--violet);
+}
+
 #GetInTouch .ToggleContainer button:nth-child(1) {
     border-right: none;
     border-radius: 6px 0 0 6px;

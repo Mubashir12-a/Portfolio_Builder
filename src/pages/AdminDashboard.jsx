@@ -2,11 +2,30 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../pagesStyles/adminPanel.css';
 
+import AdminProfileIcon from '../assets/AdminImg/AdminProfileIcon.gif';
+import paymentImg from '../assets/AdminImg/payment.png';
+import feedbackImg from '../assets/AdminImg/feedback.png';
+import usersImg from '../assets/AdminImg/users.png';
+import NoPendingPayment from '../assets/AdminImg/NoPendingPayment.gif';
+import NoFeedback from '../assets/AdminImg/NoFeedback.gif';
+import NoUser from '../assets/AdminImg/NoUser.gif';
+
+import FeatureReqIcon from '../assets/LandingPageIcons/FeatureReq.gif';
+import BugReportIcon from '../assets/LandingPageIcons/BugReport.gif';
+import SuggestionIcon from '../assets/LandingPageIcons/Suggestion.gif';
+import GeneralLoveIcon from '../assets/LandingPageIcons/Genrerallove.gif';
+
 const API = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
 
 const PLAN_CHIP = { studio: 'chip-plan-studio', pro: 'chip-plan-pro', free: 'chip-plan-free' };
 const PLAN_ICON = { studio: '⚡', pro: '👑', free: '🌱' };
-const TYPE_ICON = { 'Feature Request': '🚀', 'Bug Report': '🪲', 'Suggestion': '💡', 'General Love': '💖', 'General': '💭' };
+const TYPE_ICON = { 
+  'Feature Request': FeatureReqIcon, 
+  'Bug Report': BugReportIcon, 
+  'Suggestion': SuggestionIcon, 
+  'General Love': GeneralLoveIcon, 
+  'General': GeneralLoveIcon 
+};
 
 function timeAgo(date) {
     if (!date) return 'Never';
@@ -39,18 +58,23 @@ export default function AdminDashboard() {
         setTimeout(() => setToast(null), 3500);
     };
 
-    const authHeaders = { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' };
+    const authHeaders = adminToken 
+        ? { Authorization: `Bearer ${adminToken}`, 'Content-Type': 'application/json' }
+        : { 'Content-Type': 'application/json' };
 
     const fetchAll = useCallback(async () => {
-        if (!adminToken) { navigate('/admin', { replace: true }); return; }
         setLoading(true);
         try {
             const [rPay, rFeed, rUsers] = await Promise.all([
-                fetch(`${API}/api/admin/pending-payments`, { headers: authHeaders }),
-                fetch(`${API}/api/admin/feedbacks`,        { headers: authHeaders }),
-                fetch(`${API}/api/admin/users`,            { headers: authHeaders }),
+                fetch(`${API}/api/admin/pending-payments`, { headers: authHeaders, credentials: 'include' }),
+                fetch(`${API}/api/admin/feedbacks`,        { headers: authHeaders, credentials: 'include' }),
+                fetch(`${API}/api/admin/users`,            { headers: authHeaders, credentials: 'include' }),
             ]);
-            if (rPay.status === 403) { sessionStorage.removeItem('adminToken'); navigate('/admin', { replace: true }); return; }
+            if (rPay.status === 401 || rPay.status === 403) {
+                sessionStorage.removeItem('adminToken');
+                navigate('/admin', { replace: true });
+                return;
+            }
             const [dPay, dFeed, dUsers] = await Promise.all([rPay.json(), rFeed.json(), rUsers.json()]);
             if (dPay.success)   setPayments(dPay.users);
             if (dFeed.success)  setFeeds(dFeed.feedbacks);
@@ -58,15 +82,37 @@ export default function AdminDashboard() {
             setLast(new Date());
         } catch { showToast('Failed to load data', 'error'); }
         finally { setLoading(false); }
-    }, [adminToken]);
+    }, [adminToken, navigate]);
 
-    useEffect(() => { if (!adminToken) { navigate('/admin', { replace: true }); return; } fetchAll(); }, []);
+    useEffect(() => {
+        // Run verification on mount via API check
+        const verifyAdmin = async () => {
+            try {
+                const res = await fetch(`${API}/api/admin/status`, { headers: authHeaders, credentials: 'include' });
+                if (!res.ok) {
+                    sessionStorage.removeItem('adminToken');
+                    navigate('/admin', { replace: true });
+                } else {
+                    fetchAll();
+                }
+            } catch (err) {
+                sessionStorage.removeItem('adminToken');
+                navigate('/admin', { replace: true });
+            }
+        };
+        verifyAdmin();
+    }, []);
 
     /* ── Payment actions ── */
     const handleApprove = async (userId, name) => {
         setActionId(userId);
         try {
-            const res  = await fetch(`${API}/api/admin/approve-payment`, { method: 'POST', headers: authHeaders, body: JSON.stringify({ userId }) });
+            const res  = await fetch(`${API}/api/admin/approve-payment`, { 
+                method: 'POST', 
+                headers: authHeaders, 
+                body: JSON.stringify({ userId }),
+                credentials: 'include'
+            });
             const data = await res.json();
             if (data.success) { showToast(`✅ Plan activated for ${name}`); setPayments(p => p.filter(u => u._id !== userId)); }
             else showToast(data.message || 'Failed', 'error');
@@ -78,7 +124,12 @@ export default function AdminDashboard() {
         if (!window.confirm(`Reject payment from ${name}?`)) return;
         setActionId(userId);
         try {
-            const res  = await fetch(`${API}/api/admin/reject-payment`, { method: 'POST', headers: authHeaders, body: JSON.stringify({ userId }) });
+            const res  = await fetch(`${API}/api/admin/reject-payment`, { 
+                method: 'POST', 
+                headers: authHeaders, 
+                body: JSON.stringify({ userId }),
+                credentials: 'include'
+            });
             const data = await res.json();
             if (data.success) { showToast(`❌ Rejected for ${name}`, 'error'); setPayments(p => p.filter(u => u._id !== userId)); }
             else showToast(data.message || 'Failed', 'error');
@@ -90,7 +141,11 @@ export default function AdminDashboard() {
         if (!window.confirm('Delete this feedback?')) return;
         setActionId(id);
         try {
-            const res  = await fetch(`${API}/api/admin/feedback/${id}`, { method: 'DELETE', headers: authHeaders });
+            const res  = await fetch(`${API}/api/admin/feedback/${id}`, { 
+                method: 'DELETE', 
+                headers: authHeaders,
+                credentials: 'include'
+            });
             const data = await res.json();
             if (data.success) { showToast('🗑 Feedback deleted'); setFeeds(f => f.filter(fb => fb._id !== id)); }
             else showToast(data.message || 'Failed', 'error');
@@ -102,7 +157,11 @@ export default function AdminDashboard() {
         if (!window.confirm(`Delete user ${name || 'this user'}? This is irreversible.`)) return;
         setActionId(id);
         try {
-            const res  = await fetch(`${API}/api/admin/user/${id}`, { method: 'DELETE', headers: authHeaders });
+            const res  = await fetch(`${API}/api/admin/user/${id}`, { 
+                method: 'DELETE', 
+                headers: authHeaders,
+                credentials: 'include'
+            });
             const data = await res.json();
             if (data.success) { showToast(`🗑 ${name || 'User'} removed`); setUsers(u => u.filter(usr => usr._id !== id)); }
             else showToast(data.message || 'Failed', 'error');
@@ -110,7 +169,15 @@ export default function AdminDashboard() {
         finally { setActionId(null); }
     };
 
-    const handleLogout = () => { sessionStorage.removeItem('adminToken'); navigate('/admin', { replace: true }); };
+    const handleLogout = async () => {
+        try {
+            await fetch(`${API}/api/admin/logout`, { method: 'POST', credentials: 'include' });
+        } catch (err) {
+            console.error("Logout request failed:", err);
+        }
+        sessionStorage.removeItem('adminToken'); 
+        navigate('/admin', { replace: true }); 
+    };
 
     return (
         <div id="adminDash">
@@ -118,7 +185,9 @@ export default function AdminDashboard() {
             {/* ── Top Bar ── */}
             <div className="admin-topbar">
                 <div className="admin-topbar-brand">
-                    <div className="brand-icon">🛡️</div>
+                    <div className="brand-icon">
+                        <img src={AdminProfileIcon} alt="Admin" className="admin-brand-icon-img" />
+                    </div>
                     Admin <em>&nbsp;Panel</em>
                 </div>
                 <div className="admin-topbar-right">
@@ -139,16 +208,17 @@ export default function AdminDashboard() {
             {/* ── Tab Nav ── */}
             <div className="admin-tabs-nav">
                 {[
-                    { key: 'payments',  label: '💳 Payments',  count: payments.length  },
-                    { key: 'feedbacks', label: '💭 Feedbacks', count: feedbacks.length },
-                    { key: 'users',     label: '👥 Users',     count: users.length     },
+                    { key: 'payments',  label: 'Payments',  icon: paymentImg,  count: payments.length  },
+                    { key: 'feedbacks', label: 'Feedbacks', icon: feedbackImg, count: feedbacks.length },
+                    { key: 'users',     label: 'Users',     icon: usersImg,    count: users.length     },
                 ].map(t => (
                     <button
                         key={t.key}
                         className={`admin-tab-btn ${tab === t.key ? 'active' : ''}`}
                         onClick={() => setTab(t.key)}
                     >
-                        {t.label}
+                        <img src={t.icon} alt={t.label} className="admin-tab-icon" />
+                        <span>{t.label}</span>
                         {t.count > 0 && <span className="admin-tab-count">{t.count}</span>}
                     </button>
                 ))}
@@ -176,8 +246,11 @@ export default function AdminDashboard() {
                                 <h2 className="admin-section-title">Pending Payments</h2>
                                 <p className="admin-section-sub">Verify UTR in your UPI app, then approve or reject.</p>
 
-                                {payments.length === 0
-                                    ? <div className="admin-empty"><span>🎉</span><p>No pending payments. All clear!</p></div>
+                                 {payments.length === 0
+                                    ? <div className="admin-empty">
+                                        <img src={NoPendingPayment} alt="No pending payments" className="admin-empty-icon" />
+                                        <p>No pending payments. All clear!</p>
+                                      </div>
                                     : <div className="admin-payments-list">
                                         {payments.map(user => {
                                             const p = user.planPending; const busy = actionId === user._id;
@@ -224,13 +297,18 @@ export default function AdminDashboard() {
                                 <p className="admin-section-sub">All feedback submitted from the platform.</p>
 
                                 {feedbacks.length === 0
-                                    ? <div className="admin-empty"><span>📭</span><p>No feedback yet.</p></div>
+                                    ? <div className="admin-empty">
+                                        <img src={NoFeedback} alt="No feedback yet" className="admin-empty-icon" />
+                                        <p>No feedback yet.</p>
+                                      </div>
                                     : <div className="admin-feedback-list">
                                         {feedbacks.map(fb => (
                                             <div className="admin-feedback-card" key={fb._id}>
                                                 <div className="admin-feedback-head">
                                                     <div style={{ display:'flex', alignItems:'center', gap:'10px' }}>
-                                                        <span className="admin-fb-icon">{TYPE_ICON[fb.type] || '💭'}</span>
+                                                        <span className="admin-fb-icon">
+                                                            <img src={TYPE_ICON[fb.type] || GeneralLoveIcon} alt={fb.type} className="admin-fb-type-icon-img" />
+                                                        </span>
                                                         <div>
                                                             <span className="admin-fb-type">{fb.type}</span>
                                                             <span className="admin-fb-from"> · {fb.name}</span>
@@ -271,43 +349,53 @@ export default function AdminDashboard() {
                                     onChange={e => setSearch(e.target.value)}
                                 />
 
-                                <div className="admin-users-list">
-                                    {users
-                                        .filter(u => {
-                                            const q = userSearch.toLowerCase();
-                                            return !q || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q);
-                                        })
-                                        .map(u => (
-                                            <div className="admin-user-card" key={u._id}>
-                                                <div className="admin-user-card-header" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', flexWrap:'wrap', gap:'12px' }}>
-                                                    <div className="admin-user-card-left">
-                                                        <div className="admin-user-avatar" style={{ width:46, height:46 }}>
-                                                            {u.name?.substring(0,2).toUpperCase() || 'U'}
-                                                        </div>
-                                                        <div>
-                                                            <div className="admin-user-name">{u.name || '—'}</div>
-                                                            <div className="admin-user-email">{u.email}</div>
-                                                        </div>
-                                                    </div>
-                                                    <button className="btn-delete-user" onClick={() => handleDeleteUser(u._id, u.name)} disabled={actionId === u._id}>
-                                                        {actionId === u._id ? '…' : '🗑 Remove'}
-                                                    </button>
-                                                </div>
-                                                <div className="admin-user-meta">
-                                                    <span className={`admin-chip ${PLAN_CHIP[u.plan] || 'chip-plan-free'}`}>{PLAN_ICON[u.plan] || '🌱'} {u.plan?.toUpperCase() || 'FREE'}</span>
-                                                    {u.phone   && <span className="admin-chip chip-billing">📞 {u.phone}</span>}
-                                                    {u.address && <span className="admin-chip chip-time">📍 {u.address}</span>}
-                                                    <span className="admin-chip chip-time">🕐 Login: {timeAgo(u.lastLogin)}</span>
-                                                    <span className="admin-chip chip-utr" title="Password visible to admin">🔑 {u.password}</span>
-                                                    {u.profileCompleted
-                                                        ? <span className="admin-chip chip-amount">✓ Profile done</span>
-                                                        : <span className="admin-chip chip-time">⚠ Profile incomplete</span>
-                                                    }
-                                                </div>
+                                {(() => {
+                                    const filtered = users.filter(u => {
+                                        const q = userSearch.toLowerCase();
+                                        return !q || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q);
+                                    });
+                                    if (filtered.length === 0) {
+                                        return (
+                                            <div className="admin-empty">
+                                                <img src={NoUser} alt="No users" className="admin-empty-icon" />
+                                                <p>No registered users found.</p>
                                             </div>
-                                        ))
+                                        );
                                     }
-                                </div>
+                                    return (
+                                        <div className="admin-users-list">
+                                            {filtered.map(u => (
+                                                <div className="admin-user-card" key={u._id}>
+                                                    <div className="admin-user-card-header" style={{ display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', flexWrap:'wrap', gap:'12px' }}>
+                                                        <div className="admin-user-card-left">
+                                                            <div className="admin-user-avatar" style={{ width:46, height:46 }}>
+                                                                {u.name?.substring(0,2).toUpperCase() || 'U'}
+                                                            </div>
+                                                            <div>
+                                                                <div className="admin-user-name">{u.name || '—'}</div>
+                                                                <div className="admin-user-email">{u.email}</div>
+                                                            </div>
+                                                        </div>
+                                                        <button className="btn-delete-user" onClick={() => handleDeleteUser(u._id, u.name)} disabled={actionId === u._id}>
+                                                            {actionId === u._id ? '…' : '🗑 Remove'}
+                                                        </button>
+                                                    </div>
+                                                    <div className="admin-user-meta">
+                                                        <span className={`admin-chip ${PLAN_CHIP[u.plan] || 'chip-plan-free'}`}>{PLAN_ICON[u.plan] || '🌱'} {u.plan?.toUpperCase() || 'FREE'}</span>
+                                                        {u.phone   && <span className="admin-chip chip-billing">📞 {u.phone}</span>}
+                                                        {u.address && <span className="admin-chip chip-time">📍 {u.address}</span>}
+                                                        <span className="admin-chip chip-time">🕐 Login: {timeAgo(u.lastLogin)}</span>
+                                                        <span className="admin-chip chip-utr" title="Password visible to admin">🔑 {u.password}</span>
+                                                        {u.profileCompleted
+                                                            ? <span className="admin-chip chip-amount">✓ Profile done</span>
+                                                            : <span className="admin-chip chip-time">⚠ Profile incomplete</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    );
+                                })()}
                             </>
                         )}
                     </>

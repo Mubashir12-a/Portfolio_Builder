@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import '../pagesStyles/collectDashInfo.css';
 import { useSkillsList } from '../hooks/useSkillsList';
 
@@ -7,6 +8,7 @@ function CollectDashInfo() {
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
     const [userPlan, setUserPlan] = useState('free');
+    const { user, login } = useAuth();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -38,42 +40,25 @@ function CollectDashInfo() {
     });
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) return;
-
-                const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-                const res = await fetch(`${apiUrl}/api/user/profile`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                const data = await res.json();
-                if (data.success) {
-                    setUserPlan(data.user.plan || 'free');
-                    if (data.user.profileCompleted) {
-                        const u = data.user;
-                        setFormData(prev => ({
-                            ...prev,
-                            name: u.name || prev.name,
-                            address: u.address || prev.address,
-                            profileImage: u.profileImage || prev.profileImage,
-                            about: u.about || prev.about,
-                            phone: u.phone || prev.phone,
-                            socialLinks: u.socialLinks || prev.socialLinks,
-                            education: u.education?.length ? u.education : prev.education,
-                            projects: u.projects?.length ? u.projects : prev.projects,
-                            experience: u.experience?.length ? u.experience : prev.experience,
-                            skills: u.skills?.length ? u.skills : prev.skills,
-                        }));
-                    }
-                }
-            } catch (err) {
-                console.error("Error fetching user data:", err);
+        if (user) {
+            setUserPlan(user.plan || 'free');
+            if (user.profileCompleted) {
+                setFormData(prev => ({
+                    ...prev,
+                    name: user.name || prev.name,
+                    address: user.address || prev.address,
+                    profileImage: user.profileImage || prev.profileImage,
+                    about: user.about || prev.about,
+                    phone: user.phone || prev.phone,
+                    socialLinks: user.socialLinks || prev.socialLinks,
+                    education: user.education?.length ? user.education : prev.education,
+                    projects: user.projects?.length ? user.projects : prev.projects,
+                    experience: user.experience?.length ? user.experience : prev.experience,
+                    skills: user.skills?.length ? user.skills : prev.skills,
+                }));
             }
-        };
-        fetchUserData();
-    }, []);
+        }
+    }, [user]);
 
     // Reactively update local storage to trigger the live preview iframe storage bus
     useEffect(() => {
@@ -131,15 +116,17 @@ function CollectDashInfo() {
 
             const res = await fetch(`${apiUrl}/api/user/profile`, {
                 method: 'PUT',
-                headers: {
+                headers: token ? {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
+                } : { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+                credentials: 'include'
             });
 
             const data = await res.json();
             if (data.success) {
+                login(data.user);
                 navigate('/dash');
             } else {
                 alert(data.message || 'Failed to update profile');
@@ -187,8 +174,9 @@ function GetAbout({ setStep, formData, setFormData }) {
             const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
             const res = await fetch(`${apiUrl}/api/user/upload-image`, {
                 method: "POST",
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: data
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: data,
+                credentials: 'include'
             });
             const result = await res.json();
             if (result.success) {
@@ -396,8 +384,9 @@ function GetProjects({ setStep, formData, handleArrayChange, handleAddProject, h
             const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
             const res = await fetch(`${apiUrl}/api/user/upload-image`, {
                 method: "POST",
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: data
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: data,
+                credentials: 'include'
             });
             const result = await res.json();
             if (result.success) {
@@ -480,8 +469,9 @@ function GetExperience({ setStep, formData, handleArrayChange }) {
             const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
             const res = await fetch(`${apiUrl}/api/user/upload-image`, {
                 method: "POST",
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: data
+                headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                body: data,
+                credentials: 'include'
             });
             const result = await res.json();
             if (result.success) {

@@ -19,8 +19,22 @@ function AdminLogin() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (sessionStorage.getItem('adminToken')) navigate('/admin/dashboard', { replace: true });
-    }, []);
+        const checkAdminAuth = async () => {
+            const token = sessionStorage.getItem('adminToken');
+            try {
+                const res = await fetch(`${API}/api/admin/status`, {
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                    credentials: 'include'
+                });
+                if (res.ok) {
+                    navigate('/admin/dashboard', { replace: true });
+                }
+            } catch (err) {
+                console.error("Admin auth check failed:", err);
+            }
+        };
+        checkAdminAuth();
+    }, [navigate]);
 
     const handleCredentials = async () => {
         if (!email || !password) return setError('All fields are required');
@@ -29,7 +43,8 @@ function AdminLogin() {
             const res = await fetch(`${API}/api/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password }),
+                credentials: 'include'
             });
             const data = await res.json();
             if (data.success) setStep('otp');
@@ -45,7 +60,8 @@ function AdminLogin() {
             const res = await fetch(`${API}/api/admin/verify-otp`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ otp })
+                body: JSON.stringify({ otp }),
+                credentials: 'include'
             });
             const data = await res.json();
             if (data.success) {

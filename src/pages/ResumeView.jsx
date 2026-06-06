@@ -1,37 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext.jsx';
 import html2pdf from 'html2pdf.js';
 import '../pagesStyles/resume.css';
 
 export default function ResumeView() {
-    const [userData, setUserData] = useState(null);
+    const { user: userData } = useAuth();
     const resumeRef = useRef();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const autoDownload = searchParams.get('download') === 'true';
-
-    useEffect(() => {
-        const fetchProfile = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                if (!token) {
-                    navigate('/auth');
-                    return;
-                }
-                const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-                const res = await fetch(`${apiUrl}/api/user/profile`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const data = await res.json();
-                if (data.success) {
-                    setUserData(data.user);
-                }
-            } catch (err) {
-                console.error(err);
-            }
-        };
-        fetchProfile();
-    }, [navigate]);
 
     // Auto-trigger download if ?download=true
     useEffect(() => {

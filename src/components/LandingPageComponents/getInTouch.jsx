@@ -19,8 +19,8 @@ export default function GetInTouch() {
         </div>
 
         <div className="ToggleContainer">
-          <button onClick={() => setActiveCont_Feed('Contact')} className='contact'><span>📧</span> <span>Contact Us</span></button>
-          <button onClick={() => setActiveCont_Feed('Feedback')} className='feedback'><span>💭</span> <span>Feedback</span></button>
+          <button onClick={() => setActiveCont_Feed('Contact')} className={`contact ${activeCont_Feed === 'Contact' ? 'active' : ''}`}><span>📧</span> <span>Contact Us</span></button>
+          <button onClick={() => setActiveCont_Feed('Feedback')} className={`feedback ${activeCont_Feed === 'Feedback' ? 'active' : ''}`}><span>💭</span> <span>Feedback</span></button>
         </div>
 
         <div className="container">

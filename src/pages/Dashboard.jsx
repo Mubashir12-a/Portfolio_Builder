@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import JSZip from 'jszip';
+import { useAuth } from "../context/AuthContext.jsx";
 import "../pagesStyles/dashboard.css";
 import ToggleThemeBtn from '../components/GeneralComponents/toggleThemeBtn.jsx';
 
@@ -40,6 +41,7 @@ function Dashboard() {
         return saved ? JSON.parse(saved) : [];
     });
     const navigate = useNavigate();
+    const { logout, handle401 } = useAuth();
 
     const handleUnlike = (id) => {
         const updated = likedIds.filter(i => i !== id);
@@ -47,9 +49,8 @@ function Dashboard() {
         setLikedIds(updated);
     };
 
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('resetToken');
+    const handleLogout = async () => {
+        await logout();
         navigate('/auth');
     };
 
@@ -59,8 +60,16 @@ function Dashboard() {
                 const token = localStorage.getItem('token');
                 const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
                 const res = await fetch(`${apiUrl}/api/user/profile`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
+                    headers: token ? { 'Authorization': `Bearer ${token}` } : {},
+                    credentials: "include"
                 });
+
+                if (res.status === 401) {
+                    handle401();
+                    navigate("/auth");
+                    return;
+                }
+
                 const data = await res.json();
                 if (data.success) {
                     setUserData(data.user);

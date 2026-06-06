@@ -1,4 +1,9 @@
 import { useState } from 'react';
+import MailIcon from '../../assets/LandingPageIcons/Mail.gif';
+import ContactIcon from '../../assets/LandingPageIcons/contact.gif';
+import TwitterIcon from '../../assets/LandingPageIcons/twitter.gif';
+import LinkedInIcon from '../../assets/LandingPageIcons/LinkedIn.gif';
+import LocationIcon from '../../assets/LandingPageIcons/Location.gif';
 
 const API = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
 
@@ -82,23 +87,23 @@ export default function Contact() {
 
       <div className="refLinks">
         <a href="mailto:ma2625645@gmail.com">
-          <div>📧</div>
+          <div><img src={MailIcon} alt="Email" style={{ width: '40px', height: '40px', objectFit: 'contain' }} /></div>
           <div><h6>Email</h6><p>ma2625645@gmail.com</p></div>
         </a>
         <a href="tel:+917889825292">
-          <div>📞</div>
+          <div><img src={ContactIcon} alt="Contact" style={{ width: '40px', height: '40px', objectFit: 'contain' }} /></div>
           <div><h6>Contact</h6><p>+91-7889825292</p></div>
         </a>
         <a href="https://twitter.com/portfoliobuilderHQ" target="_blank" rel="noreferrer">
-          <div>💬</div>
+          <div><img src={TwitterIcon} alt="Twitter" style={{ width: '40px', height: '40px', objectFit: 'contain' }} /></div>
           <div><h6>Twitter</h6><p>@portfoliobuilderHQ</p></div>
         </a>
         <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-          <div>🔗</div>
+          <div><img src={LinkedInIcon} alt="LinkedIn" style={{ width: '40px', height: '40px', objectFit: 'contain' }} /></div>
           <div><h6>LinkedIn</h6><p>Portfolio Builder HQ</p></div>
         </a>
         <a href="#contact">
-          <div>📍</div>
+          <div><img src={LocationIcon} alt="Location" style={{ width: '40px', height: '40px', objectFit: 'contain' }} /></div>
           <div><h6>Based In</h6><p>Kashmir, India</p></div>
         </a>
       </div>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JSZip from 'jszip';
+import { useAuth } from '../context/AuthContext.jsx';
 import Header from '../components/LandingPageComponents/header.jsx';
 import Footer from '../components/LandingPageComponents/footer.jsx';
 import '../pagesStyles/templatesPage.css';
@@ -97,7 +98,7 @@ export default function TemplatesPage() {
     const saved = localStorage.getItem('likedTemplates');
     return saved ? JSON.parse(saved) : [];
   });
-  const [userData, setUserData] = useState(null);
+  const { user: userData, isAuthenticated } = useAuth();
   const [loadingCodeId, setLoadingCodeId] = useState(null);
   const navigate = useNavigate();
   const [toast, setToast] = useState(null);
@@ -115,29 +116,8 @@ export default function TemplatesPage() {
     }
   };
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        if (!token) return;
-        const apiUrl = import.meta.env.VITE_API_URL || "https://portfolio-builder-wgp1.onrender.com";
-        const res = await fetch(`${apiUrl}/api/user/profile`, {
-          headers: { 'Authorization': `Bearer ${token}` }
-        });
-        const data = await res.json();
-        if (data.success) {
-          setUserData(data.user);
-        }
-      } catch (err) {
-        console.error("Failed to load user profile", err);
-      }
-    };
-    fetchProfile();
-  }, []);
-
   const toggleLike = (id) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated) {
       showToast("Please log in or create an account to like templates!", "warning", () => navigate('/auth'));
       return;
     }
@@ -163,8 +143,7 @@ export default function TemplatesPage() {
   };
 
   const handlePreviewProfile = (id) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated) {
       showToast("Please log in or create an account to preview templates with your profile data!", "warning", () => navigate('/auth'));
       return;
     }
@@ -172,8 +151,7 @@ export default function TemplatesPage() {
   };
 
   const handleUseTemplate = (t) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated) {
       showToast("Please log in or create an account to use templates!", "warning", () => navigate('/auth'));
       return;
     }
@@ -203,8 +181,7 @@ export default function TemplatesPage() {
   };
 
   const handleGetCode = async (id, name, templatePlan, injectEnabled) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    if (!isAuthenticated) {
       showToast("Please log in or create an account to download templates!", "warning", () => navigate('/auth'));
       return;
     }

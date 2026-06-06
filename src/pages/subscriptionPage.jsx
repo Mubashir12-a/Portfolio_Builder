@@ -126,8 +126,12 @@ function PaymentModal({ plan, onClose }) {
     try {
       const res = await fetch(`${API}/api/subscription/request`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ plan: plan.planKey, billing: plan.billing, amount: plan.amount, utr: utr.trim() })
+        headers: token ? { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${token}` 
+        } : { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan: plan.planKey, billing: plan.billing, amount: plan.amount, utr: utr.trim() }),
+        credentials: 'include'
       });
       const data = await res.json();
       if (data.success) setDone(true);

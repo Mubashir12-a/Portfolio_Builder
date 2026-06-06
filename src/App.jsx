@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 import './App.css'
 import './pagesStyles/landingPage.css'
@@ -23,60 +24,62 @@ import ProtectedRoute from './components/Protected/protectedRoute.jsx';
 function App() {
 
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
 
-      <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/subscription' element={<Subscription />} />
-        <Route path='/auth' element={<AuthPage />} />
-        <Route path='/templates' element={<TemplatesPage />} />
-        <Route path='/templates/:templateId/demo' element={<TemplatePreviewPage />} />
-        <Route
-          path='/templates/:templateId/preview'
-          element={
-            <ProtectedRoute>
-              <TemplatePreviewPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path='/team/:memberId' element={<TeamMemberPage />} />
-        <Route path='/blog' element={<BlogPage />} />
-        <Route path='/info/stack' element={<TechStackPage />} />
-        <Route path='/info/:type' element={<InfoPage />} />
+        <Routes>
+          <Route path='/' element={<LandingPage />} />
+          <Route path='/subscription' element={<Subscription />} />
+          <Route path='/auth' element={<AuthPage />} />
+          <Route path='/templates' element={<TemplatesPage />} />
+          <Route path='/templates/:templateId/demo' element={<TemplatePreviewPage />} />
+          <Route
+            path='/templates/:templateId/preview'
+            element={
+              <ProtectedRoute>
+                <TemplatePreviewPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/team/:memberId' element={<TeamMemberPage />} />
+          <Route path='/blog' element={<BlogPage />} />
+          <Route path='/info/stack' element={<TechStackPage />} />
+          <Route path='/info/:type' element={<InfoPage />} />
 
-        <Route
-          path='/collect-info'
-          element={
-            <ProtectedRoute>
-              <GetInfo />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path='/collect-info'
+            element={
+              <ProtectedRoute>
+                <GetInfo />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path='/dash'
-          element={
-            <ProtectedRoute>
-              <Dash />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path='/dash'
+            element={
+              <ProtectedRoute>
+                <Dash />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route
-          path='/resume'
-          element={
-            <ProtectedRoute>
-              <ResumeView />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path='/resume'
+            element={
+              <ProtectedRoute>
+                <ResumeView />
+              </ProtectedRoute>
+            }
+          />
 
-        <Route path='/admin' element={<AdminLogin />} />
-        <Route path='/admin/dashboard' element={<AdminDashboard />} />
+          <Route path='/admin' element={<AdminLogin />} />
+          <Route path='/admin/dashboard' element={<AdminDashboard />} />
 
-      </Routes>
+        </Routes>
 
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 

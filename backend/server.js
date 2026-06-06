@@ -9,6 +9,7 @@ const { Resend } = require("resend");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
+const cookie = require("cookie");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -39,14 +40,42 @@ mongoose.connect(process.env.MONGO_URI)
 
 
 app.use(cors({
-  origin:  [
+  origin: [
     "http://localhost:5173",
     "https://portfolio-builder.online",
     "https://pb.portfoliobuilder153.workers.dev"
-  ]
+  ],
+  credentials: true
 }));
 
 app.use(express.json());
+
+// Cookie parsing middleware
+app.use((req, res, next) => {
+  const cookieHeader = req.headers.cookie;
+  req.cookies = {};
+  if (cookieHeader) {
+    try {
+      req.cookies = cookie.parse(cookieHeader);
+    } catch (err) {
+      console.error("Failed to parse cookies:", err);
+    }
+  }
+  next();
+});
+
+// Helper for cookie options (path: '/' consistently)
+const getCookieOptions = (req, maxAgeMs) => {
+  const origin = req.headers.origin || "";
+  const isLocalhost = origin.includes("localhost");
+  return {
+    httpOnly: true,
+    secure: !isLocalhost, // False on localhost HTTP, true on HTTPS production
+    sameSite: isLocalhost ? "lax" : "none", // lax for localhost HTTP, none for cross-domain HTTPS
+    maxAge: maxAgeMs,
+    path: "/"
+  };
+};
 
 let otpStore = {};
 
@@ -276,6 +305,8 @@ app.post("/verify-otp", async (req, res) => {
 
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'secret_key', { expiresIn: '12h' });
 
+      res.cookie('token', token, getCookieOptions(req, 12 * 60 * 60 * 1000));
+
       return res.json({
         success: true,
         user,
@@ -322,17 +353,40 @@ app.post("/reset-password", async (req, res) => {
 
 // ================= MIDDLEWARE =================
 const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  let token = req.cookies && req.cookies.token;
+  
+  if (!token) {
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
 
   if (!token) return res.status(401).json({ message: "No token provided" });
 
   jwt.verify(token, process.env.JWT_SECRET || 'secret_key', (err, user) => {
-    if (err) return res.status(403).json({ message: "Invalid token" });
+    if (err) return res.status(401).json({ message: "Invalid or expired token" });
     req.user = user;
     next();
   });
 };
+
+// ================= AUTH STATUS & LOGOUT =================
+app.get("/api/auth/status", authenticateToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.userId).select("-password");
+    if (!user) {
+      return res.status(401).json({ success: false, authenticated: false, message: "User not found" });
+    }
+    return res.json({ success: true, authenticated: true, user });
+  } catch (err) {
+    console.error("Auth status error:", err);
+    return res.status(500).json({ success: false, authenticated: false });
+  }
+});
+
+app.post("/api/auth/logout", (req, res) => {
+  res.cookie('token', '', getCookieOptions(req, 0));
+  return res.json({ success: true, message: "Logged out successfully" });
+});
 
 // ================= UPDATE PROFILE =================
 app.put("/api/user/profile", authenticateToken, async (req, res) => {
@@ -410,16 +464,31 @@ const ADMIN_OTP      = process.env.ADMIN_OTP      || '';
 
 // ================= ADMIN MIDDLEWARE =================
 const authenticateAdmin = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  let token = req.cookies && req.cookies.adminToken;
+  
+  if (!token) {
+    const authHeader = req.headers['authorization'];
+    token = authHeader && authHeader.split(' ')[1];
+  }
+
   if (!token) return res.status(401).json({ message: "No token" });
   jwt.verify(token, process.env.JWT_SECRET || 'secret_key', (err, decoded) => {
     if (err || decoded.role !== 'admin')
-      return res.status(403).json({ message: "Not authorized" });
+      return res.status(401).json({ message: "Not authorized" });
     req.admin = decoded;
     next();
   });
 };
+
+// ================= ADMIN STATUS & LOGOUT =================
+app.get("/api/admin/status", authenticateAdmin, (req, res) => {
+  return res.json({ success: true, authenticated: true });
+});
+
+app.post("/api/admin/logout", (req, res) => {
+  res.cookie('adminToken', '', getCookieOptions(req, 0));
+  return res.json({ success: true, message: "Admin logged out successfully" });
+});
 
 // ================= ADMIN LOGIN (sends decoy OTP) =================
 app.post('/api/admin/login', async (req, res) => {
@@ -456,6 +525,7 @@ app.post('/api/admin/verify-otp', (req, res) => {
     process.env.JWT_SECRET || 'secret_key',
     { expiresIn: '8h' }
   );
+  res.cookie('adminToken', token, getCookieOptions(req, 8 * 60 * 60 * 1000));
   return res.json({ success: true, token });
 });
 

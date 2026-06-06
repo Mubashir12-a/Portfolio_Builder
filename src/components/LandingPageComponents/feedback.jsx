@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import FeatureReqIcon from '../../assets/LandingPageIcons/FeatureReq.gif';
+import BugReportIcon from '../../assets/LandingPageIcons/BugReport.gif';
+import SuggestionIcon from '../../assets/LandingPageIcons/Suggestion.gif';
+import GeneralLoveIcon from '../../assets/LandingPageIcons/Genrerallove.gif';
 
 const TYPE_MAP = {
   0: 'Feature Request',
@@ -56,17 +60,19 @@ export default function Feedback() {
 
       <div className="FeedbackType">
         {[
-          { icon: '🚀', label: 'Feature Request' },
-          { icon: '🪲', label: 'Bug Report'      },
-          { icon: '💡', label: 'Suggestion'      },
-          { icon: '💖', label: 'General Love'    },
+          { icon: FeatureReqIcon, label: 'Feature Request' },
+          { icon: BugReportIcon, label: 'Bug Report'      },
+          { icon: SuggestionIcon, label: 'Suggestion'      },
+          { icon: GeneralLoveIcon, label: 'General Love'    },
         ].map((item, i) => (
           <div
             key={i}
             className={`FeedCard ${cardActive === i ? 'active' : ''}`}
             onClick={() => setCardActive(cardActive === i ? null : i)}
           >
-            <span>{item.icon}</span>
+            <span>
+              <img src={item.icon} alt={item.label} style={{ width: '45px', height: '45px', objectFit: 'contain' }} />
+            </span>
             <h3>{item.label}</h3>
           </div>
         ))}
