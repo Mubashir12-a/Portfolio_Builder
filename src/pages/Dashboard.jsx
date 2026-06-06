@@ -19,7 +19,7 @@ import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from "../components/GeneralComponents/buttonPrimary.jsx";
 import Btn_Secondry from "../components/GeneralComponents/buttonSecondry.jsx";
 
-import profileImg from "../assets/profileImg.png";
+import profileImg from "../assets/ProfileImages/DemoIcon.gif";
 
 
 // Icons for Social Links:

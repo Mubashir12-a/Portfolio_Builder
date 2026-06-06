@@ -10,6 +10,10 @@ import users from '../assets/users.png';
 import rating from '../assets/rating.png';
 import student from '../assets/student.png';
 
+import FreePlanImg from '../assets/subscriptionImages/FreePlan.png';
+import BasicPlanImg from '../assets/subscriptionImages/BasicPlan.png';
+import ProPlanImg from '../assets/subscriptionImages/ProPlan.png';
+
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary.jsx';
 import Btn_Secondry from '../components/GeneralComponents/buttonSecondry.jsx';
 
@@ -263,14 +267,16 @@ function CardLayout({ obj: card, billingType, multi, tagLine, onSelect }) {
   return (
     <section id="planCards">
       <h6 className="islandTab">{card.islandTab}</h6>
+      <div className="plan-icon-wrapper">
+        <img src={card.icon} alt={card.planType} />
+      </div>
       <div>
-        <span className="icon">{card.icon}</span>
         <h2>{card.planType}</h2>
         <p>{card.planDiscrip}</p>
         <div className="DynaPrice">
           <h3>
             {multi === 0
-              ? <em style={{ color: 'var(--mint)', fontSize: '2rem' }}>FREE</em>
+              ? <em className="free-plan-text">FREE</em>
               : <><span className="RupeeIcon">₹</span><span className="original">{original.toLocaleString('en-IN')}</span><em>{discounted.toLocaleString('en-IN')}</em> / {billingType}</>
             }
           </h3>
@@ -328,16 +334,16 @@ function Table() {
       <h1>Feature comparison</h1>
       <p>Every feature, side by side across all three plans.</p>
       <table>
-        <thead><tr><th /><th className="violet">🌱 Free</th><th className="violet">⚡ Studio</th><th className="gold">👑 Pro</th></tr></thead>
+        <thead><tr><th /><th className="violet">FREE</th><th className="violet">STUDIO</th><th className="gold">PRO</th></tr></thead>
         <Tabledata a1="Portfolios" a2="1" a2_Color="violet" a3="5" a3_Color="violet" a4="Unlimited" a4_Color="gold" />
-        <Tabledata a1="Templates" a2="3 Free" a2_Color="violet" a3="All 12" a3_Color="violet" a4="All + Early" a4_Color="gold" />
+        <Tabledata a1="Templates Available" a2="2 Templates" a2_Color="violet" a3="4 Templates" a3_Color="violet" a4="6 (All)" a4_Color="gold" />
+        <Tabledata a1="Template Likes Limit" a2="1 Liked Template" a2_Color="violet" a3="Up to 3 Likes" a3_Color="violet" a4="Unlimited" a4_Color="gold" />
         <Tabledata a1="HTML/CSS export" a2="✓" a2_Color="mint" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
-        <Tabledata a1="React/JSX export" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
-        <Tabledata a1="PDF export" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="React/JSX export" a2="✓" a2_Color="mint" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
+        <Tabledata a1="PDF export" a2="✓" a2_Color="mint" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
         <Tabledata a1="Custom domain" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
         <Tabledata a1="Remove branding" a2="-" a3="✓" a3_Color="mint" a4="✓" a4_Color="mint" />
         <Tabledata a1="Analytics" a2="-" a3="Basic" a3_Color="violet" a4="Advanced + UTM" a4_Color="gold" />
-        <Tabledata a1="Team collab" a2="-" a3="-" a4="Up to 10 seats" a4_Color="gold" />
         <Tabledata a1="Support" a2="Community" a2_Color="violet" a3="Email (48h)" a3_Color="violet" a4="Priority (4h)" a4_Color="gold" />
       </table>
     </section>
@@ -359,49 +365,49 @@ function Li({ card, n }) {
 
 // ── Plan data ──────────────────────────────────────────────────
 const PlanCard1 = {
-  planKey: 'free', islandTab: 'Basic', icon: '🌱', planType: 'Free',
+  planKey: 'free', islandTab: 'Basic', icon: FreePlanImg, planType: 'Free',
   planDiscrip: 'For students just getting started. No credit card required, ever.',
   btntext: 'Get Started Free →',
   li_1: { li_1_icon: '✓', li_1_caption: '1 Portfolio' },
-  li_2: { li_2_icon: '✓', li_2_caption: '3 free templates' },
-  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
-  li_4: { li_4_icon: '✓', li_4_caption: 'Community support' },
-  li_5: { li_5_icon: 'X', li_5_caption: 'HTML + CSS export' },
-  li_6: { li_6_icon: 'X', li_6_caption: 'Custom domain' },
-  li_7: { li_7_icon: 'X', li_7_caption: 'React / JSX export' },
-  li_8: { li_8_icon: 'X', li_8_caption: 'PDF export' },
+  li_2: { li_2_icon: '✓', li_2_caption: '2 templates (Free-tier)' },
+  li_3: { li_3_icon: '✓', li_3_caption: '1 Liked template limit' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'HTML + CSS stock export' },
+  li_5: { li_5_icon: '✓', li_5_caption: 'Community support' },
+  li_6: { li_6_icon: 'X', li_6_caption: 'Studio & Pro templates' },
+  li_7: { li_7_icon: 'X', li_7_caption: 'Advanced likes limits' },
+  li_8: { li_8_icon: 'X', li_8_caption: 'Custom domain' },
   li_9: { li_9_icon: 'X', li_9_caption: 'Remove branding' },
-  li_10: { li_10_icon: 'X', li_10_caption: 'Analytics' },
+  li_10: { li_10_icon: 'X', li_10_caption: 'Advanced analytics' },
 };
 
 const PlanCard2 = {
-  planKey: 'studio', islandTab: 'Recommended', icon: '⚡', planType: 'Studio',
+  planKey: 'studio', islandTab: 'Recommended', icon: BasicPlanImg, planType: 'Studio',
   planDiscrip: 'For job seekers and freelancers who need to stand out.',
   btntext: 'Start Studio Plan →',
   li_1: { li_1_icon: '✓', li_1_caption: '5 Portfolios' },
-  li_2: { li_2_icon: '✓', li_2_caption: 'All 12 templates' },
-  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
-  li_4: { li_4_icon: '✓', li_4_caption: 'Email support (48h)' },
-  li_5: { li_5_icon: '✓', li_5_caption: 'HTML + CSS export' },
-  li_6: { li_6_icon: 'X', li_6_caption: 'Custom domain' },
-  li_7: { li_7_icon: 'X', li_7_caption: 'React / JSX export' },
-  li_8: { li_8_icon: '✓', li_8_caption: 'PDF export' },
-  li_9: { li_9_icon: 'X', li_9_caption: 'Remove branding' },
-  li_10: { li_10_icon: '✓', li_10_caption: 'Basic analytics' },
+  li_2: { li_2_icon: '✓', li_2_caption: '4 templates (Free + Studio)' },
+  li_3: { li_3_icon: '✓', li_3_caption: '3 Liked template limit' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'HTML + CSS stock export' },
+  li_5: { li_5_icon: '✓', li_5_caption: 'Email support (48h)' },
+  li_6: { li_6_icon: '✓', li_6_caption: 'Custom domain' },
+  li_7: { li_7_icon: '✓', li_7_caption: 'Remove branding' },
+  li_8: { li_8_icon: 'X', li_8_caption: 'Pro-only templates' },
+  li_9: { li_9_icon: 'X', li_9_caption: 'Unlimited likes' },
+  li_10: { li_10_icon: 'X', li_10_caption: 'Priority support' },
 };
 
 const PlanCard3 = {
-  planKey: 'pro', islandTab: 'Premium', icon: '👑', planType: 'Pro',
+  planKey: 'pro', islandTab: 'Premium', icon: ProPlanImg, planType: 'Pro',
   planDiscrip: 'For agencies and power users managing multiple portfolios.',
   btntext: 'Upgrade To Pro →',
   li_1: { li_1_icon: '✓', li_1_caption: 'Unlimited portfolios' },
-  li_2: { li_2_icon: '✓', li_2_caption: 'All templates + early' },
-  li_3: { li_3_icon: '✓', li_3_caption: 'PNG screenshot export' },
-  li_4: { li_4_icon: '✓', li_4_caption: 'Priority support (4h)' },
-  li_5: { li_5_icon: '✓', li_5_caption: 'HTML + CSS export' },
+  li_2: { li_2_icon: '✓', li_2_caption: 'All 6 templates' },
+  li_3: { li_3_icon: '✓', li_3_caption: 'Unlimited template likes' },
+  li_4: { li_4_icon: '✓', li_4_caption: 'HTML + CSS stock export' },
+  li_5: { li_5_icon: '✓', li_5_caption: 'Priority support (4h)' },
   li_6: { li_6_icon: '✓', li_6_caption: 'Custom domain' },
-  li_7: { li_7_icon: '✓', li_7_caption: 'React / JSX export' },
-  li_8: { li_8_icon: '✓', li_8_caption: 'PDF export' },
-  li_9: { li_9_icon: '✓', li_9_caption: 'Remove branding' },
-  li_10: { li_10_icon: '✓', li_10_caption: 'Advanced + UTM analytics' },
+  li_7: { li_7_icon: '✓', li_7_caption: 'Remove branding' },
+  li_8: { li_8_icon: '✓', li_8_caption: 'Advanced analytics' },
+  li_9: { li_9_icon: '✓', li_9_caption: 'Premium assets' },
+  li_10: { li_10_icon: '✓', li_10_caption: 'Team collaboration' },
 };

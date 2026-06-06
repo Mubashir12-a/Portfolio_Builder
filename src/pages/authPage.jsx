@@ -1,6 +1,8 @@
 import '../pagesStyles/authPage.css';
 
-import loadingAuth from "../assets/loadingAuth.gif"
+import loadingAuth from "../assets/loadingAuth.gif";
+import watchPass from "../assets/AdminImg/watchPass.gif";
+import hidePass  from "../assets/AdminImg/hidePass.gif";
 
 import Header from '../components/LandingPageComponents/header';
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary';
@@ -266,14 +268,17 @@ function GetLoginInfo({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                         placeholder="Enter Your Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        style={{ paddingRight: '42px', width: '100%' }}
+                        style={{ paddingRight: '52px', width: '100%' }}
                     />
                     <button
                         type="button"
+                        className="auth-pass-toggle"
                         onClick={() => setShowPass(p => !p)}
                         tabIndex={-1}
                         aria-label={showPass ? 'Hide password' : 'Show password'}
-                    >{showPass ? '🙈' : '👁️'}</button>
+                    >
+                        <img src={showPass ? hidePass : watchPass} alt={showPass ? 'Hide' : 'Show'} />
+                    </button>
                 </div>
             </div>
 
@@ -637,15 +642,17 @@ function ResetPassword({ holdCont }) {
                         placeholder="Set Your New Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        style={{ paddingRight: '42px', width: '100%' }}
+                        style={{ paddingRight: '52px', width: '100%' }}
                     />
                     <button
                         type="button"
+                        className="auth-pass-toggle"
                         onClick={() => setShowPass(p => !p)}
-                        style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', fontSize: '1.1rem', padding: '4px', lineHeight: 1 }}
                         tabIndex={-1}
                         aria-label={showPass ? 'Hide password' : 'Show password'}
-                    >{showPass ? '🙈' : '👁️'}</button>
+                    >
+                        <img src={showPass ? hidePass : watchPass} alt={showPass ? 'Hide' : 'Show'} />
+                    </button>
                 </div>
             </div>
 
@@ -797,14 +804,17 @@ function CreateAcc({ holdCont, setUserEmail, setSwitchTab, setUserData }) {
                             placeholder="Set Your Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            style={{ paddingRight: '42px', width: '100%' }}
+                            style={{ paddingRight: '52px', width: '100%' }}
                         />
                         <button
                             type="button"
+                            className="auth-pass-toggle"
                             onClick={() => setShowPass(p => !p)}
                             tabIndex={-1}
                             aria-label={showPass ? 'Hide password' : 'Show password'}
-                        >{showPass ? '🙈' : '👁️'}</button>
+                        >
+                            <img src={showPass ? hidePass : watchPass} alt={showPass ? 'Hide' : 'Show'} />
+                        </button>
                     </div>
                 </div>
 

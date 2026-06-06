@@ -6,6 +6,7 @@ import { useSkillsList } from '../hooks/useSkillsList';
 function CollectDashInfo() {
     const [step, setStep] = useState(1);
     const navigate = useNavigate();
+    const [userPlan, setUserPlan] = useState('free');
 
     const [formData, setFormData] = useState({
         name: '',
@@ -48,21 +49,24 @@ function CollectDashInfo() {
                 });
 
                 const data = await res.json();
-                if (data.success && data.user.profileCompleted) {
-                    const u = data.user;
-                    setFormData(prev => ({
-                        ...prev,
-                        name: u.name || prev.name,
-                        address: u.address || prev.address,
-                        profileImage: u.profileImage || prev.profileImage,
-                        about: u.about || prev.about,
-                        phone: u.phone || prev.phone,
-                        socialLinks: u.socialLinks || prev.socialLinks,
-                        education: u.education?.length ? u.education : prev.education,
-                        projects: u.projects?.length ? u.projects : prev.projects,
-                        experience: u.experience?.length ? u.experience : prev.experience,
-                        skills: u.skills?.length ? u.skills : prev.skills,
-                    }));
+                if (data.success) {
+                    setUserPlan(data.user.plan || 'free');
+                    if (data.user.profileCompleted) {
+                        const u = data.user;
+                        setFormData(prev => ({
+                            ...prev,
+                            name: u.name || prev.name,
+                            address: u.address || prev.address,
+                            profileImage: u.profileImage || prev.profileImage,
+                            about: u.about || prev.about,
+                            phone: u.phone || prev.phone,
+                            socialLinks: u.socialLinks || prev.socialLinks,
+                            education: u.education?.length ? u.education : prev.education,
+                            projects: u.projects?.length ? u.projects : prev.projects,
+                            experience: u.experience?.length ? u.experience : prev.experience,
+                            skills: u.skills?.length ? u.skills : prev.skills,
+                        }));
+                    }
                 }
             } catch (err) {
                 console.error("Error fetching user data:", err);
@@ -76,6 +80,36 @@ function CollectDashInfo() {
         localStorage.setItem('portfolioUserData', JSON.stringify(formData));
         window.dispatchEvent(new Event('storage'));
     }, [formData]);
+
+    // Force projects array size to comply with pricing plan limits
+    useEffect(() => {
+        const limit = userPlan === 'pro' ? Infinity : userPlan === 'studio' ? 5 : 1;
+        if (formData.projects.length > limit) {
+            setFormData(prev => ({
+                ...prev,
+                projects: prev.projects.slice(0, limit)
+            }));
+        }
+    }, [userPlan]);
+
+    const handleAddProject = () => {
+        const limit = userPlan === 'pro' ? Infinity : userPlan === 'studio' ? 5 : 1;
+        if (formData.projects.length >= limit) {
+            alert(`Your ${userPlan.toUpperCase()} plan only allows up to ${limit} project(s). Please purchase a higher plan in the subscription page to add more!`);
+            return;
+        }
+        setFormData(prev => ({
+            ...prev,
+            projects: [...prev.projects, { title: '', description: '', link: '', image: '' }]
+        }));
+    };
+
+    const handleRemoveProject = (index) => {
+        setFormData(prev => ({
+            ...prev,
+            projects: prev.projects.filter((_, i) => i !== index)
+        }));
+    };
 
     const handleSocialChange = (e) => {
         setFormData({
@@ -123,7 +157,7 @@ function CollectDashInfo() {
                 {step === 2 && <GetContact setStep={setStep} formData={formData} setFormData={setFormData} />}
                 {step === 3 && <GetSocial setStep={setStep} formData={formData} handleSocialChange={handleSocialChange} />}
                 {step === 4 && <GetEducation setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
-                {step === 5 && <GetProjects setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
+                {step === 5 && <GetProjects setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} handleAddProject={handleAddProject} handleRemoveProject={handleRemoveProject} userPlan={userPlan} />}
                 {step === 6 && <GetExperience setStep={setStep} formData={formData} handleArrayChange={handleArrayChange} />}
                 {step === 7 && <GetSkills setStep={setStep} formData={formData} setFormData={setFormData} handleSubmit={handleSubmit} />}
             </div>
@@ -345,7 +379,7 @@ function GetEducation({ setStep, formData, handleArrayChange }) {
     )
 }
 
-function GetProjects({ setStep, formData, handleArrayChange }) {
+function GetProjects({ setStep, formData, handleArrayChange, handleAddProject, handleRemoveProject, userPlan }) {
     const handleImageUpload = async (e, idx) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -377,16 +411,27 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
         }
     };
 
+    const limitLabel = userPlan === 'pro' ? 'Unlimited' : userPlan === 'studio' ? '5' : '1';
+
     return (
         <section id="GetProjects" className="dynamic-section">
             <h1>Step 5/7: Projects</h1>
             <div className="step-header">
                 <span className="step-badge">Step 5 of 7</span>
                 <h2>Your <em>projects.</em></h2>
-                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Showcase your best work with links and images.</p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.95rem' }}>Showcase your best work with links and images. ({formData.projects.length} / {limitLabel} allowed)</p>
             </div>
             {formData.projects.map((proj, idx) => (
-                <div key={idx} className="dynamic-item">
+                <div key={idx} className="dynamic-item" style={{ position: 'relative' }}>
+                    {formData.projects.length > 1 && (
+                        <button 
+                            onClick={() => handleRemoveProject(idx)}
+                            style={{ position: 'absolute', top: '15px', right: '15px', background: '#ff4466', color: 'white', border: 'none', borderRadius: '50%', width: '26px', height: '26px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px', zIndex: 10 }}
+                            title="Remove Project"
+                        >
+                            ×
+                        </button>
+                    )}
                     <h3>Project {idx + 1}</h3>
                     <input type="text" placeholder="Project Title" value={proj.title} onChange={(e) => handleArrayChange('projects', idx, 'title', e.target.value)} />
                     <textarea placeholder="Description" value={proj.description} onChange={(e) => handleArrayChange('projects', idx, 'description', e.target.value)}></textarea>
@@ -398,6 +443,18 @@ function GetProjects({ setStep, formData, handleArrayChange }) {
                     </div>
                 </div>
             ))}
+            
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+                <button 
+                    onClick={handleAddProject}
+                    style={{ background: 'rgba(123, 94, 248, 0.1)', color: 'var(--violet)', border: '1px dashed var(--violet)', padding: '12px 24px', borderRadius: '10px', cursor: 'pointer', fontFamily: 'Syne, sans-serif', fontWeight: 'bold', transition: 'all 0.3s' }}
+                    onMouseEnter={(e) => e.target.style.background = 'rgba(123, 94, 248, 0.2)'}
+                    onMouseLeave={(e) => e.target.style.background = 'rgba(123, 94, 248, 0.1)'}
+                >
+                    + Add New Project
+                </button>
+            </div>
+
             <div className="btns">
                 <button onClick={() => setStep(4)}>Back</button>
                 <button onClick={() => setStep(6)}>NEXT</button>

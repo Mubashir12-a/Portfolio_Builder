@@ -378,15 +378,48 @@
     width: 100%;
 }
 
-#GetLoginInfo .getpass>div>button {
-    position: absolute;
-    right: -45px;
-    top: -20px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    box-shadow: none;
-    background: none;
+/* GIF password toggle — high-specificity overrides beat broad button rules */
+#GetLoginInfo .auth-pass-toggle,
+#CreateAcc .auth-pass-toggle,
+#ResetPassword .auth-pass-toggle {
+    position: absolute !important;
+    right: 8px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 40px !important;
+    height: 40px !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    transition: background 0.2s !important;
+    outline: none !important;
+    font-size: 0 !important;
+    flex: none !important;
+}
+
+#GetLoginInfo .auth-pass-toggle:hover,
+#CreateAcc .auth-pass-toggle:hover,
+#ResetPassword .auth-pass-toggle:hover {
+    background: var(--violet-dim) !important;
+}
+
+#GetLoginInfo .auth-pass-toggle img,
+#CreateAcc .auth-pass-toggle img,
+#ResetPassword .auth-pass-toggle img,
+.auth-pass-toggle img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    display: block !important;
+    border-radius: 4px;
+    pointer-events: none;
 }
 
 #GetLoginInfo .terms {
@@ -466,17 +499,6 @@ input[type="checkbox"]:checked::after {
 #CreateAcc .getpass>div {
     position: relative;
     width: 100%;
-}
-
-#CreateAcc .getpass>div>button {
-    position: absolute;
-    right: -45px;
-    top: -20px;
-    width: 40px;
-    height: 40px;
-    border: none;
-    box-shadow: none;
-    background: none;
 }
 
 /*Alert box*/

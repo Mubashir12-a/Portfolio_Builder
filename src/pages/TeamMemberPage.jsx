@@ -29,9 +29,9 @@ const TEAM_DATA = {
       'Led the transition from static layouts to the current dynamic, multi-step builder.'
     ],
     skills: ['React.js', 'Node.js', 'System Architecture', 'UI/UX Design', 'Cloud Infrastructure', 'Next.js'],
-    social: { 
-      github: 'https://github.com/mubashir12-a', 
-      linkedin: 'https://linkedin.com/in/mubashir-ahmad-pb' 
+    social: {
+      github: 'https://github.com/Mubashir12-a',
+      linkedin: 'https://linkedin.com/in/mubashir-ahmad-867b712a5'
     }
   },
   abrar: {
@@ -53,9 +53,9 @@ const TEAM_DATA = {
       'Optimized the server response times by over 40% through intelligent caching.'
     ],
     skills: ['Node.js', 'Express', 'JWT Auth', 'RESTful APIs', 'Security Auditing', 'Redis'],
-    social: { 
-      github: 'https://github.com/abrar-backdev', 
-      linkedin: 'https://linkedin.com/in/abrar-senior-eng' 
+    social: {
+      github: 'https://github.com/Abrar-a1',
+      linkedin: 'https://linkedin.com/in/abrar-ahmad-65330a2a5'
     }
   },
   hammad: {
@@ -77,9 +77,9 @@ const TEAM_DATA = {
       'Successfully migrated thousands of assets to a cloud-based CDN for faster loading.'
     ],
     skills: ['MongoDB', 'NoSQL', 'Mongoose', 'Cloudinary', 'Data Science', 'AWS'],
-    social: { 
-      github: 'https://github.com/hammad-cloudspecialist', 
-      linkedin: 'https://linkedin.com/in/hammad-database-cloud' 
+    social: {
+      github: 'https://github.com/Mohammad-Hamad-Wani',
+      linkedin: 'https://linkedin.com/in/mohammad-hammad-84492032a'
     }
   }
 };
@@ -90,28 +90,28 @@ export default function TeamMemberPage() {
   const member = TEAM_DATA[memberId?.toLowerCase()];
 
   if (!member) {
-    return <div className="error-page" style={{color: 'var(--text)', background: 'var(--bg)', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>Member not found</div>;
+    return <div className="error-page" style={{ color: 'var(--text)', background: 'var(--bg)', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Member not found</div>;
   }
 
   return (
     <div className="team-detail-page">
       <Header comp={() => <Btn_Primary title={"Home"} to={"/"} />} />
-      
+
       <main className="team-detail-main">
         <section className="profile-hero">
           <div className="profile-container">
             <div className="profile-image">
-               <img src={member.image} alt={member.name} />
-               <div className="glow-effect"></div>
+              <img src={member.image} alt={member.name} />
+              <div className="glow-effect"></div>
             </div>
             <div className="profile-info">
               <div className="role-tag">{member.role}</div>
               <h1>{member.name}</h1>
               <p className="bio">{member.bio}</p>
-              
+
               <div className="social-links">
-                 <button onClick={() => window.open(member.social.github, '_blank', 'noopener,noreferrer')}>GitHub</button>
-                 <button onClick={() => window.open(member.social.linkedin, '_blank', 'noopener,noreferrer')}>LinkedIn</button>
+                <button onClick={() => window.open(member.social.github, '_blank', 'noopener,noreferrer')}>GitHub</button>
+                <button onClick={() => window.open(member.social.linkedin, '_blank', 'noopener,noreferrer')}>LinkedIn</button>
               </div>
             </div>
           </div>
@@ -120,29 +120,29 @@ export default function TeamMemberPage() {
 
         <section className="profile-details">
           <div className="detailed-bio-section">
-             <h3>✦ The Story</h3>
-             <p>{member.detailedBio}</p>
+            <h3>✦ The Story</h3>
+            <p>{member.detailedBio}</p>
           </div>
 
           <div className="detail-grid">
-             <div className="detail-section">
-                <h3>✦ Key Responsibilities</h3>
-                <ul>
-                  {member.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
-                </ul>
-             </div>
-             <div className="detail-section">
-                <h3>✦ Career Highlights</h3>
-                <ul>
-                  {member.highlights.map((h, i) => <li key={i}>{h}</li>)}
-                </ul>
-             </div>
-             <div className="detail-section full-width">
-                <h3>✦ Technical Toolkit</h3>
-                <div className="skills-cloud">
-                  {member.skills.map((s, i) => <span key={i}>{s}</span>)}
-                </div>
-             </div>
+            <div className="detail-section">
+              <h3>✦ Key Responsibilities</h3>
+              <ul>
+                {member.responsibilities.map((r, i) => <li key={i}>{r}</li>)}
+              </ul>
+            </div>
+            <div className="detail-section">
+              <h3>✦ Career Highlights</h3>
+              <ul>
+                {member.highlights.map((h, i) => <li key={i}>{h}</li>)}
+              </ul>
+            </div>
+            <div className="detail-section full-width">
+              <h3>✦ Technical Toolkit</h3>
+              <div className="skills-cloud">
+                {member.skills.map((s, i) => <span key={i}>{s}</span>)}
+              </div>
+            </div>
           </div>
         </section>
       </main>

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import ProfileImg from '../../assets/profileImg.png'
+import ProfileImg from '../../assets/ProfileImages/DemoIcon.gif'
 
 export default function Home() {
   const navigate = useNavigate();
@@ -56,12 +56,14 @@ export default function Home() {
                 <span></span><span></span><span></span>
               </div>
               <div className='Dem-URL'>
-                <p>https://portfoliobuilder.app/AaravSharma</p>
+                <p>https://portfoliobuilder.app/MubashirAhmad</p>
               </div>
             </div>
             <div className='Container'>
               <div className="AttractProfile">
-                <img src={ProfileImg} alt="" />
+                <div className='ProfilePic'>
+                  <img src={ProfileImg} alt="" />
+                </div>
                 <div>
                   <p>Mubashir Ahmad</p>
                   <p>Full-Stack Developer</p>

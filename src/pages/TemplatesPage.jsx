@@ -5,6 +5,10 @@ import Header from '../components/LandingPageComponents/header.jsx';
 import Footer from '../components/LandingPageComponents/footer.jsx';
 import '../pagesStyles/templatesPage.css';
 
+import FreePlanImg from '../assets/subscriptionImages/FreePlan.png';
+import BasicPlanImg from '../assets/subscriptionImages/BasicPlan.png';
+import ProPlanImg from '../assets/subscriptionImages/ProPlan.png';
+
 import Btn_Primary from '../components/GeneralComponents/buttonPrimary.jsx';
 
 // 6 Templates with Netlify Preview URLs (Grouped here for easy manual editing)
@@ -60,9 +64,9 @@ const TEMPLATES = [
 ];
 
 const PLAN_BADGES = {
-  free: { label: '🌱 FREE', class: 'plan-free' },
-  studio: { label: '⚡ STUDIO', class: 'plan-studio' },
-  pro: { label: '👑 PRO', class: 'plan-pro' }
+  free: { label: 'FREE', icon: FreePlanImg, class: 'plan-free' },
+  studio: { label: 'STUDIO', icon: BasicPlanImg, class: 'plan-studio' },
+  pro: { label: 'PRO', icon: ProPlanImg, class: 'plan-pro' }
 };
 
 // Helper: check plan access permissions
@@ -344,6 +348,7 @@ export default function TemplatesPage() {
                   </button>
                 </div>
                 <span className={`plan-badge ${PLAN_BADGES[t.plan].class}`}>
+                  <img src={PLAN_BADGES[t.plan].icon} alt="" />
                   {PLAN_BADGES[t.plan].label}
                 </span>
                 <button 
